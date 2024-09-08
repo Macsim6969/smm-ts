@@ -1,0 +1,7 @@
+<section class="main">
+  <app-added-files-popup *ngIf="isOpenPopup"></app-added-files-popup>
+  <button class="added" (click)="openPopup()">
+    <img src="/assets/images/global/plus.svg" *ngIf="!isOpenPopup" alt="Plus">
+    <img src="/assets/images/global/close.svg" *ngIf="isOpenPopup" alt="Close">
+  </button>
+</section>

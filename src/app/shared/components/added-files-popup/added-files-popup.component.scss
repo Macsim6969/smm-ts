@@ -1,0 +1,26 @@
+.added_content {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(128, 128, 128, 0.5);
+  z-index: 99;
+
+  .added-settings {
+    height: 350px;
+    animation: open 0.5s ease;
+    background-color: aliceblue;
+    width: 100%;
+    border-bottom-left-radius: 26px;
+    border-bottom-right-radius: 26px;
+    box-shadow: 0 3px 35px gray;
+  }
+}
+
+@keyframes open {
+  from {
+    transform: translateY(-400px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
