@@ -1,17 +1,45 @@
 .added_content {
   height: 100%;
-  width: 100%;
   background-color: rgba(128, 128, 128, 0.5);
+  position: relative;
   z-index: 99;
-
   .added-settings {
     height: 350px;
     animation: open 0.5s ease;
     background-color: aliceblue;
-    width: 100%;
     border-bottom-left-radius: 26px;
     border-bottom-right-radius: 26px;
     box-shadow: 0 3px 35px gray;
+    padding: 25px 20px;
+
+    .settings_data_block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+
+      .title {
+        font-size: 3.6rem;
+
+      }
+
+      .settings_data {
+        border-radius: 12px;
+        border: none;
+        background-color: white;
+        outline: none;
+        padding: 12px 25px;
+        font-size: 1.8rem;
+        box-shadow: 0.5px 0.5px 4px gray;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgb(238, 237, 237);
+          transition: all 0.5s ease;
+        }
+      }
+    }
+
   }
 }
 
