@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IsFilePopupSettingsService } from '../../services/isFilesPopupSettings.service';
 
 @Component({
   selector: 'app-added-files-popup',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './added-files-popup.component.scss'
 })
 export class AddedFilesPopupComponent {
+
+  constructor(
+    private IsFilePopupSettings: IsFilePopupSettingsService
+  ) { }
+
+  public closePopup() {
+    this.IsFilePopupSettings._isOpenPopup = false;
+  }
 
 }

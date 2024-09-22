@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IsFilePopupSettingsService } from '../../shared/services/isFilesPopupSettings.service';
 import { Subject, takeUntil } from 'rxjs';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,6 +12,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   public isOpenPopup!: boolean;
+
+
+  /////
+  pageName: string | undefined;
   constructor(
     private IsFilePopupSettings: IsFilePopupSettingsService
   ) { }
@@ -25,9 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   }
 
-  public openPopup() {
-    this.isOpenPopup = !this.isOpenPopup;
-  }
+  
 
   ngOnDestroy(): void {
     this.destroy$.next();

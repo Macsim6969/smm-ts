@@ -5,11 +5,48 @@
   justify-content: space-between;
   padding: 10px 15px;
 
-  height: 36px;
+  width: 46px;
+  height: -webkit-fill-available;
   box-shadow: 0.5px 1px 15px gray;
 
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+
+    .added {
+      border-radius: 12px;
+      background-color: rgb(255, 255, 255);
+      box-shadow: 0.5px 0.5px 12px rgb(199, 198, 198);
+      border: none;
+      outline: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 46px;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        transition: all 0.5s ease;
+        background-color: rgb(221, 221, 221);
+
+      }
+
+      img {
+        width: 25px;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+  }
 }

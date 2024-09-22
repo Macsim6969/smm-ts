@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<section class="app">
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+
+
+  <app-added-files-popup *ngIf="isOpenPopup"></app-added-files-popup>
+</section>

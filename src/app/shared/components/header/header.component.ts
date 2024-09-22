@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IsFilePopupSettingsService } from '../../services/isFilesPopupSettings.service';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  constructor(
+    private IsFilePopupSettings: IsFilePopupSettingsService
+  ) { }
+
+  public openPopup() {
+    this.IsFilePopupSettings._isOpenPopup = true;
+  }
 }

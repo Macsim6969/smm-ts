@@ -1,0 +1,15 @@
+.breadcrums {
+  display: flex;
+  max-width: 1560px;
+  width: 100%;
+
+  @media (max-width: 1565px) {
+    width: 90%;
+  }
+
+  .route_page {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
