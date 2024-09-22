@@ -1,11 +1,11 @@
-// page-management.service.ts
-import { Injectable, Type } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IPages } from '../model/pages.interface';
 
 @Injectable()
 export class PageManagementService {
   private pages: IPages[] = [];
+  private _pagesSubject: BehaviorSubject<IPages[]> = new BehaviorSubject<IPages[]>(null);
 
 
   set _pages(newPage: IPages) {
@@ -13,8 +13,13 @@ export class PageManagementService {
     console.log(this.pages);
   }
 
-  get _pages(): IPages[]{
+  get _pages(): IPages[] {
     return this.pages
+  }
+
+  get _streamPages$() {
+    this._pagesSubject.next(this.pages);
+    return this._pagesSubject;
   }
 
 

@@ -1,5 +1,5 @@
 export interface IPages{
-  id: string
+  id: number
   name: string,
   route: string,
   key: string

@@ -1,14 +1,25 @@
 <section class="added_content">
   <div class="added-settings">
-    <div class="settings_data_block">
-      <h2 class="title">Create Project:</h2>
-      <div>
-        <button class="settings_data">Project</button>
+    <div class="added-settings-choice">
+      <div class="settings_data_block">
+        <h2 class="title">Create Project:</h2>
+        <div>
+          <button class="settings_data" (click)="choiceTypePR('Project')">Project</button>
+        </div>
+      </div>
+      <div class="close" (click)="closePopup()">
+        <img src="/assets/images/global/close.svg" alt="Close">
       </div>
     </div>
-    <div class="close" (click)="closePopup()">
-      <img src="/assets/images/global/close.svg" alt="Close">
+    <div *ngIf="isOpenData" class="added-naming">
+      <nav class="navbar">
+        <input [(ngModel)]="nameFile" type="text" placeholder="Choice your name {{key}}">
+        <button (click)="createProject()">
+          <img src="/assets/images/global/done.svg" alt="Done">
+        </button>
+      </nav>
     </div>
   </div>
+
 
 </section>

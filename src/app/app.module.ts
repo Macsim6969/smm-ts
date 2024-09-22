@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { IsFilePopupSettingsService } from './shared/services/isFilesPopupSettings.service';
 import { AddedFilesPopupComponent } from './shared/components/added-files-popup/added-files-popup.component';
+import { PageManagementService } from './shared/services/pageManagment.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,13 @@ import { AddedFilesPopupComponent } from './shared/components/added-files-popup/
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule
   ],
   providers: [
-    IsFilePopupSettingsService
+    IsFilePopupSettingsService,
+    PageManagementService
   ],
   bootstrap: [AppComponent]
 })

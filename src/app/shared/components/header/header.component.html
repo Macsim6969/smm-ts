@@ -1,5 +1,7 @@
 <header class="header">
   <div class="content">
+    <button class="added" *ngFor="let page of pagestArray" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}" routerLink="/{{page.route}}">{{page.name}}</button>
     <button class="added" (click)="openPopup()">
       <img src="/assets/images/global/plus.svg" alt="Plus">
     </button>
