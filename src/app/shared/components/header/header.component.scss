@@ -34,12 +34,22 @@
       width: 100%;
       height: 46px;
       cursor: pointer;
-
+    
+      &.active {
+        &::after {
+          content: "";
+          border-left: 4px solid blue;
+          box-shadow: 0.2px 0.2px 8px blue;
+          height: 40px;
+          position: absolute;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          left: 6px; /* Сделаем отступ слева отрицательным */
+        }
+      }
+    
       &:hover {
-        transform: scale(1.05);
-        transition: all 0.5s ease;
         background-color: rgb(221, 221, 221);
-
       }
 
       img {

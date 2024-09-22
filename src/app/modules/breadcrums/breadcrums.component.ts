@@ -28,7 +28,6 @@ export class BreadcrumsComponent implements OnInit, OnDestroy {
   private streamActivaPage() {
     this.route.params.subscribe((data) => {
       this.routeArray.push(data['id']);
-      console.log(this.routeArray);
       this.breadcrumsService.urlLine = data['id'];
     });
 
