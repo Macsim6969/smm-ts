@@ -9,6 +9,7 @@ import { IsFilePopupSettingsService } from './shared/services/isFilesPopupSettin
 import { AddedFilesPopupComponent } from './shared/components/added-files-popup/added-files-popup.component';
 import { PageManagementService } from './shared/services/pageManagment.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiService } from './api/api.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     IsFilePopupSettingsService,
-    PageManagementService
+    PageManagementService,
+    ApiService
   ],
   bootstrap: [AppComponent]
 })

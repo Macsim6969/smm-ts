@@ -17,6 +17,10 @@ export class PageManagementService {
     return this.pages
   }
 
+  set _streamPages(newPages: IPages[]) {
+    this._pagesSubject.next(newPages);
+  }
+
   get _streamPages$() {
     this._pagesSubject.next(this.pages);
     return this._pagesSubject;
