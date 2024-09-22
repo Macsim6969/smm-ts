@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IsFilePopupSettingsService } from '../../services/isFilesPopupSettings.service';
 import { PageManagementService } from '../../services/pageManagment.service';
+import { ApiService } from '../../../api/api.service';
+import { IPages } from '../../model/pages.interface';
 
 @Component({
   selector: 'app-added-files-popup',
@@ -12,8 +13,8 @@ export class AddedFilesPopupComponent {
   public isOpenData: boolean;
   public nameFile: string;
   constructor(
-    private IsFilePopupSettings: IsFilePopupSettingsService,
-    private pageManagment: PageManagementService
+    private pageManagment: PageManagementService,
+    private apiService: ApiService
   ) { }
 
   public choiceTypePR(key: string) {
@@ -22,13 +23,10 @@ export class AddedFilesPopupComponent {
   }
 
   public createProject() {
-    this.pageManagment._pages = { id: this.pageManagment._pages.length + 1, key: this.key, name: this.nameFile, route: `/${this.nameFile}` };
+    const newPage: IPages = { id: this.pageManagment._pages.length + 1, key: this.key, name: this.nameFile, route: `/${this.nameFile}` };
+    this.pageManagment._pages = newPage ;
+    this.apiService.setNewProject(newPage, this.nameFile);
     this.isOpenData = false;
-    this.closePopup();
-  }
-
-  public closePopup() {
-    this.IsFilePopupSettings._isOpenPopup = false;
   }
 
 }

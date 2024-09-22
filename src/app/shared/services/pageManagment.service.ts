@@ -10,7 +10,6 @@ export class PageManagementService {
 
   set _pages(newPage: IPages) {
     this.pages.push(newPage);
-    console.log(this.pages);
   }
 
   get _pages(): IPages[] {

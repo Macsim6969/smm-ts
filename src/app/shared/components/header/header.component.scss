@@ -1,9 +1,9 @@
 .header {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 10px 15px;
+  padding: 25px 15px;
 
   width: 46px;
   height: -webkit-fill-available;
@@ -34,7 +34,7 @@
       width: 100%;
       height: 46px;
       cursor: pointer;
-    
+
       &.active {
         &::after {
           content: "";
@@ -47,7 +47,7 @@
           left: 6px;
         }
       }
-    
+
       &:hover {
         background-color: rgb(221, 221, 221);
       }

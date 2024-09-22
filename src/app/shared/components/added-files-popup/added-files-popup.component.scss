@@ -1,21 +1,7 @@
 .added_content {
   height: 100%;
-  background-color: rgba(128, 128, 128, 0.5);
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 99;
 
   .added-settings {
-    height: 350px;
-    animation: open 0.5s ease;
-    background-color: aliceblue;
-    border-bottom-left-radius: 26px;
-    border-bottom-right-radius: 26px;
-    box-shadow: 0 3px 35px gray;
-    padding: 25px 20px;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -54,28 +40,6 @@
             background-color: rgb(238, 237, 237);
             transition: all 0.5s ease;
           }
-        }
-      }
-
-      .close {
-        width: 52px;
-        height: 52px;
-        border-radius: 12px;
-        box-shadow: 0.5px 0.5px 12px gray;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-
-        &:hover {
-          background-color: rgba(128, 128, 128, 0.5);
-          transition: all 0.5s ease;
-        }
-
-        img {
-          object-fit: cover;
-          width: 25px;
         }
       }
     }
@@ -117,15 +81,5 @@
         }
       }
     }
-  }
-}
-
-@keyframes open {
-  from {
-    transform: translateY(-400px);
-  }
-
-  to {
-    transform: translateY(0);
   }
 }

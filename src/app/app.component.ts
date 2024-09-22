@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { IsFilePopupSettingsService } from './shared/services/isFilesPopupSettings.service';
-import { Subject, takeUntil } from 'rxjs';
+
+import { Subject } from 'rxjs';
 import { ApiService } from './api/api.service';
 
 @Component({
@@ -14,19 +13,13 @@ export class AppComponent implements OnInit, OnDestroy {
   public isOpenPopup: boolean;
 
   constructor(
-    private IsFilePopupSettings: IsFilePopupSettingsService,
     private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
-    this.streamToChangeOpenPopup();
     this.apiService.getNewProject();
   }
-  private streamToChangeOpenPopup() {
-    this.IsFilePopupSettings._isOpenPopup$.pipe(takeUntil(this.destroy$)).subscribe((data: boolean) => {
-      this.isOpenPopup = data;
-    })
-  }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

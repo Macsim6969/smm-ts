@@ -5,30 +5,29 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { IsFilePopupSettingsService } from './shared/services/isFilesPopupSettings.service';
-import { AddedFilesPopupComponent } from './shared/components/added-files-popup/added-files-popup.component';
 import { PageManagementService } from './shared/services/pageManagment.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './api/api.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ShareModule } from './shared/module/share.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    AddedFilesPopupComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    ShareModule,
     RouterModule
   ],
   providers: [
-    IsFilePopupSettingsService,
     PageManagementService,
-    ApiService
+    ApiService,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IsFilePopupSettingsService } from '../../services/isFilesPopupSettings.service';
 import { PageManagementService } from '../../services/pageManagment.service';
 import { IPages } from '../../model/pages.interface';
 import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +11,11 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
-  public pagestArray: IPages[];
+  public pagestArray: IPages[] = null;
 
   constructor(
-    private IsFilePopupSettings: IsFilePopupSettingsService,
-    private pageManagment: PageManagementService
+    private pageManagment: PageManagementService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,10 +30,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public openPopup() {
-    this.IsFilePopupSettings._isOpenPopup = true;
+    this.router.navigate(['/start']).then();
   }
 
   ngOnDestroy(): void {
-
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
