@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { PageManagementService } from './shared/services/pageManagment.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './api/api.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ShareModule } from './shared/module/share.module';

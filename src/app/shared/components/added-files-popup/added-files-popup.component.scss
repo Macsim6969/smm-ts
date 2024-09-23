@@ -1,11 +1,14 @@
 .added_content {
-  height: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
 
   .added-settings {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 20px;
 
     .added-settings-choice {
 
