@@ -9,6 +9,10 @@ import { PageManagementService } from './shared/services/pageManagment.service';
 import { ApiService } from './api/api.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ShareModule } from './shared/module/share.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { storeReducers } from './store/reducers/store.reducers';
+import { AuthEffects } from './store/effects/store.effects';
 
 
 @NgModule({
@@ -21,7 +25,9 @@ import { ShareModule } from './shared/module/share.module';
     AppRoutingModule,
     HttpClientModule,
     ShareModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forRoot({ store: storeReducers }),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   providers: [
     PageManagementService,

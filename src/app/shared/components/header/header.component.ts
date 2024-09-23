@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PageManagementService } from '../../services/pageManagment.service';
 import { IPages } from '../../model/pages.interface';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { StoreInterface } from '../../../store/model/store.model';
+import { selectUserProjects } from '../../../store/selectors/store.selectors';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public pagestArray: IPages[] = null;
 
   constructor(
-    private pageManagment: PageManagementService,
+    private store: Store<{ store: StoreInterface }>,
     private router: Router
   ) { }
 
@@ -23,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private streamToNewProjectFromService() {
-    this.pageManagment._streamPages$.pipe(takeUntil(this.destroy$))
+    this.store.pipe(select(selectUserProjects), takeUntil(this.destroy$))
       .subscribe((data: IPages[]) => {
         this.pagestArray = data;
       })
