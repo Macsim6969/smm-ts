@@ -3,7 +3,7 @@ import { ApiService } from '../../../api/api.service';
 import { IPages } from '../../model/pages.interface';
 import { select, Store } from '@ngrx/store';
 import { StoreInterface } from '../../../store/model/store.model';
-import { selectUserProjects, selectUserProjectsLenght } from '../../../store/selectors/store.selectors';
+import { selectUserProjects } from '../../../store/selectors/store.selectors';
 import { take } from 'rxjs';
 
 @Component({

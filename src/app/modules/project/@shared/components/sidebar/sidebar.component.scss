@@ -1,4 +1,4 @@
-.sidebar{
+.sidebar {
   display: flex;
   flex-direction: column;
   padding: 0 20px;
@@ -11,7 +11,20 @@
   border-left: 0;
   box-shadow: 0.2px 0.2px 10px gray;
 
-  .sidebar-route{
+  .sidebar-route {
     padding-top: 25px;
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .title {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+    }
+
   }
 }
