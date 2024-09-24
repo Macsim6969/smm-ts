@@ -17,7 +17,9 @@ export namespace ProjectPages {
         });
     }
 
-
+    public getListSidebarDataPage(callback: (name: string) => void) : void{
+      
+    }
 
   }
 

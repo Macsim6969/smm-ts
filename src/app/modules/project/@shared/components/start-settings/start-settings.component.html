@@ -1,0 +1,15 @@
+<section class="start-settings">
+  <div class="content">
+    <p>You can choose our pages for project or create own</p>
+    <div class="settings-list">
+
+      <div class="list_content" *ngFor="let list of listSettings">
+        <p class="content_title">- {{list.titleList}}</p>
+        <button (click)="choicePage(id)" class="content_pages" *ngFor="let content of list.listContent index as id">
+          <nav>{{content.title}}</nav>
+          <div class="circle" [ngClass]="{'active': isActive[id]}"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

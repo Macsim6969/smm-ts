@@ -24,6 +24,17 @@
         font-size: 2rem;
         font-weight: 500;
       }
+
+      .settings{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        img{
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+        }
+      }
     }
 
   }
