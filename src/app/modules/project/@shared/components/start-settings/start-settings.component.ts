@@ -12,7 +12,9 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   public listSettings: IListSettings[];
-  public isActive: boolean[] = [];
+  public isActive: boolean[][] = [];
+
+  public newList: any[] = [];
 
   constructor(
     private settingsListProjects: SettingsListProjectsService
@@ -24,10 +26,21 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
 
   private initializeListSettingsFromService() {
     this.listSettings = this.settingsListProjects._listSettings;
+
+    this.listSettings.forEach(list => {
+      this.isActive.push(Array(list.listContent.length).fill(false));
+    });
   }
 
-  public choicePage(id: number) {
-    this.isActive[id] = !this.isActive[id]
+  public choicePage(listIndex: number, itemIndex: number, key: string) {
+    this.isActive[listIndex][itemIndex] = !this.isActive[listIndex][itemIndex];
+
+    if (this.newList.includes(key)) {
+      this.newList = this.newList.filter((data) => data !== key)
+    } else {
+      this.newList.push(key);
+    }
+    this.settingsListProjects._choiceActivePage = this.newList;
   }
 
   ngOnDestroy(): void {

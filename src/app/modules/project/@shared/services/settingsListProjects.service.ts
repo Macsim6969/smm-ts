@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IListSettings } from '../model/listSettings.interface';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 
@@ -26,8 +27,18 @@ export class SettingsListProjectsService {
           key: 'direct-messages'
         }
       ]
+    },
+    {
+      titleList: 'Audio System',
+      listContent: [
+        {
+          title: 'Music',
+          key: 'music'
+        }
+      ]
     }
   ];
+  private choiceActivePageSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
 
   get _listSettings(): IListSettings[] {
     return this.listSettings;
@@ -35,6 +46,15 @@ export class SettingsListProjectsService {
 
   set _listSettings(newList: IListSettings) {
     this.listSettings.push(newList);
+  }
+
+
+  get _choiceActivePage$() {
+    return this.choiceActivePageSubject;
+  }
+
+  set _choiceActivePage(newData: string[]) {
+    this.choiceActivePageSubject.next(newData);
   }
 
 }

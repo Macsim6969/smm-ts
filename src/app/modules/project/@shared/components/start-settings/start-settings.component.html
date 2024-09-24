@@ -3,11 +3,11 @@
     <p>You can choose our pages for project or create own</p>
     <div class="settings-list">
 
-      <div class="list_content" *ngFor="let list of listSettings">
+      <div class="list_content" *ngFor="let list of listSettings; let listIndex = index">
         <p class="content_title">- {{list.titleList}}</p>
-        <button (click)="choicePage(id)" class="content_pages" *ngFor="let content of list.listContent index as id">
+        <button (click)="choicePage(listIndex, id, content.key)" class="content_pages" *ngFor="let content of list.listContent; let id = index">
           <nav>{{content.title}}</nav>
-          <div class="circle" [ngClass]="{'active': isActive[id]}"></div>
+          <div class="circle" [ngClass]="{'active': isActive[listIndex][id]}"></div>
         </button>
       </div>
     </div>
