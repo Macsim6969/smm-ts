@@ -18,6 +18,7 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
   public listSettings: IListSettings[];
   private activeProject: string;
   public projectPageList: string[] = [];
+  public isChoiceNewList: boolean;
 
   constructor(
     private settingsListProjects: SettingsListProjectsService,
@@ -50,25 +51,30 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public choicePage(key: string) {
+  public choicePage(key: string): void {
     const projectPageListCopy = [...this.projectPageList];
-
+  
     if (projectPageListCopy.includes(key)) {
       this.projectPageList = projectPageListCopy.filter((data) => data !== key);
     } else {
       projectPageListCopy.push(key);
       this.projectPageList = projectPageListCopy;
     }
-
-    this.settingsListProjects._choiceActivePage = this.projectPageList;
+ 
+    this.isChoiceNewList = this.projectPageList.length !== projectPageListCopy.length;
   }
+
 
   public Save() {
     if (this.activeProject && this.projectPageList.length > 0) {
       const newData: IListPages = { keyProject: this.activeProject, key: this.projectPageList };
       this.apiService.setSidebarList(newData, this.activeProject);
+      this.Close();
     }
+  }
 
+  public Close() {
+    this.settingsListProjects._isOpenSettings = false;
   }
 
   ngOnDestroy(): void {

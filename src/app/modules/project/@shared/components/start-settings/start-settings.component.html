@@ -2,7 +2,6 @@
   <div class="content">
     <p>You can choose our pages for project or create own</p>
     <div class="settings-list">
-
       <div class="list_content" *ngFor="let list of listSettings; let listIndex = index">
         <p class="content_title">- {{list.titleList}}</p>
         <button (click)="choicePage( content.key)" class="content_pages"
@@ -14,7 +13,8 @@
     </div>
 
     <div class="settings-footer">
-      <button (click)="Save()">Save</button>
+      <button (click)="Close()">Cancel</button>
+      <button (click)="Save()" *ngIf="isChoiceNewList">Save</button>
     </div>
   </div>
 </section>

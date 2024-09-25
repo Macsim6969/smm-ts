@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 
 export class SettingsListProjectsService {
-
   private listSettings: IListSettings[] = [
     {
       titleList: 'Chats',
@@ -38,7 +37,8 @@ export class SettingsListProjectsService {
       ]
     }
   ];
-  private choiceActivePageSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
+
+  private isOpenSettingPopup: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get _listSettings(): IListSettings[] {
     return this.listSettings;
@@ -49,12 +49,13 @@ export class SettingsListProjectsService {
   }
 
 
-  get _choiceActivePage$() {
-    return this.choiceActivePageSubject;
+  set _isOpenSettings(newValue: boolean) {
+    this.isOpenSettingPopup.next(newValue);
   }
 
-  set _choiceActivePage(newData: string[]) {
-    this.choiceActivePageSubject.next(newData);
+  get _isOpenSettings$() {
+    return this.isOpenSettingPopup;
   }
+
 
 }

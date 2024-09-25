@@ -57,4 +57,8 @@ export class SidebarComponent implements OnInit {
     return listContent.some(content => this.isActive.includes(content.key));
   }
 
+  public openSettings() {
+    this.settingsListProjects._isOpenSettings = true;
+  }
+
 }
