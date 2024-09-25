@@ -29,7 +29,7 @@ export class AddedFilesPopupComponent {
   public createProject() {
 
     this.store.pipe(select(selectUserProjects), take(1)).subscribe((data) => this.projectSize = data.length);
-    const newPage: IPages = { id: this.projectSize + 1, key: this.key, name: this.nameFile, route: `/${this.nameFile}` };
+    const newPage: IPages = { id: this.projectSize + 1, key: this.nameFile, name: this.nameFile, route: `/${this.nameFile}` };
     this.apiService.setNewProject(newPage, this.nameFile);
     this.isOpenData = false;
   }

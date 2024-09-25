@@ -71,5 +71,23 @@
         }
       }
     }
+
+    .settings-footer{
+      display: flex;
+      margin: auto 0 0 0;
+      button{
+        outline: none;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 12px;
+        font-size: 1.8rem;
+        cursor: pointer;
+
+        &:hover{
+          box-shadow: 0.3px 0.3px 10px gray;
+          transition: all 0.5s ease;
+        }
+      }
+    }
   }
 }

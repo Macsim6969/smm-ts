@@ -1,28 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Subject } from 'rxjs';
-import { ApiService } from './api/api.service';
+import { Store } from '@ngrx/store';
+import { StoreInterface } from './store/model/store.model';
+import { startGetData } from './store/actions/store.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<void> = new Subject<void>();
-  public isOpenPopup: boolean;
+export class AppComponent implements OnInit {
 
   constructor(
-    private apiService: ApiService
+    private store: Store<{ store: StoreInterface }>
   ) { }
 
   ngOnInit(): void {
-    this.apiService.getNewProject();
+    // this.store.dispatch(startGetData());
   }
 
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

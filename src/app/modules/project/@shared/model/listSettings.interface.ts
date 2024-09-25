@@ -8,3 +8,8 @@ export interface IContent {
   title: string;
   key: string;
 }
+
+export interface IListPages {
+  keyProject: string
+  key: string[];
+}

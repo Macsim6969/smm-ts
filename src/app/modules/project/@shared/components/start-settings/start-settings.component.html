@@ -5,11 +5,16 @@
 
       <div class="list_content" *ngFor="let list of listSettings; let listIndex = index">
         <p class="content_title">- {{list.titleList}}</p>
-        <button (click)="choicePage(listIndex, id, content.key)" class="content_pages" *ngFor="let content of list.listContent; let id = index">
+        <button (click)="choicePage( content.key)" class="content_pages"
+          *ngFor="let content of list.listContent; let id = index">
           <nav>{{content.title}}</nav>
-          <div class="circle" [ngClass]="{'active': isActive[listIndex][id]}"></div>
+          <div class="circle" [ngClass]="{'active': hasActiveContent(content.key)}"></div>
         </button>
       </div>
+    </div>
+
+    <div class="settings-footer">
+      <button (click)="Save()">Save</button>
     </div>
   </div>
 </section>

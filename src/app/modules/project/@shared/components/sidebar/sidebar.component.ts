@@ -5,17 +5,17 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectPages } from '../../../../../shared/namespaces/Project';
 import { SettingsListProjectsService } from '../../services/settingsListProjects.service';
 import { IListSettings } from '../../model/listSettings.interface';
+import { SetActiveProject, startGetData } from '../../../../../store/actions/store.actions';
+import { of, take } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements AfterViewInit {
+export class SidebarComponent implements OnInit {
 
   public TitlePage: string = '';
-  private _projectPageSettings: ProjectPages.ProjectPageSettings;
-
   public listSettings: IListSettings[] = [];
   public isActive: string[] = [];
 
@@ -24,15 +24,15 @@ export class SidebarComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private settingsListProjects: SettingsListProjectsService
   ) {
-    this._projectPageSettings = new ProjectPages.ProjectPageSettings(this.store);
+
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.route.params.subscribe((data) => {
-      if (data) {
-        this._projectPageSettings.getNameActivePage(data['id'], (name: string) => {
-          this.TitlePage = name;
-        });
+      if (data['id']) {
+        this.TitlePage = data["id"];
+        this.store.dispatch(SetActiveProject({ value: data['id'] }));
+        this.store.dispatch(startGetData());
       }
     })
 

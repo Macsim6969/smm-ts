@@ -8,18 +8,17 @@
     </div>
     <div *ngIf="isActive">
       <ng-container *ngFor="let list of listSettings; let listIndex = index">
-     
+
         <div *ngIf="hasActiveContent(list.listContent)" class="list_content">
           <p class="content_title">{{list.titleList}}</p>
-          
+
           <!-- Цикл для элементов внутри списка -->
-          <button [ngClass]="{'active': isActive.includes(content.key)}" 
-                  class="content_pages"
-                  *ngFor="let content of list.listContent; let id = index">
+          <button [ngClass]="{'active': isActive.includes(content.key)}" class="content_pages"
+            *ngFor="let content of list.listContent; let id = index">
             <nav>- {{content.title}}</nav>
           </button>
         </div>
       </ng-container>
     </div>
-    
+
   </div>

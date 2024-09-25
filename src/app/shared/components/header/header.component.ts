@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { StoreInterface } from '../../../store/model/store.model';
 import { selectUserProjects } from '../../../store/selectors/store.selectors';
+import { SetActiveProject } from '../../../store/actions/store.actions';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/start']).then();
   }
 
+  public choiceProject(key: string) {
+    this.store.dispatch(SetActiveProject({ value: key }));
+  }
+  
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
