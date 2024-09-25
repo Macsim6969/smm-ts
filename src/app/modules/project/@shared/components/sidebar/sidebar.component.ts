@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { StoreInterface } from '../../../../../store/model/store.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectPages } from '../../../../../shared/namespaces/Project';
 import { SettingsListProjectsService } from '../../services/settingsListProjects.service';
 import { IListSettings } from '../../model/listSettings.interface';
@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     private store: Store<{ store: StoreInterface }>,
     private route: ActivatedRoute,
+    private router: Router,
     private settingsListProjects: SettingsListProjectsService
   ) {
 
@@ -51,6 +52,11 @@ export class SidebarComponent implements OnInit {
     this.store.pipe(select(selectPagesList)).pipe(takeUntil(this.destroy$)).subscribe((data: string[]) => {
       this.isActive = data;
     })
+  }
+
+  public openPage(url: string) {
+    console.log(url);
+    this.router.navigate([`/${this.TitlePage}/${url}`]).then();
   }
 
   public hasActiveContent(listContent: any[]): boolean {

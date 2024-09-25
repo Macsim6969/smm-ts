@@ -1,0 +1,5 @@
+<div *ngIf="userProfile">
+  <h1>Welcome, {{ userProfile.display_name }}</h1>
+  <p>Email: {{ userProfile.email }}</p>
+</div>
+<button (click)="authorize()">Login with Spotify</button>

@@ -6,8 +6,12 @@ import { SidebarComponent } from './@shared/components/sidebar/sidebar.component
 import { StartSettingsComponent } from './@shared/components/start-settings/start-settings.component';
 import { SettingsListProjectsService } from './@shared/services/settingsListProjects.service';
 
-const routes: Routes =[
-  {path: '', component: ProjectComponent}
+const routes: Routes = [
+  {
+    path: '', component: ProjectComponent, children: [
+      { path: 'music', loadChildren: () => import('../music/music.module').then(m => m.MusicModule) }
+    ]
+  }
 ]
 
 @NgModule({
