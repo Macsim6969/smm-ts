@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { StoreInterface } from '../../../../../store/model/store.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectPages } from '../../../../../shared/namespaces/Project';
 import { SettingsListProjectsService } from '../../services/settingsListProjects.service';
 import { IListSettings } from '../../model/listSettings.interface';
 import { SetActiveProject, startGetData } from '../../../../../store/actions/store.actions';
-import { of, take } from 'rxjs';
+import { of, Subject, take, takeUntil } from 'rxjs';
+import { selectPagesList } from '../../../../../store/selectors/store.selectors';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +15,7 @@ import { of, take } from 'rxjs';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
-
+  private destroy$: Subject<void> = new Subject<void>();
   public TitlePage: string = '';
   public listSettings: IListSettings[] = [];
   public isActive: string[] = [];
@@ -28,17 +29,18 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((data) => {
+    this.streamToActiveProject();
+    this.initializeListSettingsFromService();
+    this.streamToActivePage();
+  }
+
+  private streamToActiveProject() {
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       if (data['id']) {
         this.TitlePage = data["id"];
         this.store.dispatch(SetActiveProject({ value: data['id'] }));
-        this.store.dispatch(startGetData());
       }
     })
-
-    ////
-    this.initializeListSettingsFromService();
-    this.streamToActivePage();
   }
 
   private initializeListSettingsFromService() {
@@ -46,7 +48,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private streamToActivePage() {
-    this.settingsListProjects._choiceActivePage$.subscribe((data) => {
+    this.store.pipe(select(selectPagesList)).pipe(takeUntil(this.destroy$)).subscribe((data: string[]) => {
       this.isActive = data;
     })
   }

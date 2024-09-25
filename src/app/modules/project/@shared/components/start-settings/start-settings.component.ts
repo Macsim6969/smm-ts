@@ -39,8 +39,6 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
       .subscribe(([pageList, activeProject]) => {
         this.activeProject = activeProject;
         this.projectPageList = pageList;
-        console.log(pageList, activeProject)
-
       })
   }
 

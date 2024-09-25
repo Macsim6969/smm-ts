@@ -44,7 +44,7 @@ export class ApiService {
 
 
   public setSidebarList(listPages: IListPages, projectKey: string) {
-    this.http.post<IListPages>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/project-pages/${projectKey}.json`, listPages).subscribe(() => {
+    this.http.put<IListPages>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/project-pages/${projectKey}.json`, listPages).subscribe(() => {
       this.getSidebarList(projectKey);
     });
   }
@@ -52,7 +52,7 @@ export class ApiService {
   public getSidebarList(projectKey: string) {
     this.http.get<IListPages>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/project-pages/${projectKey}.json`).subscribe((data: IListPages) => {
       if (data && Object.values(data)) {
-        this.store.dispatch(loadPagesList({ value: Object.values(Object.values(data)[0])[0]['key'] }))
+        this.store.dispatch(loadPagesList({ value: (Object.values(Object.values(data)[0]) as string[]) }));
       }
     })
   }
