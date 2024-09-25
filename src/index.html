@@ -17,6 +17,13 @@
 
 <body>
   <app-root></app-root>
+
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      // Здесь вы можете инициализировать плеер
+    };
+  </script>
 </body>
 
 </html>

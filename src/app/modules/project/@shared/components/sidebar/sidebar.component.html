@@ -13,7 +13,7 @@
           <p class="content_title">{{list.titleList}}</p>
 
           <!-- Цикл для элементов внутри списка -->
-          <button [ngClass]="{'active': isActive.includes(content.key)}" routerLink="/{{TitlePage}}/{{content.key}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="openPage(content.key)" class="content_pages"
+          <button [ngClass]="{'active': isActive.includes(content.key)}" routerLink="/{{TitlePage}}/{{content.key}}" routerLinkActive="open" [routerLinkActiveOptions]="{exact: true}" (click)="openPage(content.key)" class="content_pages"
             *ngFor="let content of list.listContent; let id = index">
             <nav>- {{content.title}}</nav>
           </button>

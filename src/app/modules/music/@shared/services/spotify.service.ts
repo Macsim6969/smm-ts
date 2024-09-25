@@ -1,60 +1,73 @@
+// spotify.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SpotifyService {
-  private clientId = '846b3dfb9a074e96a0a15432baaa9e44';  // Твой Client ID
-  private redirectUri = 'http://localhost:4200/bbc/music/data';  // Твой redirect URI
-  private baseUrl = 'https://api.spotify.com/v1/';
-  private tokenUrl = 'https://accounts.spotify.com/api/token';
-  private authUrl = `https://accounts.spotify.com/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=${this.redirectUri}&scope=user-read-private%20user-read-email`;
+  public clientId = '846b3dfb9a074e96a0a15432baaa9e44';
+  private clientSecret = '9f82503618ec45fbaa0be37836b73ef3'; // Замените на ваш client secret
+  public redirectUri = 'http://localhost:4200/bbc/music'; // Убедитесь, что этот URI совпадает с зарегистрированным
+  private accessToken: string | null = null; // Храним токен доступа
 
-  private accessToken: string | null = null;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  // Метод для перенаправления пользователя на страницу авторизации Spotify
-  authorize(): void {
-    window.location.href = this.authUrl;
+  // Метод для установки токена доступа
+  setAccessToken(token: string) {
+    this.accessToken = token; // Сохраняем токен
+    localStorage.setItem('spotifyAccessToken', token); // Опционально: сохраняем токен в локальном хранилище
   }
 
-  // Получение токена с помощью авторизационного кода
+  // Метод для получения токена доступа
   getAccessToken(code: string): Observable<any> {
-    const body = new URLSearchParams({
+    const body = new URLSearchParams();
+    body.set('grant_type', 'authorization_code');
+    body.set('code', code);
+    body.set('redirect_uri', this.redirectUri); // Этот URI должен совпадать с зарегистрированным
+    body.set('client_id', this.clientId);
+    body.set('client_secret', this.clientSecret);
+
+    console.log('Запрос токена с параметрами:', {
       grant_type: 'authorization_code',
       code: code,
       redirect_uri: this.redirectUri,
       client_id: this.clientId,
-      client_secret: 'your_client_secret'
+      client_secret: this.clientSecret
     });
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    return this.http.post(this.tokenUrl, body.toString(), { headers }).pipe(
-      catchError(error => {
-        console.error('Ошибка при обмене кода на токен:', error);
-        return throwError(error);
+
+    return this.http.post('https://accounts.spotify.com/api/token', body.toString(), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
       })
-    );
+    });
   }
 
-  // Установка токена
-  setAccessToken(token: string): void {
-    this.accessToken = token;
-    console.log('Токен установлен:', this.accessToken);
+  // Метод для получения сохраненного токена (если нужно)
+  getAccessTokenFromStorage(): string | null {
+    return localStorage.getItem('spotifyAccessToken');
   }
 
-  // Пример запроса на получение профиля пользователя
-  getUserProfile(): Observable<any> {
-    if (!this.accessToken) {
-      throw new Error('Access token is not set');
-    }
-  
+  // Метод для получения треков
+  getTracks(): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.accessToken}`
     });
-  
-    return this.http.get(`${this.baseUrl}me`, { headers });
+
+    // Запрос к API для получения топ треков текущего пользователя
+    return this.http.get('https://api.spotify.com/v1/me/top/tracks', { headers });
+  }
+
+  // Метод для воспроизведения трека
+  playTrack(deviceId: string, trackId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.accessToken}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      uris: [`spotify:track:${trackId}`]
+    };
+
+    return this.http.put(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, body, { headers });
   }
 }

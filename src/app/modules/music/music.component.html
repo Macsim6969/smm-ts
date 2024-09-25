@@ -1,3 +1,19 @@
-<p>Processing Spotify authentication...</p>
+<!-- music.component.html -->
+<div>
+  <h1>Музыкальная страница</h1>
+  
+  <button (click)="startAuthorization()">Авторизоваться через Spotify</button>
 
-<router-outlet></router-outlet>
+  <div *ngIf="accessToken">
+    <h2>Добро пожаловать!</h2>
+    <p>Ваш токен доступа: {{ accessToken }}</p>
+
+    <h3>Ваши любимые треки:</h3>
+    <ul>
+      <li *ngFor="let track of tracks">
+        <p>{{ track.name }} - {{ track.artists[0]?.name }}</p>
+        <button (click)="playTrack(track.id)">Воспроизвести</button>
+      </li>
+    </ul>
+  </div>
+</div>

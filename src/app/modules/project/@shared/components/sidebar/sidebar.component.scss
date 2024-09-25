@@ -32,7 +32,7 @@
         background-color: transparent;
         cursor: pointer;
 
-        &:hover{
+        &:hover {
           transform: scale(1.1);
           transition: all 0.65s ease;
         }
@@ -73,8 +73,12 @@
       cursor: pointer;
       text-decoration: underline;
 
-      &.active{
+      &.active {
         display: flex;
+      }
+
+      &.open {
+
         box-shadow: 0.3px 0.3px 12px gray;
         text-decoration: none;
       }
