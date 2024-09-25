@@ -3,4 +3,8 @@
   grid-template-columns: 260px 0px 1fr;
   height: 100%;
   width: 100%;
+
+  @media (max-width: 920px) {
+    grid-template-columns: 160px 0px 1fr;
+  }
 }
