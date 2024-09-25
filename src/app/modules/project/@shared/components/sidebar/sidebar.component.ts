@@ -55,7 +55,6 @@ export class SidebarComponent implements OnInit {
   }
 
   public openPage(url: string) {
-    console.log(url);
     this.router.navigate([`/${this.TitlePage}/${url}`]).then();
   }
 

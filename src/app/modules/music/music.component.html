@@ -1,19 +1,32 @@
-<!-- music.component.html -->
-<div>
-  <h1>Музыкальная страница</h1>
-  
+<div class="music-container">  
   <button (click)="startAuthorization()">Авторизоваться через Spotify</button>
 
   <div *ngIf="accessToken">
-    <h2>Добро пожаловать!</h2>
-    <p>Ваш токен доступа: {{ accessToken }}</p>
 
-    <h3>Ваши любимые треки:</h3>
-    <ul>
-      <li *ngFor="let track of tracks">
-        <p>{{ track.name }} - {{ track.artists[0]?.name }}</p>
-        <button (click)="playTrack(track.id)">Воспроизвести</button>
-      </li>
-    </ul>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Поиск треков или исполнителей"/>
+    <button (click)="search()">Поиск</button>
+
+    <div *ngIf="tracks.length">
+      <h3>Треки:</h3>
+      <div class="tracks">
+        <div (click)="playTrack(track.id)" *ngFor="let track of tracks" class="track">
+          <img [src]="track.album.images[0]?.url" alt="{{ track.name }}" class="track-image"/>
+          <h4>{{ track.name }}</h4>
+          <p>Исполнитель: {{ track.artists[0].name }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="artists.length">
+      <h3>Исполнители:</h3>
+      <div class="artists">
+        <div *ngFor="let artist of artists" class="artist">
+          <img [src]="artist.images[0]?.url" alt="{{ artist.name }}" class="artist-image"/>
+          <h4>{{ artist.name }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <button (click)="pauseTrack()">Пауза</button>
   </div>
 </div>

@@ -17,7 +17,7 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   public listSettings: IListSettings[];
   private activeProject: string;
-  public projectPageList: string[] = [];
+  public projectPageList: string[];
   public isChoiceNewList: boolean;
 
   constructor(
@@ -39,7 +39,7 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
     combineLatest([this.store.pipe(select(selectPagesList)), this.store.pipe(select(selectActiveProject))]).pipe(takeUntil(this.destroy$))
       .subscribe(([pageList, activeProject]) => {
         this.activeProject = activeProject;
-        this.projectPageList = pageList;
+        this.projectPageList = pageList ? pageList : this.projectPageList;
       })
   }
 
@@ -53,14 +53,13 @@ export class StartSettingsComponent implements OnInit, OnDestroy {
 
   public choicePage(key: string): void {
     const projectPageListCopy = [...this.projectPageList];
-  
-    if (projectPageListCopy.includes(key)) {
-      this.projectPageList = projectPageListCopy.filter((data) => data !== key);
+
+    if (this.projectPageList?.includes(key)) {
+      this.projectPageList = this.projectPageList.filter((data) => data !== key);
     } else {
-      projectPageListCopy.push(key);
-      this.projectPageList = projectPageListCopy;
+      this.projectPageList = [...this.projectPageList, key];
     }
- 
+
     this.isChoiceNewList = this.projectPageList.length !== projectPageListCopy.length;
   }
 

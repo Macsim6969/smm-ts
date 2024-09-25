@@ -27,14 +27,6 @@ export class SpotifyService {
     body.set('client_id', this.clientId);
     body.set('client_secret', this.clientSecret);
 
-    console.log('Запрос токена с параметрами:', {
-      grant_type: 'authorization_code',
-      code: code,
-      redirect_uri: this.redirectUri,
-      client_id: this.clientId,
-      client_secret: this.clientSecret
-    });
-
     return this.http.post('https://accounts.spotify.com/api/token', body.toString(), {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -69,5 +61,23 @@ export class SpotifyService {
     };
 
     return this.http.put(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, body, { headers });
+  }
+
+  searchTracks(query: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`;
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.accessToken}`
+      })
+    });
+  }
+  
+  searchArtists(query: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=10`;
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.accessToken}`
+      })
+    });
   }
 }

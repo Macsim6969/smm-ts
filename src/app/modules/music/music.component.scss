@@ -1,0 +1,35 @@
+.music-container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  .tracks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  
+  .track {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    transition: transform 0.2s;
+  
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  .track-image {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+}
+
