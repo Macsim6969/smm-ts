@@ -3,8 +3,9 @@ import { IPages } from "../../shared/model/pages.interface";
 
 export interface StoreInterface {
   isLogin: boolean;
-  activeProject: string
-  userProjects: IPages[]
-  pagesSidebarList: string[]
- 
+  activeProject: string;
+  userProjects: IPages[];
+  pagesSidebarList: string[];
+  draftsFolders: string[];
+  draftsChoiceFolderData: string;
 }

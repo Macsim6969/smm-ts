@@ -9,7 +9,8 @@ import { SettingsListProjectsService } from './@shared/services/settingsListProj
 const routes: Routes = [
   {
     path: '', component: ProjectComponent, children: [
-      { path: 'music', loadChildren: () => import('../music/music.module').then(m => m.MusicModule) }
+      { path: 'music', loadChildren: () => import('../music/music.module').then(m => m.MusicModule) },
+      { path: 'draft', loadChildren: () => import('../drafts/drafts.module').then(m => m.DraftsModule) }
     ]
   }
 ]
