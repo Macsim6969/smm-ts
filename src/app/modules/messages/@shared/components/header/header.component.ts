@@ -1,4 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IChatsList } from '../../models/chats.inteface';
+import { MessagesApiService } from '../../../../../api/messagesApi.service';
+import { select, Store } from '@ngrx/store';
+import { StoreInterface } from '../../../../../store/model/store.model';
+import { selectMessagesLists } from '../../../../../store/selectors/store.selectors';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -6,18 +12,44 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isDown = false;
-  startX = 0;
-  scrollLeft = 0;
-  slider: HTMLElement | null = null;
+  private destroy$: Subject<void> = new Subject<void>();
+  private isDown = false;
+  private startX = 0;
+  private scrollLeft = 0;
+  private slider: HTMLElement | null = null;
+  public newChat: string;
+  public isNewCreate: boolean;
+  public messagesLists: IChatsList[];
 
-  constructor() { }
+  constructor(
+    private messagesApi: MessagesApiService,
+    private store: Store<{ store: StoreInterface }>
+  ) { }
 
   ngOnInit(): void {
-
+    this.streamToChatsListsFromStore();
   }
 
-  public createNewChat() { }
+  private streamToChatsListsFromStore() {
+    this.store.pipe(select(selectMessagesLists)).pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.messagesLists = data;
+      })
+  }
+
+  public createNewChat() {
+    this.isNewCreate = true;
+  }
+
+  public saveChat() {
+    const newData: IChatsList = {
+      key: `${this.newChat}`,
+      title: this.newChat,
+      route: `/${this.newChat}`
+    }
+    this.isNewCreate = false;
+    this.messagesApi.createNewChats(newData);
+  }
 
   public onMouseDown(event: MouseEvent) {
     this.slider = event.currentTarget as HTMLElement;
@@ -48,6 +80,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

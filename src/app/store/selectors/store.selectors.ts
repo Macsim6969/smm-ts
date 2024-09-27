@@ -14,3 +14,4 @@ export const selectActiveFolders = (store: { store: StoreInterface }) => store.s
 
 export const selectMessagesLists = (store: { store: StoreInterface }) => store.store.chatsLists;
 export const selectMessagesChat = (store: { store: StoreInterface }) => store.store.chatsData; 
+export const selectActiveChat = (store: { store: StoreInterface }) => store.store.activeChatsData; 

@@ -13,12 +13,11 @@
     <div class="chat_pluss" (click)="createNewChat()">
       <img src="/assets/images/global/plus.svg" alt="Plus">
     </div>
-    <div class="chat">Logo 1</div>
-    <div class="chat">Logo 2</div>
-    <div class="chat">Logo 3</div>
-    <div class="chat">Logo 4</div>
-    <div class="chat">Logo 5</div>
-    <div class="chat">Logo 6</div>
-    <div class="chat">Logo 7</div>
+    <div class="folder" *ngIf="isNewCreate">
+      <input type="text" placeholder="name" [(ngModel)]="newChat">
+      <img (click)="saveChat()" src="/assets/images/global/done.svg" alt="Plus">
+    </div>
+    <div class="chat" *ngFor="let chats of messagesLists" routerLink="/bbc/direct-messages{{chats.route}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">{{chats.title}}</div>
+
   </div>
 </div>

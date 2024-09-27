@@ -16,5 +16,6 @@ export interface StoreInterface {
 
   // Meesages Chats Page
   chatsLists: IChatsList[];
-  chatsData: IChats[]
+  chatsData: IChats[];
+  activeChatsData: string;
 }
