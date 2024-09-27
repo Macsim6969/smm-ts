@@ -37,8 +37,12 @@ export class DraftsApiService {
   }
 
   public getChangesToFolderData(key: string) {
-    this.http.get<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/${key}.json`).subscribe((data: string) =>{
-      this.store.dispatch(setChangesToFolder({ value: Object.values(data) }))
+    this.http.get<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/${key}.json`).subscribe((data: string) => {
+      if (data && Object.values(data)) {
+        this.store.dispatch(setChangesToFolder({ value: Object.values(data) }))
+      } else {
+        this.store.dispatch(setChangesToFolder({ value: data }))
+      }
     });
   }
 

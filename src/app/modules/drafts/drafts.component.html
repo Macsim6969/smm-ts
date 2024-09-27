@@ -1,6 +1,7 @@
 <section class="drafts">
   <div class="header_folders">
-    <div class="folder" (click)="choiceFolder(folder)" *ngFor="let folder of listsFolder">{{folder.name}}</div>
+    <div class="folder" [ngClass]="{'active': this.isActiveFolder?.key === folder.key}" (click)="choiceFolder(folder)"
+      *ngFor="let folder of listsFolder">{{folder.name}}</div>
     <div class="folder" *ngIf="isNewCreate">
       <input type="text" placeholder="name" [(ngModel)]="newFolder">
       <img (click)="saveFolder()" src="/assets/images/global/done.svg" alt="Plus">
