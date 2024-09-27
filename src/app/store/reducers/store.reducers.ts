@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { StoreInterface } from "../model/store.model";
 import { loadPagesList, SetActiveProject, SetAllProjects } from "../actions/store.actions";
-import { setChangesToFolder } from "../actions/drafts.action.";
+import { setActiveFolder, setChangesToFolder, setNewFolder } from "../actions/drafts.action.";
 
 
 
@@ -11,6 +11,7 @@ export const store: StoreInterface = {
   userProjects: [],
   pagesSidebarList: [],
   draftsFolders: [],
+  draftsActiveFolder: null,
   draftsChoiceFolderData: null
 
 }
@@ -27,6 +28,12 @@ export const storeReducers = createReducer(store,
   }),
   on(setChangesToFolder, (state, action) => {
     return { ...state, draftsChoiceFolderData: action.value }
+  }),
+  on(setNewFolder, (state, action) => {
+    return { ...state, draftsFolders: action.value }
+  }),
+  on(setActiveFolder, (state, action) => {
+    return { ...state, draftsActiveFolder: action.value }
   })
 
 )

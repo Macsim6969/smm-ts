@@ -4,40 +4,63 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, onValue, ref } from "firebase/database";
 import { environment } from "../../../../../environment/environment";
 import { StoreInterface } from "../../../../store/model/store.model";
-import { Store } from "@ngrx/store";
-import { setChangesToFolder } from "../../../../store/actions/drafts.action.";
-
-
+import { select, Store } from "@ngrx/store";
+import { setChangesToFolder, setNewFolder } from "../../../../store/actions/drafts.action.";
+import { IFolder } from "../models/folder.interface";
+import { selectActiveFolders, selectFolders } from "../../../../store/selectors/store.selectors";
 
 @Injectable()
 
 export class DraftsApiService {
 
   private db = getDatabase(initializeApp(environment.firebaseConfig));
-  private activeDraftsFolder: string;
+  private activeDraftsFolder: IFolder;
 
   constructor(
     private http: HttpClient,
     private store: Store<{ store: StoreInterface }>
   ) {
+    this.streamToActiveFoldersAndData();
     this.watchForChanges();
   }
 
-  public setChangesToFolderData(data: string) {
-    this.http.put<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/bbc.json`, { data }).subscribe();
+  private streamToActiveFoldersAndData() {
+    this.store.pipe(select(selectActiveFolders))
+      .subscribe((data: IFolder) => {
+        this.activeDraftsFolder = data;
+        this.getChangesToFolderData(this.activeDraftsFolder?.key);
+      })
   }
 
-  public getChangesToFolderData(data: string) {
-    this.http.get<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/bbc.json`).subscribe(() =>{
+  public setChangesToFolderData(key: string, data: string) {
+    this.http.put<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/${key}.json`, { data }).subscribe();
+  }
 
+  public getChangesToFolderData(key: string) {
+    this.http.get<string>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts/${key}.json`).subscribe((data: string) =>{
+      this.store.dispatch(setChangesToFolder({ value: Object.values(data) }))
+    });
+  }
+
+  public setNewFoldersToProject(data: IFolder) {
+    this.http.put<IFolder>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts-folders/${data.key}.json`, data).subscribe();
+  }
+
+  public getNewFoldersToProject(data: IFolder) {
+    this.http.get<IFolder>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts-folders/${data.key}.json`).subscribe();
+  }
+
+  public getAllFoldersFromProject() {
+    this.http.get<IFolder[]>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/drafts-folders.json`).subscribe((data: IFolder[]) => {
+      this.store.dispatch(setNewFolder({ value: data }));
     });
   }
 
 
 
   private watchForChanges() {
-    const draftstRef = ref(this.db, 'dlf4-345/drafts-folders');
-    const draftsIdtRef = ref(this.db, `dlf4-345/drafts/bbc`);
+    const draftstFoldersRef = ref(this.db, `dlf4-345/drafts-folders`);
+    const draftsIdtRef = ref(this.db, `dlf4-345/drafts/${this.activeDraftsFolder?.key}`);
 
     onValue(draftsIdtRef, (snapshot) => {
       const data = snapshot.val();
@@ -45,6 +68,13 @@ export class DraftsApiService {
         this.store.dispatch(setChangesToFolder({ value: Object.values(data) }))
       }
     });
+
+    onValue(draftstFoldersRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        this.store.dispatch(setNewFolder({ value: data }));
+      }
+    })
   }
 
 }

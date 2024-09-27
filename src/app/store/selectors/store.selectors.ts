@@ -7,3 +7,5 @@ export const selectPagesList = (store: { store: StoreInterface }) => store.store
 
 
 export const selectChangesFromActiveFolders = (store: {store: StoreInterface}) => store.store.draftsChoiceFolderData;
+export const selectFolders = (store: {store: StoreInterface}) => store.store.draftsFolders;
+export const selectActiveFolders = (store: {store: StoreInterface}) => store.store.draftsActiveFolder;

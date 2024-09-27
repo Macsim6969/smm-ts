@@ -1,3 +1,4 @@
+import { IFolder } from "../../modules/drafts/@shared/models/folder.interface";
 import { IPages } from "../../shared/model/pages.interface";
 
 
@@ -6,6 +7,7 @@ export interface StoreInterface {
   activeProject: string;
   userProjects: IPages[];
   pagesSidebarList: string[];
-  draftsFolders: string[];
+  draftsFolders: IFolder[];
+  draftsActiveFolder: IFolder;
   draftsChoiceFolderData: string;
 }
