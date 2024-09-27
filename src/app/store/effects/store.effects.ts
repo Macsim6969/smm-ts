@@ -17,6 +17,17 @@ export class AuthEffects {
       withLatestFrom(this.store.pipe(select(selectActiveProject))),
       tap(([action, id]) => {
         this.apiService.getNewProject();
+      })
+    )
+    ,
+    { dispatch: false }
+  );
+
+  checkToChangeProject = createEffect(
+    () => this.actions$.pipe(
+      ofType(SetActiveProject),
+      withLatestFrom(this.store.pipe(select(selectActiveProject))),
+      tap(([action, id]) => {
         this.apiService.getSidebarList(id);
       })
     )

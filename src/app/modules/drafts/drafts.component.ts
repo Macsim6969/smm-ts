@@ -47,7 +47,6 @@ export class DraftsComponent implements OnInit, OnDestroy {
       .subscribe(([foldersData, activeFolders]) => {
         this.listsFolder = Object.values(foldersData);
         this.isActiveFolder = activeFolders;
-        console.log(Object.values(this.listsFolder));
       })
   }
 

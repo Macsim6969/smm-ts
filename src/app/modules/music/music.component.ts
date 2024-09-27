@@ -62,14 +62,12 @@ export class MusicComponent {
     if (this.searchTerm) {
       this.spotifyService.searchTracks(this.searchTerm).subscribe(response => {
         this.tracks = response.tracks.items;
-        console.log(this.tracks);
       }, error => {
         console.error('Ошибка поиска треков:', error);
       });
 
       this.spotifyService.searchArtists(this.searchTerm).subscribe(response => {
         this.artists = response.artists.items;
-        console.log(this.artists);
       }, error => {
         console.error('Ошибка поиска исполнителей:', error);
       });
