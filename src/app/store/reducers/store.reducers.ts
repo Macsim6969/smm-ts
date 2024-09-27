@@ -2,6 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import { StoreInterface } from "../model/store.model";
 import { loadPagesList, SetActiveProject, SetAllProjects } from "../actions/store.actions";
 import { setActiveFolder, setChangesToFolder, setNewFolder } from "../actions/drafts.action.";
+import { setChatsData, setNewChats } from "../actions/messages.action";
 
 
 
@@ -10,9 +11,15 @@ export const store: StoreInterface = {
   activeProject: null,
   userProjects: [],
   pagesSidebarList: [],
+
+  //Drafts Page
   draftsFolders: [],
   draftsActiveFolder: null,
-  draftsChoiceFolderData: null
+  draftsChoiceFolderData: null,
+
+  ///Message page
+  chatsData: [],
+  chatsLists: []
 
 }
 
@@ -34,6 +41,13 @@ export const storeReducers = createReducer(store,
   }),
   on(setActiveFolder, (state, action) => {
     return { ...state, draftsActiveFolder: action.value }
-  })
+  }),
+  ///Message Page
 
+  on(setNewChats, (state, action) => {
+    return { ...state, chatsLists: action.value }
+  }),
+  on(setChatsData, (state, action) => {
+    return { ...state, chatsData: action.value }
+  })
 )
