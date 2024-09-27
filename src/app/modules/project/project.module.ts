@@ -10,7 +10,8 @@ const routes: Routes = [
   {
     path: '', component: ProjectComponent, children: [
       { path: 'music', loadChildren: () => import('../music/music.module').then(m => m.MusicModule) },
-      { path: 'draft', loadChildren: () => import('../drafts/drafts.module').then(m => m.DraftsModule) }
+      { path: 'draft', loadChildren: () => import('../drafts/drafts.module').then(m => m.DraftsModule) },
+      { path: 'direct-messages', loadChildren: () => import('../messages/messages.module').then(m => m.MessagesModule) }
     ]
   }
 ]
