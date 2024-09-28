@@ -3,8 +3,9 @@ import { IChatsList } from '../../models/chats.inteface';
 import { MessagesApiService } from '../../../../../api/messagesApi.service';
 import { select, Store } from '@ngrx/store';
 import { StoreInterface } from '../../../../../store/model/store.model';
-import { selectMessagesLists } from '../../../../../store/selectors/store.selectors';
+import { selectActiveProject, selectMessagesLists } from '../../../../../store/selectors/store.selectors';
 import { Subject, takeUntil } from 'rxjs';
+import { setActiveChatsData } from '../../../../../store/actions/messages.action';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private slider: HTMLElement | null = null;
   public newChat: string;
   public isNewCreate: boolean;
+  private activeProject: string;
   public messagesLists: IChatsList[];
 
   constructor(
@@ -28,6 +30,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.streamToChatsListsFromStore();
+    this.initializeActiveProject();
+  }
+
+  private initializeActiveProject() {
+    this.store.pipe(select(selectActiveProject), takeUntil(this.destroy$))
+      .subscribe((data: string) => {
+        this.activeProject = data;
+      })
   }
 
   private streamToChatsListsFromStore() {
@@ -41,9 +51,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isNewCreate = true;
   }
 
+  public choiceChat(id: string) {
+    this.store.dispatch(setActiveChatsData({ value: id }));
+  }
+
   public saveChat() {
     const newData: IChatsList = {
-      key: `${this.newChat}`,
+      key: `${this.activeProject}-${this.newChat}`,
       title: this.newChat,
       route: `/${this.newChat}`
     }

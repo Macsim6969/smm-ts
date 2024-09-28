@@ -15,7 +15,7 @@ import { IChats, IChatsList } from "../modules/messages/@shared/models/chats.int
 export class MessagesApiService {
 
   private db = getDatabase(initializeApp(environment.firebaseConfig));
-  private activeDraftsFolder: string;
+  private activeChats: string;
 
   constructor(
     private http: HttpClient,
@@ -28,8 +28,8 @@ export class MessagesApiService {
   private streamToActiveFoldersAndData() {
     this.store.pipe(select(selectActiveChat))
       .subscribe((data: string) => {
-        this.activeDraftsFolder = data;
-        this.getChangesToFolderData(this.activeDraftsFolder);
+        this.activeChats = data;
+        this.getChangesMessagesData(this.activeChats);
       })
   }
 
@@ -55,13 +55,19 @@ export class MessagesApiService {
 
 
   public setChangesMessagesData(key: string, data: IChats[]) {
-    this.http.put<IChats[]>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/messages-chats/${key}.json`, { data }).subscribe();
+    this.http.post<IChats[]>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/messages-chats/${key}.json`, data).subscribe();
   }
 
   public getChangesMessagesData(key: string) {
     this.http.get<IChats[]>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/messages-chats/${key}.json`).subscribe((data: IChats[]) => {
       if (data && Object.values(data)) {
-        this.store.dispatch(setChatsData({ value: Object.values(data) }))
+        const newDate = Object.values(data).reduce((acc, res) => {
+          return acc.concat(res);
+        }, [])
+          .filter((data: IChats) => data.createDate) // Фильтрация по наличию даты
+          .sort((a: IChats, b: IChats) => new Date(a.createDate).getTime() - new Date(b.createDate).getTime());
+        console.log(newDate);
+        this.store.dispatch(setChatsData({ value: newDate }))
       } else {
         this.store.dispatch(setChatsData({ value: data }))
       }

@@ -1,3 +1,12 @@
 <section class="chats">
-
+  <div class="window">
+    <div class="user" [ngClass]="{'me': message.userCreate === 'Macs', 'other': message.userCreate !== 'Macs'}"
+      *ngFor="let message of chatsData">
+      <div class="txt">{{message.message}}, {{message.createDate | date:'shortTime'}}</div>
+    </div>
+  </div>
+  <div class="navigation">
+    <input type="text">
+    <button (click)="create()">Create</button>
+  </div>
 </section>

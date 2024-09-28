@@ -17,7 +17,7 @@
       <input type="text" placeholder="name" [(ngModel)]="newChat">
       <img (click)="saveChat()" src="/assets/images/global/done.svg" alt="Plus">
     </div>
-    <div class="chat" *ngFor="let chats of messagesLists" routerLink="/bbc/direct-messages{{chats.route}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">{{chats.title}}</div>
+    <div class="chat" (click)="choiceChat(chats.key)" *ngFor="let chats of messagesLists" routerLink="/bbc/direct-messages{{chats.route}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">{{chats.title}}</div>
 
   </div>
 </div>
