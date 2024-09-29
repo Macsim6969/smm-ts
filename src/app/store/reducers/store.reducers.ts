@@ -3,6 +3,7 @@ import { StoreInterface } from "../model/store.model";
 import { loadPagesList, SetActiveProject, SetAllProjects } from "../actions/store.actions";
 import { setActiveFolder, setChangesToFolder, setNewFolder } from "../actions/drafts.action.";
 import { setActiveChatsData, setChatsData, setNewChats } from "../actions/messages.action";
+import { addedNewUsers } from "../actions/users.action";
 
 
 
@@ -20,7 +21,10 @@ export const store: StoreInterface = {
   ///Message page
   chatsData: [],
   chatsLists: [],
-  activeChatsData: null
+  activeChatsData: null,
+
+  //Users page
+  users: []
 }
 
 export const storeReducers = createReducer(store,
@@ -52,5 +56,10 @@ export const storeReducers = createReducer(store,
   }),
   on(setActiveChatsData, (state, acttion) => {
     return { ...state, activeChatsData: acttion.value }
+  }),
+  // USERS PAGE
+
+  on(addedNewUsers, (state, action) => {
+    return { ...state, users: action.value }
   })
 )

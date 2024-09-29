@@ -1,0 +1,10 @@
+<section class="links">
+  <h3>Create your access user</h3>
+  <form (ngSubmit)="generateToken()">
+    <input type="text" [(ngModel)]="userName" name="userName" placeholder="name user" required>
+    <button type="submit">Generate key</button>
+  </form>
+
+  <p *ngIf="generatedUrl">Generate URL: <a [href]="generatedUrl">{{ generatedUrl }}</a></p>
+
+</section>

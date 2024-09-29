@@ -1,0 +1,62 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
+  width: calc(100vw - 450px);
+  padding: 35px 25px;
+
+  .dashboard_content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h1 {
+      font-size: 3.8rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      align-items: center;
+      gap: 5px;
+
+      .icons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+
+        img {
+          width: 20px;
+        }
+
+        p {
+          font-size: 1.6rem;
+        }
+      }
+
+      .data {
+        width: max-content;
+        font-size: 1.6rem;
+        padding: 8px 12px;
+        border-radius: 10px;
+        background-color: rgb(243, 191, 191);
+      }
+
+      .users {
+        .plus {
+          cursor: pointer;
+          width: 28px;
+          height: 28px;
+          background-color: rgb(137, 235, 235);
+          border: 1px dashed blue;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}

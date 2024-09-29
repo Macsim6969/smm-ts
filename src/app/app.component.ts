@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StoreInterface } from './store/model/store.model';
 import { startGetData } from './store/actions/store.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,14 @@ import { startGetData } from './store/actions/store.actions';
 export class AppComponent implements OnInit {
 
   constructor(
-    private store: Store<{ store: StoreInterface }>
+    private store: Store<{ store: StoreInterface }>,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // this.store.dispatch(startGetData());
+    this.route.queryParams.subscribe((data) => {
+      console.log(data['key']);
+    })
   }
 
 }

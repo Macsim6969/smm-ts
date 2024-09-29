@@ -1,5 +1,6 @@
 import { IFolder } from "../../modules/drafts/@shared/models/folder.interface";
 import { IChatsList, IChats } from "../../modules/messages/@shared/models/chats.inteface";
+import { IUser } from "../../modules/project/@shared/model/users.interface";
 import { IPages } from "../../shared/model/pages.interface";
 
 
@@ -18,4 +19,7 @@ export interface StoreInterface {
   chatsLists: IChatsList[];
   chatsData: IChats[];
   activeChatsData: string;
+
+  //Users
+  users: IUser[]
 }
