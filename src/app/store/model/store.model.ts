@@ -22,4 +22,5 @@ export interface StoreInterface {
 
   //Users
   users: IUser[]
+  guest: IUser
 }

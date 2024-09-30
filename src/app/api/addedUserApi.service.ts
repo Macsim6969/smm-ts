@@ -17,7 +17,7 @@ export class AddedUserApiService {
 
   public getAllChatsProject() {
     this.http.get<IUser[]>(`https://smm-st-19042-default-rtdb.firebaseio.com/dlf4-345/users.json`).subscribe((data: IUser[]) => {
-      this.store.dispatch(addedNewUsers({ value: data }))
+      this.store.dispatch(addedNewUsers({ value: Object.values(data) }))
     });
   }
 

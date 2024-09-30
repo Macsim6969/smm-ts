@@ -16,11 +16,10 @@ export class CreatedLinkComponent {
 
   constructor(
     private addedUser: AddedUserService,
-    private route: ActivatedRoute,
     private addedUserApi: AddedUserApiService
   ) { }
 
-  generateToken(): void {
+  public generateToken(): void {
     if (this.userName) {
       const token = this.generateRandomToken(40); // Генерация случайного ключа длиной 16 символов
       const currentUrl = window.location.href.split('?')[0]; // Текущий URL без параметров
@@ -32,11 +31,10 @@ export class CreatedLinkComponent {
         name: this.userName
       }
       this.addedUserApi.setChangesMessagesData(newUser);
-      this.addedUser._isOpenPopup = false;
     }
   }
 
-  generateRandomToken(length: number): string {
+  private generateRandomToken(length: number): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < length; i++) {
@@ -44,4 +42,9 @@ export class CreatedLinkComponent {
     }
     return result;
   }
+
+  public close() {
+    this.addedUser._isOpenPopup = false;
+  }
+
 }

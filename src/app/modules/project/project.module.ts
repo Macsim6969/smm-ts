@@ -9,7 +9,6 @@ import { DashboardComponent } from './@shared/components/dashboard/dashboard.com
 import { AddedUserService } from './@shared/services/addedUser.service';
 import { CreatedLinkComponent } from './@shared/components/created-link/created-link.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddedUserApiService } from '../../api/addedUserApi.service';
 
 const routes: Routes = [
   {
@@ -37,8 +36,7 @@ const routes: Routes = [
   ],
   providers: [
     SettingsListProjectsService,
-    AddedUserService,
-    AddedUserApiService
+    AddedUserService
   ]
 })
 export class ProjectModule { }

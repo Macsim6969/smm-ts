@@ -24,7 +24,8 @@ export const store: StoreInterface = {
   activeChatsData: null,
 
   //Users page
-  users: []
+  users: [],
+  guest: null
 }
 
 export const storeReducers = createReducer(store,

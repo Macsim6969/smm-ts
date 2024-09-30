@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { storeReducers } from './store/reducers/store.reducers';
 import { AuthEffects } from './store/effects/store.effects';
+import { AddedUserApiService } from './api/addedUserApi.service';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AuthEffects } from './store/effects/store.effects';
   providers: [
     PageManagementService,
     ApiService,
+    AddedUserApiService,
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
