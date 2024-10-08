@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-pane {
+  width: 200px;
+  background: #f0f0f0;
+  padding: 10px;
+}
+
+.right-pane {
+  flex: 1;
+  position: relative;
+  background: #ffffff;
+  border: 2px dashed #ccc;
+  padding: 10px;
+}
+
+.draggable {
+  background: #007bff;
+  color: white;
+  padding: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.block {
+  position: absolute;
+  background: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: grab;
+}
+
+.lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Игнорировать события мыши для SVG */
+  cursor: col-resize;
+}
+
+.selected {
+  border: 2px solid blue; // Стили для выделенных блоков
+}

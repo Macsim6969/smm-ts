@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="left-pane">
+    <div
+      class="draggable"
+      *ngFor="let node of nodes"
+      draggable="true"
+      (dragstart)="onDragStart($event, node)"
+    >
+      {{ node.label }}
+    </div>
+  </div>
+
+  <div
+    class="right-pane"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+    (mousemove)="onMouseMove($event)"
+  >
+    <svg
+      class="lines"
+      [attr.width]="getMaxWidth()"
+      [attr.height]="getMaxHeight()"
+    >
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="black" />
+        </marker>
+      </defs>
+
+      <ng-container *ngFor="let link of links">
+        <!-- Горизонтальная линия -->
+        <line
+          [attr.x1]="link.from.x + 50"  
+          [attr.y1]="link.from.y + 25"  
+          [attr.x2]="link.to.x + 50"     
+          [attr.y2]="link.from.y + 25"   
+          stroke="black"
+          stroke-width="2"
+          
+        />
+
+        <!-- Вертикальная линия -->
+        <line
+          [attr.x1]="link.to.x + 50"     
+          [attr.y1]="link.from.y + 25"   
+          [attr.x2]="link.to.x + 50"     
+          [attr.y2]="link.to.y + 25"    
+          stroke="black"
+          stroke-width="2"
+          marker-end="url(#arrow)"        
+        />
+      </ng-container>
+    </svg>
+
+    <div
+      class="block"
+      *ngFor="let block of createdBlocks"
+      [style.left.px]="block.x"
+      [style.top.px]="block.y"
+      (mousedown)="onMouseDown($event, block)"
+      (mouseup)="onMouseUp()"
+      [class.selected]="block.selected"
+      (click)="selectBlock(block)"
+    >
+      {{ block.name }}
+    </div>
+  </div>
+</div>

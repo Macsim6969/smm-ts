@@ -35,6 +35,15 @@ export class SettingsListProjectsService {
           key: 'music'
         }
       ]
+    },
+    {
+      titleList: 'Constructor',
+      listContent: [
+        {
+          title: 'Constructor',
+          key: 'constructor'
+        }
+      ]
     }
   ];
 

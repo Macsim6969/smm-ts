@@ -22,8 +22,11 @@
     "@angular/router": "^18.0.0",
     "@ngrx/effects": "^18.0.2",
     "@ngrx/store": "^18.0.2",
+    "@swimlane/ngx-graph": "^9.0.0-beta.0",
     "angular-oauth2-oidc": "^17.0.2",
     "firebase": "^10.13.2",
+    "interactjs": "^1.10.27",
+    "mermaid": "^11.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
