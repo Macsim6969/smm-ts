@@ -1,47 +1,28 @@
-.container {
+.constructor {
   display: flex;
+  flex-direction: row;
   height: 100vh;
-}
 
-.left-pane {
-  width: 200px;
-  background: #f0f0f0;
-  padding: 10px;
-}
+  ::ng-deep {
+    #stencil {
+      width: 300px;
+      position: relative;
+      height: 100vh;
+    }
 
-.right-pane {
-  flex: 1;
-  position: relative;
-  background: #ffffff;
-  border: 2px dashed #ccc;
-  padding: 10px;
-}
+    #paper {
+      width: 800px !important;
+      height: 800px !important;
+    }
 
-.draggable {
-  background: #007bff;
-  color: white;
-  padding: 5px;
-  margin: 5px 0;
-  cursor: pointer;
-}
+    #inspector {
+      width: 300px;
 
-.block {
-  position: absolute;
-  background: #28a745;
-  color: white;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: grab;
-}
+      ::ng-deep .joint-inspector {
+        width: 300px;
+        position: relative;
+      }
+    }
+  }
 
-.lines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none; /* Игнорировать события мыши для SVG */
-  cursor: col-resize;
-}
-
-.selected {
-  border: 2px solid blue; // Стили для выделенных блоков
 }

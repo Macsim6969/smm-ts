@@ -1,131 +1,246 @@
-import { Component } from '@angular/core';
-
-interface Block {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  selected?: boolean; // Свойство для отслеживания выбора
-}
-
-interface Connection {
-  from: Block;
-  to: Block;
-}
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { dia, format, shapes, ui, util } from '@joint/plus';
+import '@joint/plus/joint-plus.css';
 
 @Component({
   selector: 'app-constructor',
   templateUrl: './constructor.component.html',
-  styleUrls: ['./constructor.component.scss'],
+  styleUrls: ['./constructor.component.scss']
 })
-export class ConstructorComponent {
-  nodes = [
-    { id: '1', label: 'Node 1' },
-    { id: '2', label: 'Node 2' },
-    { id: '3', label: 'Node 3' },
-  ];
+export class ConstructorComponent implements AfterViewInit {
 
-  createdBlocks: Block[] = [];
-  links: Connection[] = [];
-  blockCounter = 0;
+  ngAfterViewInit() {
 
-  // Переменные для перемещения блоков
-  currentBlock: Block | null = null;
-  offsetX = 0;
-  offsetY = 0;
 
-  onDragStart(event: DragEvent, node: { id: string; label: string }) {
-    event.dataTransfer?.setData('text/plain', node.id);
-  }
+    const namespace = shapes;
 
-  onDragOver(event: DragEvent) {
-    event.preventDefault(); // Разрешить сброс
-  }
+    const graph = new dia.Graph({}, { cellNamespace: namespace });
 
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    const id = event.dataTransfer?.getData('text/plain');
-    const droppedNode = this.nodes.find((node) => node.id === id);
-    
-    if (droppedNode) {
-      const newBlock: Block = {
-        id: (this.blockCounter++).toString(),
-        name: droppedNode.label,
-        x: event.offsetX, // Позиция по X
-        y: event.offsetY, // Позиция по Y
-      };
-      this.createdBlocks.push(newBlock);
+    const paper = new dia.Paper({
+      el: document.getElementById('paper'),
+      model: graph,
+      width: 300,
+      height: 300,
+      background: { color: '#F5F5F5' },
+      cellViewNamespace: namespace
+    });
 
-      // Выводим весь массив графика в консоль после добавления нового блока
-      this.logGraphData();
+    const rect1 = new shapes.standard.Rectangle();
+    rect1.position(25, 25);
+    rect1.resize(180, 50);
+    rect1.addTo(graph);
+
+    const rect2 = new shapes.standard.Rectangle();
+    rect2.position(95, 225);
+    rect2.resize(180, 50);
+    rect2.addTo(graph);
+
+    rect1.attr('body', { stroke: '#C94A46', rx: 2, ry: 2 });
+    rect2.attr('body', { stroke: '#C94A46', rx: 2, ry: 2 });
+
+    rect1.attr('label', { text: 'Hello', fill: '#353535' });
+    rect2.attr('label', { text: 'World!', fill: '#353535' });
+
+    const link = new shapes.standard.Link();
+    link.source(rect1);
+    link.target(rect2);
+    link.addTo(graph);
+
+    link.appendLabel({
+      attrs: {
+        text: {
+          text: 'to the'
+        }
+      }
+    });
+    link.router('orthogonal');
+    link.connector('straight', { cornerType: 'line' });
+
+    const stencil = new ui.Stencil({
+      paper: paper,
+      width: 170,
+      height: 100,
+      layout: true,
+      dropAnimation: true
+    });
+    stencil.render();
+    const stencilContainer = document.getElementById('stencil');
+    if (stencilContainer) {
+      stencilContainer.appendChild(stencil.el);
     }
-  }
 
-  // Функции для перемещения блоков
-  onMouseDown(event: MouseEvent, block: Block) {
-    this.currentBlock = block;
-    this.offsetX = event.clientX - block.x;
-    this.offsetY = event.clientY - block.y;
 
-    // Добавляем обработчики для перемещения
-    document.addEventListener('mousemove', this.onMouseMove.bind(this));
-    document.addEventListener('mouseup', this.onMouseUp.bind(this));
-  }
 
-  onMouseMove(event: MouseEvent) {
-    if (this.currentBlock) {
-      this.currentBlock.x = event.clientX - this.offsetX;
-      this.currentBlock.y = event.clientY - this.offsetY;
+    const elements = [
+      {
+        type: 'standard.Rectangle',
+        size: { width: 70, height: 50 },
+        attrs: {
+          body: {
+            stroke: '#C94A46',
+            rx: 2,
+            ry: 2
+          }
+        }
+      },
+      {
+        type: 'standard.Ellipse',
+        size: { width: 70, height: 50 },
+        attrs: {
+          body: {
+            stroke: '#C94A46',
+          }
+        }
+      },
+      {
+        type: 'standard.Polygon',
+        size: { width: 70, height: 50 },
+        attrs: {
+          body: {
+            stroke: '#C94A46',
+            points: 'calc(w/2),0 calc(w),calc(h/2) calc(w/2),calc(h) 0,calc(h/2)'
+          }
+        }
+      },
+      {
+        type: 'standard.Cylinder',
+        size: { width: 70, height: 50 },
+        attrs: {
+          body: {
+            stroke: '#C94A46',
+          },
+          top: {
+            fill: '#C94A46',
+            stroke: '#C94A46'
+          }
+        }
+      }
+    ];
+    stencil.load(elements);
 
-      // Обновляем линии
-      this.updateLinks();
+    function openHalo(cellView) {
+      new ui.Halo({ cellView: cellView }).render();
     }
-  }
 
-  onMouseUp() {
-    this.currentBlock = null;
-    document.removeEventListener('mousemove', this.onMouseMove.bind(this));
-    document.removeEventListener('mouseup', this.onMouseUp.bind(this));
-  }
+    paper.on('cell:pointerup', (cellView) => {
+      openHalo(cellView);
+    });
 
-  // Выбор блока для соединения
-  selectBlock(block: Block) {
-    block.selected = !block.selected; // Переключаем состояние выбора
-    this.updateLinks(); // Обновляем связи
-  }
+    openHalo(paper.findViewByModel(rect1));
 
-  // Обновление линий на основе выбранных блоков
-  updateLinks() {
-    const selectedBlocks = this.createdBlocks.filter(block => block.selected);
+    const toolbar = new ui.Toolbar({
+      tools: [
+        {
+          type: 'button',
+          name: 'json',
+          text: 'Export JSON'
+        },
+        {
+          type: 'button',
+          name: 'svg',
+          text: 'Export SVG'
+        }
+      ]
+    });
+    toolbar.render();
+    const toolbarContainer = document.getElementById('toolbar');
+    if (toolbarContainer) {
+      toolbarContainer.appendChild(toolbar.el);
+    }
 
-    // Соединяем только два выбранных блока
-    if (selectedBlocks.length === 2) {
-      this.links.push({
-        from: selectedBlocks[0],
-        to: selectedBlocks[1]
+    toolbar.on('json:pointerclick', () => {
+      const str = JSON.stringify(graph.toJSON());
+      const bytes = new TextEncoder().encode(str);
+      const blob = new Blob([bytes], { type: 'application/json;charset=utf-8' });
+      util.downloadBlob(blob, 'joint-plus.json');
+    });
+
+    toolbar.on('svg:pointerclick', () => {
+      format.toSVG(
+        paper,
+        (svg) => {
+          util.downloadDataUri(
+            `data:image/svg+xml,${encodeURIComponent(svg)}`,
+            'joint-plus.svg'
+          );
+        },
+        { useComputedStyles: false }
+      );
+    });
+
+    function openInspector(cell) {
+      closeInspector(); // close inspector if currently open
+
+      ui.Inspector.create('#inspector', {
+        cell: cell,
+        inputs: getInspectorConfig(cell)
       });
-
-      // Сбрасываем выбор
-      selectedBlocks.forEach(block => block.selected = false);
-
-      // Выводим массив данных графика после обновления соединений
-      this.logGraphData();
     }
+
+    function closeInspector() {
+      ui.Inspector.close();
+    }
+
+    function getInspectorConfig(cell) {
+      if (cell.isElement()) {
+        return {
+          attrs: {
+            label: {
+              text: {
+                type: 'content-editable',
+                label: 'Label'
+              }
+            }
+          }
+        };
+
+      } else { // cell.isLink()
+        return {
+          labels: {
+            type: 'list',
+            label: 'Labels',
+            item: {
+              type: 'object',
+              properties: {
+                attrs: {
+                  text: {
+                    text: {
+                      type: 'content-editable',
+                      label: 'Text',
+                      defaultValue: 'label'
+                    }
+                  }
+                },
+                position: {
+                  type: 'select-box',
+                  options: [
+                    { value: 30, content: 'Source' },
+                    { value: 0.5, content: 'Middle' },
+                    { value: -30, content: 'Target' }
+                  ],
+                  defaultValue: 0.5,
+                  label: 'Position'
+                }
+              }
+            }
+          }
+        };
+      }
+    }
+
+    paper.on('cell:pointerdown', function (cellView) {
+      openInspector(cellView.model);
+    });
+
+    stencil.on('element:drop', function (elementView) {
+      openInspector(elementView.model);
+    });
+
+    paper.on('blank:pointerdown', function () {
+      closeInspector(); // close inspector if currently open
+    });
+
+    openInspector(rect1);
   }
 
-  // Метод для вывода в консоль текущего состояния графика (блоков и связей)
-  logGraphData() {
-    console.log('График блоков:', this.createdBlocks);
-    console.log('Соединения:', this.links);
-  }
-
-  // Получение максимальной ширины для SVG
-  getMaxWidth(): number {
-    return Math.max(500, ...this.createdBlocks.map(block => block.x + 100));
-  }
-
-  // Получение максимальной высоты для SVG
-  getMaxHeight(): number {
-    return Math.max(500, ...this.createdBlocks.map(block => block.y + 50));
-  }
 }
