@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { dia, format, shapes, ui, util } from '@joint/plus';
 import '@joint/plus/joint-plus.css';
 
@@ -11,9 +11,7 @@ export class ConstructorComponent implements AfterViewInit {
 
   ngAfterViewInit() {
 
-
     const namespace = shapes;
-
     const graph = new dia.Graph({}, { cellNamespace: namespace });
 
     const paper = new dia.Paper({
@@ -22,6 +20,8 @@ export class ConstructorComponent implements AfterViewInit {
       width: 300,
       height: 300,
       background: { color: '#F5F5F5' },
+      gridSize: 10, // Размер сетки
+      drawGrid: true, // Включаем отрисовку сетки
       cellViewNamespace: namespace
     });
 
@@ -64,12 +64,11 @@ export class ConstructorComponent implements AfterViewInit {
       dropAnimation: true
     });
     stencil.render();
+
     const stencilContainer = document.getElementById('stencil');
     if (stencilContainer) {
       stencilContainer.appendChild(stencil.el);
     }
-
-
 
     const elements = [
       {
@@ -139,10 +138,51 @@ export class ConstructorComponent implements AfterViewInit {
           type: 'button',
           name: 'svg',
           text: 'Export SVG'
+        },
+        {
+          type: 'button',
+          name: 'zoom-in',
+          text: 'Zoom In'
+        },
+        {
+          type: 'button',
+          name: 'zoom-out',
+          text: 'Zoom Out'
+        },
+        {
+          type: 'button',
+          name: 'save-state',
+          text: 'Save State'
+        },
+        {
+          type: 'button',
+          name: 'load-state',
+          text: 'Load State'
+        },
+        {
+          type: 'button',
+          name: 'group-elements',
+          text: 'Group Elements'
+        },
+        {
+          type: 'button',
+          name: 'export-png',
+          text: 'Export PNG'
+        },
+        {
+          type: 'button',
+          name: 'increase-grid',
+          text: 'Increase Grid Size'
+        },
+        {
+          type: 'button',
+          name: 'decrease-grid',
+          text: 'Decrease Grid Size'
         }
       ]
     });
     toolbar.render();
+
     const toolbarContainer = document.getElementById('toolbar');
     if (toolbarContainer) {
       toolbarContainer.appendChild(toolbar.el);
@@ -168,79 +208,85 @@ export class ConstructorComponent implements AfterViewInit {
       );
     });
 
-    function openInspector(cell) {
-      closeInspector(); // close inspector if currently open
+    toolbar.on('zoom-in:pointerclick', () => {
+      const scale = paper.scale();
+      paper.scale(scale.sx * 1.2, scale.sy * 1.2);
+    });
 
-      ui.Inspector.create('#inspector', {
-        cell: cell,
-        inputs: getInspectorConfig(cell)
-      });
-    }
+    toolbar.on('zoom-out:pointerclick', () => {
+      const scale = paper.scale();
+      paper.scale(scale.sx / 1.2, scale.sy / 1.2);
+    });
 
-    function closeInspector() {
-      ui.Inspector.close();
-    }
+    toolbar.on('save-state:pointerclick', () => {
+      const graphState = JSON.stringify(graph.toJSON());
+      localStorage.setItem('graphState', graphState);
+      alert('Graph saved to localStorage!');
+    });
 
-    function getInspectorConfig(cell) {
-      if (cell.isElement()) {
-        return {
-          attrs: {
-            label: {
-              text: {
-                type: 'content-editable',
-                label: 'Label'
-              }
-            }
-          }
-        };
-
-      } else { // cell.isLink()
-        return {
-          labels: {
-            type: 'list',
-            label: 'Labels',
-            item: {
-              type: 'object',
-              properties: {
-                attrs: {
-                  text: {
-                    text: {
-                      type: 'content-editable',
-                      label: 'Text',
-                      defaultValue: 'label'
-                    }
-                  }
-                },
-                position: {
-                  type: 'select-box',
-                  options: [
-                    { value: 30, content: 'Source' },
-                    { value: 0.5, content: 'Middle' },
-                    { value: -30, content: 'Target' }
-                  ],
-                  defaultValue: 0.5,
-                  label: 'Position'
-                }
-              }
-            }
-          }
-        };
+    toolbar.on('load-state:pointerclick', () => {
+      const graphState = localStorage.getItem('graphState');
+      if (graphState) {
+        graph.fromJSON(JSON.parse(graphState));
+        alert('Graph restored from localStorage!');
+      } else {
+        alert('No saved state found.');
       }
+    });
+
+    toolbar.on('group-elements:pointerclick', () => {
+      const elements = graph.getElements();
+      if (elements.length > 0) {
+        const parent = new dia.Element();
+        graph.addCell(parent);
+        elements.forEach(el => {
+          parent.embed(el); // Добавляем элемент в составной родительский элемент
+        });
+        alert('Elements grouped successfully.');
+      } else {
+        alert('No elements to group.');
+      }
+    });
+
+    toolbar.on('export-png:pointerclick', () => {
+      format.toPNG(paper, (dataURL) => {
+        util.downloadDataUri(dataURL, 'joint-plus.png');
+      });
+    });
+
+    let currentGridSize = 10;
+    toolbar.on('increase-grid:pointerclick', () => {
+      currentGridSize += 5;
+      paper.setGridSize(currentGridSize);
+    });
+
+    toolbar.on('decrease-grid:pointerclick', () => {
+      currentGridSize = Math.max(1, currentGridSize - 5);
+      paper.setGridSize(currentGridSize);
+    });
+
+    function openInspector(cell) {
+      new ui.Inspector({
+        cell: cell,
+        inputs: {
+          'attrs/body/fill': {
+            type: 'color',
+            label: 'Fill',
+            group: 'presentation',
+            index: 1
+          },
+          'attrs/label/text': {
+            type: 'text',
+            label: 'Text',
+            group: 'content',
+            index: 1
+          }
+        }
+      }).render();
     }
 
-    paper.on('cell:pointerdown', function (cellView) {
+    paper.on('element:pointerclick', function (cellView) {
       openInspector(cellView.model);
     });
-
-    stencil.on('element:drop', function (elementView) {
-      openInspector(elementView.model);
-    });
-
-    paper.on('blank:pointerdown', function () {
-      closeInspector(); // close inspector if currently open
-    });
-
-    openInspector(rect1);
   }
-
 }

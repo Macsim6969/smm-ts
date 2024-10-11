@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: '', component: ProjectComponent, children: [
       { path: '', component: DashboardComponent },
+      { path: 'constructor-Test', loadChildren: () => import('../constructor/constructor.module').then(m => m.ConstructorModule) },
       { path: 'constructor', loadChildren: () => import('../constructor/constructor.module').then(m => m.ConstructorModule) },
       { path: 'music', loadChildren: () => import('../music/music.module').then(m => m.MusicModule) },
       { path: 'draft', loadChildren: () => import('../drafts/drafts.module').then(m => m.DraftsModule) },

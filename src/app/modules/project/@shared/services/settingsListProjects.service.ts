@@ -42,6 +42,10 @@ export class SettingsListProjectsService {
         {
           title: 'Constructor',
           key: 'constructor'
+        },
+        {
+          title: 'Constructor-Test',
+          key: 'constructor-Test'
         }
       ]
     }
