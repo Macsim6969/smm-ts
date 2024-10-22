@@ -10,7 +10,6 @@ import {
   IDragEnterEventArgs,
   LaneModel,
   NodeModel,
-  PageSettingsModel,
   PaletteModel,
   PointPortModel,
   PortConstraints,
@@ -25,6 +24,7 @@ import {
   SymbolInfo,
   SymbolPaletteComponent,
 } from '@syncfusion/ej2-angular-diagrams';
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 
 let pathData: string =
@@ -308,9 +308,17 @@ export class ConstructorComponent {
 
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
-  //Disable the rotate constrains for selected nodes
+
+  @ViewChild('ejDialog') ejDialog: DialogComponent;
+  isDialogVisible: boolean = false; // Control dialog visibility
+  dialogButtons: Object[] = [
+    {
+      click: () => this.closePopup(),
+      buttonModel: { content: 'Cancel', isPrimary: false },
+    },
+  ];
+
   ngOnInit(): void {
-    
     this.selectedItems = {
       constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
     };
@@ -362,7 +370,7 @@ export class ConstructorComponent {
     ],
     showCustomMenuOnly: true,
   };
-  //Set the default values of a Connector.
+
   public getConnectorDefaults(connector: ConnectorModel): ConnectorModel {
     if (
       connector.id.indexOf('straight') !== -1 ||
@@ -373,7 +381,7 @@ export class ConstructorComponent {
       connector.type = 'Orthogonal';
     }
     var color = '#717171';
-    //set styles for connector
+
     connector.targetDecorator.style.strokeColor = color;
     connector.targetDecorator.style.fill = color;
     connector.style.strokeColor = color;
@@ -383,13 +391,13 @@ export class ConstructorComponent {
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {
     return { tooltip: symbol.addInfo ? symbol.addInfo['tooltip'] : symbol.id };
   }
-  //Set the default values of a node.
+
   public getNodeDefaults(node: NodeModel): NodeModel {
     node.style.strokeColor = '#717171';
     node.style.strokeWidth = 1;
     return node;
   }
-  //Set the node style for the DragEnter element.
+
   public dragEnter(arg: IDragEnterEventArgs): void {
     if (arg.element instanceof Node) {
       let shape: SwimLaneModel = arg.element.shape as SwimLaneModel;
@@ -404,7 +412,7 @@ export class ConstructorComponent {
       }
     }
   }
-  //Open the context menu
+
   public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
     for (let item of args.items) {
       if (
@@ -426,7 +434,7 @@ export class ConstructorComponent {
       }
     }
   }
-  //Handle click event for menu items.
+
   public contextMenuClick(args: MenuEventArgs): void {
     if (
       args.item.id === 'InsertLaneBefore' ||
@@ -484,11 +492,31 @@ export class ConstructorComponent {
     }
   }
 
-  rotateSelectedNode(angle: number): void {
-    const selectedNode: NodeModel = this.selectedItems.nodes[0]; // Получаем первый выбранный узел
-    if (selectedNode) {
-      selectedNode.rotateAngle = (selectedNode.rotateAngle + angle) % 360; // Изменяем угол поворота
-      this.diagram.dataBind(); // Обновляем диаграмму
-    }
+  clickOnNode(node: any): void {
+    const currentStyle = { ...node.style };
+
+    node.style = {
+      ...currentStyle,
+      fill: 'lightblue',
+      strokeColor: 'blue',
+      strokeWidth: 2,
+    };
+
+    this.openDialog();
+    this.diagram.dataBind();
+  }
+
+  openDialog(): void {
+    this.isDialogVisible = true;
+    this.ejDialog.show();
+  }
+
+  closePopup(): void {
+    this.isDialogVisible = false;
+    this.ejDialog.hide();
+  }
+
+  saveData(): void {
+    this.closePopup();
   }
 }
