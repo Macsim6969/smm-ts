@@ -1,28 +1,30 @@
 <section class="dialog">
-  <div class="dialog_container">
+  <form class="dialog_container" [formGroup]="form" (submit)="onSave()">
     <p mat-dialog-title>Settings “{{ data.element.label }}”</p>
     <div class="content" mat-dialog-content>
       <div class="column">
         <mat-label>Step type</mat-label>
-        <input matInput type="text" placeholder="Start" />
+        <input matInput type="text" placeholder="Start" formControlName="stepType" />
       </div>
       <div class="column">
         <mat-label>Name Process</mat-label>
-        <input matInput type="text" placeholder="Placeholder" />
+        <input matInput type="text" placeholder="Placeholder"  formControlName="nameProcess"/>
       </div>
 
       <div class="column">
         <mat-label>Диапозон сумы</mat-label>
         <div class="row">
-          <input matInput type="number" placeholder="От" />
-          <input matInput type="number" placeholder="До" />
+          <input matInput type="number" placeholder="From"  formControlName="from"/>
+          <input matInput type="number" placeholder="To" formControlName="to" />
         </div>
       </div>
       <div class="column">
-        <mat-label>Choose one</mat-label>
+        <mat-label>Next Step</mat-label>
         <mat-form-field>
-          <mat-select class="select"> 
-            <mat-option value="{{list}}" *ngFor="let list of toppingList">{{list}}</mat-option>
+          <mat-select formControlName="nextStep" class="select">
+            <mat-option value="{{ list }}" *ngFor="let list of toppingList">{{
+              list
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -32,8 +34,8 @@
       </div>
     </div>
     <div class="footer" mat-dialog-actions>
-      <button mat-button (click)="onClose()">Close</button>
-      <button mat-button (click)="onSave()">Save</button>
+      <button mat-button type="button" (click)="onClose()">Close</button>
+      <button mat-button type="submit">Save</button>
     </div>
-  </div>
+  </form>
 </section>
