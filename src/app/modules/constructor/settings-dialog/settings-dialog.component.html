@@ -1,0 +1,39 @@
+<section class="dialog">
+  <div class="dialog_container">
+    <p mat-dialog-title>Settings “{{ data.element.label }}”</p>
+    <div class="content" mat-dialog-content>
+      <div class="column">
+        <mat-label>Step type</mat-label>
+        <input matInput type="text" placeholder="Start" />
+      </div>
+      <div class="column">
+        <mat-label>Name Process</mat-label>
+        <input matInput type="text" placeholder="Placeholder" />
+      </div>
+
+      <div class="column">
+        <mat-label>Диапозон сумы</mat-label>
+        <div class="row">
+          <input matInput type="number" placeholder="От" />
+          <input matInput type="number" placeholder="До" />
+        </div>
+      </div>
+      <div class="column">
+        <mat-label>Choose one</mat-label>
+        <mat-form-field>
+          <mat-select class="select"> 
+            <mat-option value="{{list}}" *ngFor="let list of toppingList">{{list}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-label>Role</mat-label>
+        <div class="container"></div>
+      </div>
+    </div>
+    <div class="footer" mat-dialog-actions>
+      <button mat-button (click)="onClose()">Close</button>
+      <button mat-button (click)="onSave()">Save</button>
+    </div>
+  </div>
+</section>

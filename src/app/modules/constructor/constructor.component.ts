@@ -7,6 +7,7 @@ import {
   DiagramBeforeMenuOpenEventArgs,
   DiagramComponent,
   HeaderModel,
+  IBlazorConnectionChangeEventArgs,
   IDragEnterEventArgs,
   LaneModel,
   NodeModel,
@@ -24,14 +25,15 @@ import {
   SymbolInfo,
   SymbolPaletteComponent,
 } from '@syncfusion/ej2-angular-diagrams';
-import { DialogComponent } from '@syncfusion/ej2-angular-popups';
+
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
-
-let pathData: string =
-  'M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23.135' +
-  ' 50 C 10.3578 50 0 38.8072 0 24.9999 L 0 24.9999 C' +
-  '0 11.1928 10.3578 0 23.135 0 L 96.8653 0 C 109.642 0 120 11.1928 120 24.9999 Z';
-
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+export interface DraggableElement {
+  id: number;
+  type: string;
+  properties: any;
+}
 @Component({
   selector: 'app-constructor',
   templateUrl: './constructor.component.html',
@@ -39,8 +41,9 @@ let pathData: string =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstructorComponent {
-  @ViewChild('diagram')
-  public diagram: DiagramComponent;
+  @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
+
+  createdElements: NodeModel[] = [];
   public port: PointPortModel[] = [
     {
       id: 'Port1',
@@ -308,21 +311,33 @@ export class ConstructorComponent {
 
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
+  public elementData: {
+   
+      id: string;
+      fill: string;
+      stroke: string | any;
+      strokeWidth: number;
+      label: string;
 
-  @ViewChild('ejDialog') ejDialog: DialogComponent;
-  isDialogVisible: boolean = false; // Control dialog visibility
-  dialogButtons: Object[] = [
-    {
-      click: () => this.closePopup(),
-      buttonModel: { content: 'Cancel', isPrimary: false },
-    },
-  ];
+  };
+  elements: DraggableElement[] = [];
+  nextId: number = 1;
+  saveData: any;
+  constructor(private matDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.selectedItems = {
       constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
     };
   }
+
+  ngAfterViewInit(): void {
+    
+    if (this.diagram && localStorage.getItem('fileName')) {
+      this.diagram.loadDiagram(localStorage.getItem('fileName'));
+    }
+  }
+
   public snapSettings: SnapSettingsModel = {
     horizontalGridlines: {
       snapIntervals: [10],
@@ -333,12 +348,20 @@ export class ConstructorComponent {
     constraints: SnapConstraints.All,
   };
   public created(): void {
-    this.diagram.fitToPage();
+    if (this.diagram) {
+      this.diagram.fitToPage();
+    }
   }
-  //Define custom menu items
+
   public contextMenuSettings: ContextMenuSettingsModel = {
     show: true,
     items: [
+      {
+        text: 'Settings',
+        id: 'Settings',
+        target: '.e-diagramcontent',
+        iconCss: 'e-icons e-settings',
+      },
       {
         text: 'Clone',
         id: 'Clone',
@@ -411,9 +434,41 @@ export class ConstructorComponent {
         }
       }
     }
+    this.saveData = this.diagram.saveDiagram();
+  
+    localStorage.setItem('fileName', JSON.stringify(this.saveData));
   }
 
   public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
+    const srcElement = args.event.srcElement as HTMLElement;
+    const ariaLabel = srcElement
+      ? srcElement.getAttribute('aria-label')
+      : 'aria-label не найден';
+
+    if (srcElement) {
+      const computedStyle = window.getComputedStyle(srcElement);
+      const id = srcElement.getAttribute('id');
+      const stroke =
+        srcElement.getAttribute('stroke') ||
+        computedStyle.getPropertyValue('stroke');
+      const strokeWidth =
+        srcElement.getAttribute('stroke-width') ||
+        computedStyle.getPropertyValue('stroke-width');
+      const fill =
+        srcElement.getAttribute('fill') ||
+        computedStyle.getPropertyValue('fill');
+
+      this.elementData = {
+    
+          id,
+          stroke,
+          strokeWidth: +strokeWidth,
+          fill,
+          label: ariaLabel,
+
+      };
+    }
+
     for (let item of args.items) {
       if (
         this.diagram.selectedItems.connectors.length +
@@ -489,34 +544,41 @@ export class ConstructorComponent {
       this.diagram.copy();
     } else if (args.item.id === 'Paste') {
       this.diagram.paste();
+    } else if (args.item.id === 'Settings') {
+      this.matDialog.closeAll();
+      this.onOpenDialog();
     }
   }
 
-  clickOnNode(node: any): void {
-    const currentStyle = { ...node.style };
+  onOpenDialog(): void {
+    const dialogRef = this.matDialog.open(SettingsDialogComponent, {
+      width: '260px',
+      data: {
+        element: this.elementData,
+      },
+    });
 
-    node.style = {
-      ...currentStyle,
-      fill: 'lightblue',
-      strokeColor: 'blue',
-      strokeWidth: 2,
-    };
-
-    this.openDialog();
-    this.diagram.dataBind();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.elementData = result;
+      }
+    });
   }
 
-  openDialog(): void {
-    this.isDialogVisible = true;
-    this.ejDialog.show();
+  public connectionChange(args: IBlazorConnectionChangeEventArgs): void {
+    // Проверяем, что соединение было изменено
+    if (args.state === 'Changing') {
+      const sourceNode = args.connector.sourceID;
+      const targetNode = args.connector.targetID;
+
+      if (sourceNode && targetNode) {
+        console.log(`Соединение изменено между узлом ${sourceNode} и узлом ${targetNode}`);
+      }
+    } else if (args.state === 'Cancelled') {
+      console.log('Изменение соединения было отменено.');
+    }
+
+    console.log(args);
   }
 
-  closePopup(): void {
-    this.isDialogVisible = false;
-    this.ejDialog.hide();
-  }
-
-  saveData(): void {
-    this.closePopup();
-  }
 }

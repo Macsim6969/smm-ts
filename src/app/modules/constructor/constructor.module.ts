@@ -25,16 +25,24 @@ import {
 } from '@syncfusion/ej2-angular-diagrams';
 import { NgModule } from '@angular/core';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 const routes: Routes = [{ path: '', component: ConstructorComponent }];
 
 @NgModule({
-  declarations: [ConstructorComponent],
+  declarations: [ConstructorComponent, SettingsDialogComponent],
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
     MatExpansionModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
 
     DiagramModule,

@@ -1,0 +1,83 @@
+.dialog{
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-width: 260px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+
+  z-index: 99999;
+
+  .dialog_container{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 50px);
+    padding: 20px;
+    p{
+      font-size: 12px;
+      font-weight: 600;
+      color: #101828;
+      padding: 0 0 12px 0;
+    }
+    .content{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .column{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: relative;
+        label{
+          font-size: 12px;
+          color: #344054;
+        }
+        input{
+          outline: none;
+          font-size: 14px;
+          color: #101828;
+          padding: 5px 14px;
+          border-radius: 8px;
+          border: 1px solid #D0D5DD;
+          width: inherit;
+        }
+
+        ::ng-deep{
+          .select{
+            display: flex;
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+        }
+
+        .row{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          gap: 6px;
+        }
+
+        .container{
+          border: 1px solid #D0D5DD;
+          border-radius: 8px;
+          padding: 4px 14px;
+        }
+      }
+
+    }
+    .footer{
+      margin: auto 0 0 0;
+      button{
+        border: 1px solid black;
+        padding: 12px 18px;
+        border-radius: 10px;
+      }
+    }
+  }
+  
+}

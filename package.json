@@ -31,6 +31,8 @@
     "@syncfusion/ej2-angular-inputs": "^27.1.50",
     "@syncfusion/ej2-angular-navigations": "^27.1.53",
     "@syncfusion/ej2-angular-popups": "^27.1.55",
+    "@syncfusion/ej2-buttons": "^27.1.53",
+    "@syncfusion/ej2-icons": "^27.1.50",
     "angular-oauth2-oidc": "^17.0.2",
     "firebase": "^10.13.2",
     "interactjs": "^1.10.27",

@@ -3,6 +3,8 @@
 @import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-icons/styles/material.css';
 
 
 * {
@@ -77,4 +79,14 @@ jsplumb-controls {
 
 .ports div {
   height: 60px;
+}
+
+mat-dialog-container{
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-width: 160px !important;
+  max-width: 260px !important;
+  width: 100% !important;
+  background-color: white;
 }

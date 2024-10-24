@@ -25,25 +25,10 @@
     (dragEnter)="dragEnter($event)"
     (contextMenuOpen)="contextMenuOpen($event)"
     (contextMenuClick)="contextMenuClick($event)"
+    (connectionChange)="connectionChange($event)"
     [getNodeDefaults]="getNodeDefaults"
     (created)="created()"
-    (click)="clickOnNode($event)"
+    (dragEnter)="dragEnter($event)"
   >
   </ejs-diagram>
-
-  <ejs-dialog
-    id="defaultDialog"
-    #ejDialog
-    [visible]="isDialogVisible"
-    [header]="'Diagram Properties'"
-    [width]="'400px'"
-    [showCloseIcon]="true"
-    [buttons]="dialogButtons"
-    (overlayClick)="closePopup()"
-  >
-    <ng-template #content>
-      <p>Content related to the diagram goes here.</p>
-      <button ejs-button (click)="saveData()">Save</button>
-    </ng-template>
-  </ejs-dialog>
 </div>
