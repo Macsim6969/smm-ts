@@ -29,6 +29,7 @@ import {
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { take, timer } from 'rxjs';
 export interface DraggableElement {
   id: number;
   type: string;
@@ -312,13 +313,11 @@ export class ConstructorComponent {
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
   public elementData: {
-   
-      id: string;
-      fill: string;
-      stroke: string | any;
-      strokeWidth: number;
-      label: string;
-
+    id: string;
+    fill: string;
+    stroke: string | any;
+    strokeWidth: number;
+    label: string;
   };
   elements: DraggableElement[] = [];
   nextId: number = 1;
@@ -332,10 +331,16 @@ export class ConstructorComponent {
   }
 
   ngAfterViewInit(): void {
-    
-    if (this.diagram && localStorage.getItem('fileName')) {
-      this.diagram.loadDiagram(localStorage.getItem('fileName'));
-    }
+    setTimeout(() => {
+      const data = localStorage.getItem('diagram');
+      if (data) {
+        try {
+          this.diagram.loadDiagram(data);
+        } catch (error) {
+          console.error('Ошибка при загрузке диаграммы:', error);
+        }
+      }
+    }, 1500);
   }
 
   public snapSettings: SnapSettingsModel = {
@@ -434,9 +439,21 @@ export class ConstructorComponent {
         }
       }
     }
-    this.saveData = this.diagram.saveDiagram();
-  
-    localStorage.setItem('fileName', JSON.stringify(this.saveData));
+
+    this.saveDiagram();
+  }
+
+  private saveDiagram() {
+    timer(150)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.saveData = this.diagram.saveDiagram();
+        localStorage.setItem('diagram', this.saveData);
+      });
+  }
+
+  public dragLeave(event: any) {
+    this.saveDiagram();
   }
 
   public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
@@ -459,13 +476,11 @@ export class ConstructorComponent {
         computedStyle.getPropertyValue('fill');
 
       this.elementData = {
-    
-          id,
-          stroke,
-          strokeWidth: +strokeWidth,
-          fill,
-          label: ariaLabel,
-
+        id,
+        stroke,
+        strokeWidth: +strokeWidth,
+        fill,
+        label: ariaLabel,
       };
     }
 
@@ -572,13 +587,16 @@ export class ConstructorComponent {
       const targetNode = args.connector.targetID;
 
       if (sourceNode && targetNode) {
-        console.log(`Соединение изменено между узлом ${sourceNode} и узлом ${targetNode}`);
+        console.log(
+          `Соединение изменено между узлом ${sourceNode} и узлом ${targetNode}`
+        );
+        this.saveDiagram();
       }
-    } else if (args.state === 'Cancelled') {
-      console.log('Изменение соединения было отменено.');
     }
-
-    console.log(args);
   }
 
+  public checkToChange(){
+    this.saveDiagram();
+    console.log('change')
+  }
 }
