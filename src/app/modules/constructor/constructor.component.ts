@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import {
   BasicShapeModel,
   cloneObject,
@@ -29,7 +29,8 @@ import {
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { take, timer } from 'rxjs';
+import { timer } from 'rxjs';
+import { IElementData } from './models/form.interface';
 export interface DraggableElement {
   id: number;
   type: string;
@@ -38,7 +39,17 @@ export interface DraggableElement {
 @Component({
   selector: 'app-constructor',
   templateUrl: './constructor.component.html',
-  styleUrls: ['./constructor.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: [
+    './constructor.component.scss',
+    '../../../../node_modules/@syncfusion/ej2-angular-diagrams/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-angular-base/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-popups/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-navigations/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-base/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstructorComponent {
@@ -311,17 +322,11 @@ export class ConstructorComponent {
 
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
-  public elementData: {
-    id: string;
-    fill: string;
-    stroke: string | any;
-    strokeWidth: number;
-    label: string;
-    connection?: {
-      from: string;
-      to: string[];
-    };
-  };
+  public elementData: IElementData;
+  public diagramsLogicData: {
+    [elementId: string]: IElementData[];
+  }[] = [];
+
   elements: DraggableElement[] = [];
   nextId: number = 1;
   saveData: any;
@@ -336,9 +341,11 @@ export class ConstructorComponent {
   ngAfterViewInit(): void {
     setTimeout(() => {
       const data = localStorage.getItem('diagram');
-      if (data) {
+      const diagramLogic = localStorage.getItem('diagramLogicData');
+      if (data && diagramLogic) {
         try {
           this.diagram.loadDiagram(data);
+          this.diagramsLogicData = JSON.parse(diagramLogic);
         } catch (error) {
           console.error('Ошибка при загрузке диаграммы:', error);
         }
@@ -446,14 +453,7 @@ export class ConstructorComponent {
     this.saveDiagram();
   }
 
-  private saveDiagram() {
-    timer(150).subscribe(() => {
-      this.saveData = this.diagram.saveDiagram();
-      localStorage.setItem('diagram', this.saveData);
-    });
-  }
-
-  public dragLeave(event: any) {
+  public dragLeave() {
     this.saveDiagram();
   }
 
@@ -584,36 +584,35 @@ export class ConstructorComponent {
 
   public connectionChange(args: IBlazorConnectionChangeEventArgs): void {
     if (args.state === 'Changing') {
-        const sourceNode = args.connector.sourceID;
-        const targetNode = args.connector.targetID;
+      const sourceNode = args.connector.sourceID;
+      const targetNode = args.connector.targetID;
+  
+      if (sourceNode && targetNode && sourceNode !== targetNode) {
 
-        if (sourceNode && targetNode && sourceNode !== targetNode) {
-            if (!this.elementData) {
-                this.elementData = {
-                    id: '',
-                    fill: '',
-                    stroke: '',
-                    strokeWidth: 1,
-                    label: '',
-                    connection: { from: sourceNode, to: [] },
-                };
-            }
+        if (!this.diagramsLogicData[sourceNode]) {
+          this.diagramsLogicData[sourceNode] = {
+            id: sourceNode
+          };
+        }
+  
+    
+        if (!this.diagramsLogicData[sourceNode]['connection']) {
+          this.diagramsLogicData[sourceNode]['connection'] = {
+            from: sourceNode,
+            to: []
+          };
+        }
 
-            if (!this.elementData.connection) {
-                this.elementData.connection = { from: sourceNode, to: [] };
-            }
+        this.diagramsLogicData[sourceNode]['connection']['from'] = sourceNode;
+        if (!this.diagramsLogicData[sourceNode]['connection']['to'].includes(targetNode)) {
+          this.diagramsLogicData[sourceNode]['connection']['to'].push(targetNode);
+        }
 
-            this.elementData.connection.from = sourceNode;
-
-            if (!this.elementData.connection.to.includes(targetNode)) {
-                this.elementData.connection.to.push(targetNode);
-            }
-
-            this.saveDiagram();
-        } 
+        this.saveDiagram();
+      }
     }
-}
-
+  }
+  
 
   public checkToChange() {
     this.saveDiagram();
@@ -621,20 +620,27 @@ export class ConstructorComponent {
 
   public selectionChange(event: any) {
     if (event.type === 'Removal' && event.oldValue[0]) {
-        const sourceNode = event.oldValue[0].sourceID;
-        const targetNode = event.oldValue[0].targetID;
+      const sourceNode = event.oldValue[0].sourceID;
+      const targetNode = event.oldValue[0].targetID;
 
-        if (sourceNode && targetNode && this.elementData?.connection) {
-            if (this.elementData.connection.from === sourceNode) {
-                const index = this.elementData.connection.to.indexOf(targetNode);
-                if (index !== -1) {
-                    this.elementData.connection.to.splice(index, 1);
-
-                    this.saveDiagram();
-                }
-            }
+      if (sourceNode && targetNode && this.diagramsLogicData[sourceNode]['connection']) {
+        if (this.diagramsLogicData[sourceNode]['connection']['from'] === sourceNode) {
+          const index = this.diagramsLogicData[sourceNode]['connection']['to'].indexOf(targetNode);
+          if (index !== -1) {
+            this.diagramsLogicData[sourceNode]['connection']['to'].splice(index, 1);
+            this.saveDiagram();
+          }
         }
+      }
     }
-}
+  }
 
+  private saveDiagram() {
+    timer(250).subscribe(() => {
+      this.saveData = this.diagram.saveDiagram();
+      // const data = JSON.stringify(this.diagramsLogicData)
+      localStorage.setItem('diagram', this.saveData);
+      // localStorage.setItem('diagramLogicData', data);
+    });
+  }
 }

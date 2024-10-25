@@ -29,6 +29,7 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { ShareModule } from "../../shared/module/share.module";
 
 const routes: Routes = [{ path: '', component: ConstructorComponent }];
 
@@ -44,11 +45,11 @@ const routes: Routes = [{ path: '', component: ConstructorComponent }];
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-
     DiagramModule,
     SymbolPaletteModule,
     DialogModule,
-  ],
+    ShareModule
+],
   providers: [
     HierarchicalTreeService,
     MindMapService,
