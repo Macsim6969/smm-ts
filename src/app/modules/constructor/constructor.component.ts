@@ -43,7 +43,6 @@ export interface DraggableElement {
 })
 export class ConstructorComponent {
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
-
   createdElements: NodeModel[] = [];
   public port: PointPortModel[] = [
     {
@@ -318,6 +317,10 @@ export class ConstructorComponent {
     stroke: string | any;
     strokeWidth: number;
     label: string;
+    connection?: {
+      from: string;
+      to: string[];
+    };
   };
   elements: DraggableElement[] = [];
   nextId: number = 1;
@@ -444,12 +447,10 @@ export class ConstructorComponent {
   }
 
   private saveDiagram() {
-    timer(150)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.saveData = this.diagram.saveDiagram();
-        localStorage.setItem('diagram', this.saveData);
-      });
+    timer(150).subscribe(() => {
+      this.saveData = this.diagram.saveDiagram();
+      localStorage.setItem('diagram', this.saveData);
+    });
   }
 
   public dragLeave(event: any) {
@@ -476,6 +477,7 @@ export class ConstructorComponent {
         computedStyle.getPropertyValue('fill');
 
       this.elementData = {
+        ...this.elementData,
         id,
         stroke,
         strokeWidth: +strokeWidth,
@@ -585,18 +587,47 @@ export class ConstructorComponent {
     if (args.state === 'Changing') {
       const sourceNode = args.connector.sourceID;
       const targetNode = args.connector.targetID;
-
+  
       if (sourceNode && targetNode) {
+        // Ensure that 'elementData' is initialized
+        if (!this.elementData) {
+          this.elementData = {
+            id: '',
+            fill: '',
+            stroke: '',
+            strokeWidth: 1,
+            label: '',
+            connection: { from: sourceNode, to: [] },
+          };
+        }
+  
+        // Ensure that 'connection' is initialized
+        if (!this.elementData.connection) {
+          this.elementData.connection = { from: sourceNode, to: [] };
+        }
+  
+        this.elementData.connection.from = sourceNode;
+        if(!this.elementData.connection.to.includes(targetNode)){
+          this.elementData.connection.to.push(targetNode);
+        }
+  
         console.log(
           `Соединение изменено между узлом ${sourceNode} и узлом ${targetNode}`
         );
+
+        console.log(this.elementData);
+  
         this.saveDiagram();
       }
     }
   }
 
-  public checkToChange(){
+  public checkToChange() {
     this.saveDiagram();
-    console.log('change')
+    console.log('change');
+  }
+
+  public changeRotate(event: any) {
+    console.log(event);
   }
 }

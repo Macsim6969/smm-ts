@@ -6,4 +6,8 @@ export interface SettingsDialog{
   to: string;
   nextStep: string;
   role: string;
+  connection: [
+    from: string,
+    to: string[]
+  ];
 }
