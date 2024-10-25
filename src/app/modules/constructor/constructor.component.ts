@@ -583,51 +583,58 @@ export class ConstructorComponent {
   }
 
   public connectionChange(args: IBlazorConnectionChangeEventArgs): void {
-    // Проверяем, что соединение было изменено
     if (args.state === 'Changing') {
-      const sourceNode = args.connector.sourceID;
-      const targetNode = args.connector.targetID;
-  
-      if (sourceNode && targetNode) {
-        // Ensure that 'elementData' is initialized
-        if (!this.elementData) {
-          this.elementData = {
-            id: '',
-            fill: '',
-            stroke: '',
-            strokeWidth: 1,
-            label: '',
-            connection: { from: sourceNode, to: [] },
-          };
-        }
-  
-        // Ensure that 'connection' is initialized
-        if (!this.elementData.connection) {
-          this.elementData.connection = { from: sourceNode, to: [] };
-        }
-  
-        this.elementData.connection.from = sourceNode;
-        if(!this.elementData.connection.to.includes(targetNode)){
-          this.elementData.connection.to.push(targetNode);
-        }
-  
-        console.log(
-          `Соединение изменено между узлом ${sourceNode} и узлом ${targetNode}`
-        );
+        const sourceNode = args.connector.sourceID;
+        const targetNode = args.connector.targetID;
 
-        console.log(this.elementData);
-  
-        this.saveDiagram();
-      }
+        if (sourceNode && targetNode && sourceNode !== targetNode) {
+            if (!this.elementData) {
+                this.elementData = {
+                    id: '',
+                    fill: '',
+                    stroke: '',
+                    strokeWidth: 1,
+                    label: '',
+                    connection: { from: sourceNode, to: [] },
+                };
+            }
+
+            if (!this.elementData.connection) {
+                this.elementData.connection = { from: sourceNode, to: [] };
+            }
+
+            this.elementData.connection.from = sourceNode;
+
+            if (!this.elementData.connection.to.includes(targetNode)) {
+                this.elementData.connection.to.push(targetNode);
+            }
+
+            this.saveDiagram();
+        } 
     }
-  }
+}
+
 
   public checkToChange() {
     this.saveDiagram();
-    console.log('change');
   }
 
-  public changeRotate(event: any) {
-    console.log(event);
-  }
+  public selectionChange(event: any) {
+    if (event.type === 'Removal' && event.oldValue[0]) {
+        const sourceNode = event.oldValue[0].sourceID;
+        const targetNode = event.oldValue[0].targetID;
+
+        if (sourceNode && targetNode && this.elementData?.connection) {
+            if (this.elementData.connection.from === sourceNode) {
+                const index = this.elementData.connection.to.indexOf(targetNode);
+                if (index !== -1) {
+                    this.elementData.connection.to.splice(index, 1);
+
+                    this.saveDiagram();
+                }
+            }
+        }
+    }
+}
+
 }
