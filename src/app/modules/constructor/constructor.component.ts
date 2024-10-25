@@ -1,4 +1,9 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   BasicShapeModel,
   cloneObject,
@@ -31,6 +36,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
+import { DiagramService } from './services/diagram.service';
 export interface DraggableElement {
   id: number;
   type: string;
@@ -48,7 +54,7 @@ export interface DraggableElement {
     '../../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-navigations/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-base/styles/material.css',
-    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css'
+    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -330,7 +336,10 @@ export class ConstructorComponent {
   elements: DraggableElement[] = [];
   nextId: number = 1;
   saveData: any;
-  constructor(private matDialog: MatDialog) {}
+  constructor(
+    private matDialog: MatDialog,
+    private diagramService: DiagramService
+  ) {}
 
   ngOnInit(): void {
     this.selectedItems = {
@@ -437,6 +446,16 @@ export class ConstructorComponent {
   }
 
   public dragEnter(arg: IDragEnterEventArgs): void {
+    const elementId = arg.element['changedProperties']['id'];
+
+    if (!this.diagramsLogicData[elementId]) {
+      this.diagramsLogicData[elementId] = {};
+    }
+
+    this.diagramsLogicData[elementId]['id'] = elementId;
+    this.diagramsLogicData[elementId]['label'] =
+      arg.element['oldProperties']?.['id'];
+
     if (arg.element instanceof Node) {
       let shape: SwimLaneModel = arg.element.shape as SwimLaneModel;
       if (shape.isLane) {
@@ -586,61 +605,81 @@ export class ConstructorComponent {
     if (args.state === 'Changing') {
       const sourceNode = args.connector.sourceID;
       const targetNode = args.connector.targetID;
-  
-      if (sourceNode && targetNode && sourceNode !== targetNode) {
 
+      if (sourceNode && targetNode && sourceNode !== targetNode) {
         if (!this.diagramsLogicData[sourceNode]) {
           this.diagramsLogicData[sourceNode] = {
-            id: sourceNode
+            id: sourceNode,
           };
         }
-  
-    
+
         if (!this.diagramsLogicData[sourceNode]['connection']) {
           this.diagramsLogicData[sourceNode]['connection'] = {
             from: sourceNode,
-            to: []
+            to: [],
           };
         }
 
         this.diagramsLogicData[sourceNode]['connection']['from'] = sourceNode;
-        if (!this.diagramsLogicData[sourceNode]['connection']['to'].includes(targetNode)) {
-          this.diagramsLogicData[sourceNode]['connection']['to'].push(targetNode);
+        if (
+          !this.diagramsLogicData[sourceNode]['connection']['to'].includes(
+            targetNode
+          )
+        ) {
+          this.diagramsLogicData[sourceNode]['connection']['to'].push(
+            targetNode
+          );
         }
 
         this.saveDiagram();
       }
     }
   }
-  
 
   public checkToChange() {
     this.saveDiagram();
   }
 
   public selectionChange(event: any) {
+    console.log(event);
     if (event.type === 'Removal' && event.oldValue[0]) {
       const sourceNode = event.oldValue[0].sourceID;
       const targetNode = event.oldValue[0].targetID;
 
-      if (sourceNode && targetNode && this.diagramsLogicData[sourceNode]['connection']) {
-        if (this.diagramsLogicData[sourceNode]['connection']['from'] === sourceNode) {
-          const index = this.diagramsLogicData[sourceNode]['connection']['to'].indexOf(targetNode);
+      if (
+        sourceNode &&
+        targetNode &&
+        this.diagramsLogicData[sourceNode]['connection']
+      ) {
+        if (
+          this.diagramsLogicData[sourceNode]['connection']['from'] ===
+          sourceNode
+        ) {
+          const index =
+            this.diagramsLogicData[sourceNode]['connection']['to'].indexOf(
+              targetNode
+            );
           if (index !== -1) {
-            this.diagramsLogicData[sourceNode]['connection']['to'].splice(index, 1);
-            this.saveDiagram();
+            this.diagramsLogicData[sourceNode]['connection']['to'].splice(
+              index,
+              1
+            );
           }
         }
       }
+      this.saveDiagram();
     }
   }
 
   private saveDiagram() {
     timer(250).subscribe(() => {
       this.saveData = this.diagram.saveDiagram();
-      // const data = JSON.stringify(this.diagramsLogicData)
+      console.log(this.diagramsLogicData);
       localStorage.setItem('diagram', this.saveData);
-      // localStorage.setItem('diagramLogicData', data);
     });
+  }
+
+  public postData(){
+    this.diagramService.sendDiagramLogic(this.diagramsLogicData);
   }
 }

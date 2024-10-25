@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { storeReducers } from './store/reducers/store.reducers';
 import { AuthEffects } from './store/effects/store.effects';
 import { AddedUserApiService } from './api/addedUserApi.service';
+import { DiagramService } from './modules/constructor/services/diagram.service';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { AddedUserApiService } from './api/addedUserApi.service';
     PageManagementService,
     ApiService,
     AddedUserApiService,
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    DiagramService
   ],
   bootstrap: [AppComponent]
 })
