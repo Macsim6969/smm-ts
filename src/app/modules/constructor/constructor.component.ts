@@ -359,7 +359,53 @@ export class ConstructorComponent {
           console.error('Ошибка при загрузке диаграммы:', error);
         }
       }
+      this.createSidebarTitle();
     }, 1500);
+  }
+
+  private createSidebarTitle() {
+    const container = document.querySelector(
+      '#symbolpalette'
+    ) as HTMLElement;
+    console.log(container);
+
+    if (container) {
+      // Создаем div для заголовка и кнопки
+      const titleDiv = document.createElement('div');
+      titleDiv.classList.add('titleDiv');
+
+      // Создаем элемент заголовка
+      const titleElement = document.createElement('h2');
+      titleElement.classList.add('titleDivTitle');
+      titleElement.innerText = 'Add Process Attribute';
+
+      // Создаем кнопку
+      const toggleButton = document.createElement('button');
+      toggleButton.classList.add('titleDivBtn');
+      toggleButton.innerText = 'Toggle Width';
+
+
+      let isExpanded = false;
+
+      toggleButton.addEventListener('click', () => {
+        if (isExpanded) {
+          container.style.width = '120px';
+        } else {
+          container.style.width = '100%';
+        }
+        isExpanded = !isExpanded; // Переключаем состояние
+      });
+
+      titleDiv.appendChild(titleElement);
+      titleDiv.appendChild(toggleButton);
+
+      container.prepend(titleDiv);
+
+      container.style.transition = 'width 0.5s'; // Плавный переход ширины
+      container.style.overflow = 'hidden'; // Скроет содержимое, если оно превышает ширину контейнера
+    } else {
+      console.log("Контейнер с ID 'symbolpalette_container' не найден.");
+    }
   }
 
   public snapSettings: SnapSettingsModel = {
@@ -649,24 +695,35 @@ export class ConstructorComponent {
       if (
         sourceNode &&
         targetNode &&
-        this.diagramsLogicData[sourceNode]['connection']
+        this.diagramsLogicData[sourceNode]['connection'] &&
+        !Array.isArray(this.diagramsLogicData[sourceNode]['connection']) // Ensure connection is not an array
       ) {
-        if (
-          this.diagramsLogicData[sourceNode]['connection']['from'] ===
-          sourceNode
-        ) {
-          const index =
-            this.diagramsLogicData[sourceNode]['connection']['to'].indexOf(
-              targetNode
-            );
-          if (index !== -1) {
-            this.diagramsLogicData[sourceNode]['connection']['to'].splice(
-              index,
-              1
-            );
+        const connection = this.diagramsLogicData[sourceNode][
+          'connection'
+        ] as any; // Explicit type for connection
+
+        if (connection.from === sourceNode) {
+          const targetIndex = connection.to.indexOf(targetNode);
+
+          console.log("Connection 'to' array before removal:", connection.to);
+          console.log(
+            'Source Node:',
+            sourceNode,
+            'Target Node:',
+            targetNode,
+            'Index to remove:',
+            targetIndex
+          );
+
+          if (targetIndex !== -1) {
+            connection.to.splice(targetIndex, 1);
+            console.log("Connection 'to' array after removal:", connection.to);
+          } else {
+            console.warn("Target node not found in 'to' array.");
           }
         }
       }
+
       this.saveDiagram();
     }
   }
@@ -679,7 +736,7 @@ export class ConstructorComponent {
     });
   }
 
-  public postData(){
+  public postData() {
     this.diagramService.sendDiagramLogic(this.diagramsLogicData);
   }
 }

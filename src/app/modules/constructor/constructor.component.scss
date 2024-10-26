@@ -1,20 +1,14 @@
-
-.block{
+.block {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100vh;
   background-color: white;
 
-  display: grid ;
+  display: grid;
   grid-template-columns: 0.2fr 1fr;
 
-  .hide{
-   display: none; 
+  ejs-symbolpalette{
+  
   }
-  ::ng-deep{
-    ejs-symbolpalette{
-      width: 100%;
-    }
-  } 
 }
