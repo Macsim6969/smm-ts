@@ -388,12 +388,12 @@ export class ConstructorComponent {
       let isExpanded = false;
 
       toggleButton.addEventListener('click', () => {
+        isExpanded = !isExpanded; // Переключаем состояние
         if (isExpanded) {
           container.style.width = '120px';
         } else {
           container.style.width = '100%';
         }
-        isExpanded = !isExpanded; // Переключаем состояние
       });
 
       titleDiv.appendChild(titleElement);
