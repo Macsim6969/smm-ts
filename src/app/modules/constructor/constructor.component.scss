@@ -30,4 +30,16 @@
       width: 100% !important;
     }
   }
+
+  .popup_modal {
+    position: fixed;
+    background-color: white;
+    right: 0;
+    top: 0;
+    width: 500px !important;
+    height: 350px !important;
+
+    ejs-overview {}
+  }
+
 }

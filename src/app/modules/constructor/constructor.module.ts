@@ -17,6 +17,7 @@ import {
   HierarchicalTreeService,
   LayoutAnimationService,
   MindMapService,
+  OverviewModule,
   PrintAndExportService,
   RadialTreeService,
   SnappingService,
@@ -51,7 +52,8 @@ const routes: Routes = [{ path: '', component: ConstructorComponent }];
     SymbolPaletteModule,
     DialogModule,
     ShareModule,
-    HttpClientModule
+    HttpClientModule ,
+    OverviewModule
 ],
   providers: [
     HierarchicalTreeService,

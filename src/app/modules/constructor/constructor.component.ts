@@ -9,6 +9,7 @@ import {
   cloneObject,
   ConnectorModel,
   ContextMenuSettingsModel,
+  DataSourceModel,
   DiagramBeforeMenuOpenEventArgs,
   DiagramComponent,
   HeaderModel,
@@ -37,6 +38,8 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
 import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
+import { DataManager, Query } from '@syncfusion/ej2-data';
+
 export interface DraggableElement {
   id: number;
   type: string;
@@ -336,6 +339,8 @@ export class ConstructorComponent {
   elements: DraggableElement[] = [];
   nextId: number = 1;
   saveData: any;
+  dataSourceSetings: DataSourceModel;
+  public items?: DataManager;
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService
@@ -345,6 +350,12 @@ export class ConstructorComponent {
     this.selectedItems = {
       constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
     };
+
+    this.dataSourceSetings = {
+      id : 'Id',
+      parentId: 'Team',
+      dataSource: this.items
+    }
   }
 
   ngAfterViewInit(): void {
