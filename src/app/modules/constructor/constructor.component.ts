@@ -19,8 +19,6 @@ import {
   NodeModel,
   PaletteModel,
   PointPortModel,
-  PortConstraints,
-  PortVisibility,
   randomId,
   SelectorConstraints,
   SelectorModel,
@@ -35,11 +33,12 @@ import {
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { timer } from 'rxjs';
+import { take, timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
-import { DataManager, Query } from '@syncfusion/ej2-data';
+import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
+import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 
 export interface DraggableElement {
   id: number;
@@ -66,7 +65,7 @@ export class ConstructorComponent {
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
   public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
-  public palettes: PaletteModel[] ;
+  public palettes: PaletteModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
@@ -87,88 +86,48 @@ export class ConstructorComponent {
     constraints: SnapConstraints.All,
   };
 
-  public dataSourceSetings: DataSourceModel;
   public items?: DataManager;
-  
+
   private saveData: any;
 
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService,
-    private diagramInitDataService: DiagramInitDataService
+    private diagramInitDataService: DiagramInitDataService,
+    private diagramSidebarLogicService: DiagramSidebarLogicService
   ) {}
 
   ngOnInit(): void {
     this.port = this.diagramInitDataService._portSettings;
     this.palettes = this.diagramInitDataService._palettesData;
-    this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings
+    this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
     this.selectedItems = {
       constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
     };
-
-    this.dataSourceSetings = {
-      id : 'Id',
-      parentId: 'Team',
-      dataSource: this.items
-    }
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      const data = localStorage.getItem('diagram');
-      const diagramLogic = localStorage.getItem('diagramLogicData');
-      if (data && diagramLogic) {
-        try {
-          this.diagram.loadDiagram(data);
-          this.diagramsLogicData = JSON.parse(diagramLogic);
-        } catch (error) {
-          console.error('Ошибка при загрузке диаграммы:', error);
-        }
-      }
-      this.createSidebarTitle();
-    }, 1500);
-  }
-
-  private createSidebarTitle() {
-    const container = document.querySelector(
-      '#symbolpalette'
-    ) as HTMLElement;
-
-    if (container) {
-      const titleDiv = document.createElement('div');
-      titleDiv.classList.add('titleDiv');
-
-      const titleElement = document.createElement('h2');
-      titleElement.classList.add('titleDivTitle');
-      titleElement.innerText = 'Add Process Attribute';
-
-      // Создаем кнопку
-      const toggleButton = document.createElement('button');
-      toggleButton.classList.add('titleDivBtn');
-      toggleButton.innerText = 'Toggle Width';
-
-
-      let isExpanded = false;
-
-      toggleButton.addEventListener('click', () => {
-        isExpanded = !isExpanded; // Переключаем состояние
-        if (isExpanded) {
-          container.style.width = '120px';
-        } else {
-          container.style.width = '100%';
+    timer(800)
+      .pipe(take(1))
+      .subscribe(() => {
+        const data = localStorage.getItem('diagram');
+        const diagramLogic = localStorage.getItem('diagramLogicData');
+        if (data && diagramLogic) {
+          try {
+            this.diagram.loadDiagram(data);
+            this.diagramsLogicData = JSON.parse(diagramLogic);
+          } catch (error) {
+            console.error('Ошибка при загрузке диаграммы:', error);
+          }
         }
       });
 
-      titleDiv.appendChild(titleElement);
-      titleDiv.appendChild(toggleButton);
-
-      container.prepend(titleDiv);
-
-      container.style.transition = 'width 0.5s'; // Плавный переход ширины
-      container.style.overflow = 'hidden'; // Скроет содержимое, если оно превышает ширину контейнера
+    const container = document.querySelector('#symbolpalette') as HTMLElement;
+    if (container) {
+      this.diagramSidebarLogicService.createSidebarTitle(container);
     }
   }
-  
+
   public created(): void {
     if (this.diagram) {
       this.diagram.fitToPage();
@@ -225,7 +184,6 @@ export class ConstructorComponent {
         }
       }
     }
-
     this.saveDiagram();
   }
 
@@ -343,7 +301,7 @@ export class ConstructorComponent {
     }
   }
 
-  onOpenDialog(): void {
+  private onOpenDialog(): void {
     const dialogRef = this.matDialog.open(SettingsDialogComponent, {
       width: '260px',
       data: {
@@ -393,11 +351,11 @@ export class ConstructorComponent {
     }
   }
 
-  public checkToChange() {
+  public checkToChange(): void {
     this.saveDiagram();
   }
 
-  public selectionChange(event: any) {
+  public selectionChange(event: any): void {
     if (event.type === 'Removal' && event.oldValue[0]) {
       const sourceNode = event.oldValue[0].sourceID;
       const targetNode = event.oldValue[0].targetID;
@@ -406,11 +364,11 @@ export class ConstructorComponent {
         sourceNode &&
         targetNode &&
         this.diagramsLogicData[sourceNode]['connection'] &&
-        !Array.isArray(this.diagramsLogicData[sourceNode]['connection']) // Ensure connection is not an array
+        !Array.isArray(this.diagramsLogicData[sourceNode]['connection'])
       ) {
         const connection = this.diagramsLogicData[sourceNode][
           'connection'
-        ] as any; // Explicit type for connection
+        ] as any;
 
         if (connection.from === sourceNode) {
           const targetIndex = connection.to.indexOf(targetNode);
@@ -422,19 +380,18 @@ export class ConstructorComponent {
           }
         }
       }
-
       this.saveDiagram();
     }
   }
 
-  private saveDiagram() {
+  private saveDiagram(): void {
     timer(250).subscribe(() => {
       this.saveData = this.diagram.saveDiagram();
       localStorage.setItem('diagram', this.saveData);
     });
   }
 
-  public postData() {
+  public postData(): void {
     this.diagramService.sendDiagramLogic(this.diagramsLogicData);
   }
 }

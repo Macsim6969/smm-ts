@@ -34,6 +34,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { ShareModule } from "../../shared/module/share.module";
 import { DiagramService } from './services/diagram.service';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
+import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 
 const routes: Routes = [{ path: '', component: ConstructorComponent }];
 
@@ -59,6 +60,7 @@ const routes: Routes = [{ path: '', component: ConstructorComponent }];
   providers: [
     HierarchicalTreeService,
     DiagramInitDataService,
+    DiagramSidebarLogicService,
     MindMapService,
     RadialTreeService,
     ComplexHierarchicalTreeService,
