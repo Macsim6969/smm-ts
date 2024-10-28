@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ContextMenuSettingsModel, PaletteModel, PointPortModel, PortConstraints, PortVisibility } from "@syncfusion/ej2-angular-diagrams";
 
-
 @Injectable()
 
 export class DiagramInitDataService{

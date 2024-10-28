@@ -1,10 +1,7 @@
-import { Injectable } from "@angular/core";
-
+import { Injectable } from '@angular/core';
 
 @Injectable()
-
-export class DiagramSidebarLogicService{
-
+export class DiagramSidebarLogicService {
   public createSidebarTitle(container: HTMLElement): void {
     if (container) {
       const titleDiv = document.createElement('div');
@@ -15,13 +12,21 @@ export class DiagramSidebarLogicService{
       titleElement.innerText = 'Add Process Attribute';
 
       const toggleButton = document.createElement('button');
-      toggleButton.classList.add('titleDivBtn');
-      toggleButton.innerText = 'Toggle Width';
+
+      const img = document.createElement('img');
+      img.src = '/assets/images/diagram/arrowLeft.svg';
+      img.alt = 'arrow';
+
+      // Добавляем img в toggleButton
+      toggleButton.appendChild(img);
 
       let isExpanded = false;
 
       toggleButton.addEventListener('click', () => {
         isExpanded = !isExpanded;
+        isExpanded
+          ? toggleButton.classList.add('active')
+          : toggleButton.classList.remove('active');
         container.style.width = isExpanded ? '120px' : '100%';
       });
 
@@ -34,5 +39,4 @@ export class DiagramSidebarLogicService{
       container.style.overflow = 'hidden';
     }
   }
-
 }

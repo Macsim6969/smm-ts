@@ -21,13 +21,19 @@
   ejs-diagram {
     width: 100%;
 
-    #diagram_diagramPorts_svg,
-    #diagram_htmlLayer,
-    #diagram_diagramLayer_div,
-    #diagram_diagramLayer_svg,
-    #diagram_diagramAdornerLayer,
-    #diagram_gridline_svg {
-      width: 100% !important;
+    // #diagram_diagramPorts_svg,
+    // #diagram_htmlLayer,
+    // #diagram_diagramLayer_div,
+    // #diagram_diagramLayer_svg,
+    // #diagram_diagramAdornerLayer,
+    // #diagram_gridline_svg {
+    //   width: 100% !important;
+    // }
+
+    #diagramcontent{
+      &::-webkit-scrollbar{
+        display: none;
+      }
     }
   }
 
@@ -36,8 +42,8 @@
     background-color: white;
     right: 0;
     top: 0;
-    width: 500px !important;
-    height: 350px !important;
+    width: 300px !important;
+    height: 300px !important;
 
     ejs-overview {}
   }

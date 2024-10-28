@@ -39,6 +39,7 @@ import { DiagramService } from './services/diagram.service';
 import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
+import { DiagramMainLogicService } from './services/diagram-main-logic.service';
 
 export interface DraggableElement {
   id: number;
@@ -88,13 +89,13 @@ export class ConstructorComponent {
 
   public items?: DataManager;
 
-  private saveData: any;
 
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService,
     private diagramInitDataService: DiagramInitDataService,
-    private diagramSidebarLogicService: DiagramSidebarLogicService
+    private diagramSidebarLogicService: DiagramSidebarLogicService,
+    private diagramMainLogicService: DiagramMainLogicService    
   ) {}
 
   ngOnInit(): void {
@@ -184,11 +185,11 @@ export class ConstructorComponent {
         }
       }
     }
-    this.saveDiagram();
+    this.diagramMainLogicService.saveDiagram(this.diagram);
   }
 
   public dragLeave(): void {
-    this.saveDiagram();
+    this.diagramMainLogicService.saveDiagram(this.diagram);
   }
 
   public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
@@ -346,13 +347,13 @@ export class ConstructorComponent {
           );
         }
 
-        this.saveDiagram();
+        this.diagramMainLogicService.saveDiagram(this.diagram);
       }
     }
   }
 
   public checkToChange(): void {
-    this.saveDiagram();
+    this.diagramMainLogicService.saveDiagram(this.diagram);
   }
 
   public selectionChange(event: any): void {
@@ -380,15 +381,8 @@ export class ConstructorComponent {
           }
         }
       }
-      this.saveDiagram();
+      this.diagramMainLogicService.saveDiagram(this.diagram);
     }
-  }
-
-  private saveDiagram(): void {
-    timer(250).subscribe(() => {
-      this.saveData = this.diagram.saveDiagram();
-      localStorage.setItem('diagram', this.saveData);
-    });
   }
 
   public postData(): void {
