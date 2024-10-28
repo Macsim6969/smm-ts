@@ -6,7 +6,6 @@ export class DiagramService {
   constructor(private http: HttpClient) {}
 
   public sendDiagramLogic(data: any) {
-    console.log({ data: data });
     if (!data || Object.keys(data).length === 0) {
       console.error('No data to send. Please check the data structure.');
       return false;

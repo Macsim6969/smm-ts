@@ -39,6 +39,7 @@ import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
 import { DataManager, Query } from '@syncfusion/ej2-data';
+import { DiagramInitDataService } from './services/diagram-init-data.service';
 
 export interface DraggableElement {
   id: number;
@@ -63,272 +64,10 @@ export interface DraggableElement {
 })
 export class ConstructorComponent {
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
-  createdElements: NodeModel[] = [];
-  public port: PointPortModel[] = [
-    {
-      id: 'Port1',
-      offset: { x: 0, y: 0.5 },
-      visibility: PortVisibility.Connect | PortVisibility.Hover,
-      constraints: PortConstraints.Default | PortConstraints.Draw,
-    },
-    {
-      id: 'Port2',
-      offset: { x: 0.5, y: 0 },
-      visibility: PortVisibility.Connect | PortVisibility.Hover,
-      constraints: PortConstraints.Default | PortConstraints.Draw,
-    },
-    {
-      id: 'Port3',
-      offset: { x: 1, y: 0.5 },
-      visibility: PortVisibility.Connect | PortVisibility.Hover,
-      constraints: PortConstraints.Default | PortConstraints.Draw,
-    },
-    {
-      id: 'Port4',
-      offset: { x: 0.5, y: 1 },
-      visibility: PortVisibility.Connect | PortVisibility.Hover,
-      constraints: PortConstraints.Default | PortConstraints.Draw,
-    },
-  ];
-
+  public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
-  public palettes: PaletteModel[] = [
-    {
-      id: 'flow',
-      expanded: true,
-      title: 'Flow Shapes',
-      symbols: [
-        {
-          id: 'Start',
-          width: 150,
-          height: 50,
-          shape: {
-            type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Start',
-            },
-            classifier: 'Class',
-            cornerRadius: 16,
-          },
-          ports: this.port,
-          style: {
-            fill: '#DFD8FD',
-          },
-          annotations: [
-            {
-              content: 'Start',
-              style: { color: 'black', fontSize: 18 },
-            },
-          ],
-          // Adding the node annotations here
-          addInfo: {
-            annotations: [
-              {
-                id: 'label1',
-                content: 'Rectangle1',
-                horizontalAlignment: 'Center', // Or use 'Left'/'Right' based on your preference
-              },
-            ],
-          },
-        },
-        {
-          id: 'Terminator',
-          addInfo: { tooltip: 'Terminator' },
-          width: 50,
-          height: 60,
-          shape: { type: 'Flow', shape: 'Terminator' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Terminator',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Process',
-          addInfo: { tooltip: 'Process' },
-          width: 50,
-          height: 60,
-          shape: { type: 'Flow', shape: 'Process' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Process',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Decision',
-          addInfo: { tooltip: 'Decision' },
-          width: 50,
-          height: 50,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Decision',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Document',
-          addInfo: { tooltip: 'Document' },
-          width: 50,
-          height: 50,
-          shape: { type: 'Flow', shape: 'Document' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Document',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Predefinedprocess',
-          addInfo: { tooltip: 'Predefined process' },
-          width: 50,
-          height: 50,
-          shape: { type: 'Flow', shape: 'PreDefinedProcess' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'PreDefined Process',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Data',
-          addInfo: { tooltip: 'Data' },
-          width: 50,
-          height: 50,
-          shape: { type: 'Flow', shape: 'Data' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Data',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'swimlaneShapes',
-      expanded: true,
-      title: 'Swimlane Shapes',
-      symbols: [
-        {
-          id: 'Horizontalswimlane',
-          addInfo: { tooltip: 'Horizontal swimlane' },
-          shape: {
-            type: 'SwimLane',
-            lanes: [
-              {
-                id: 'lane1',
-                height: 60,
-                width: 150,
-                header: { width: 50, height: 50, style: { fontSize: 11 } },
-              },
-            ],
-            orientation: 'Horizontal',
-            isLane: true,
-          },
-          height: 60,
-          width: 140,
-          offsetX: 70,
-          offsetY: 30,
-        },
-        {
-          id: 'Verticalswimlane',
-          addInfo: { tooltip: 'Vertical swimlane' },
-          shape: {
-            type: 'SwimLane',
-            lanes: [
-              {
-                id: 'lane1',
-                height: 150,
-                width: 60,
-                header: { width: 50, height: 50, style: { fontSize: 11 } },
-              },
-            ],
-            orientation: 'Vertical',
-            isLane: true,
-          },
-          height: 140,
-          width: 60,
-          offsetX: 70,
-          offsetY: 30,
-        },
-        {
-          id: 'Verticalphase',
-          addInfo: { tooltip: 'Vertical phase' },
-          shape: {
-            type: 'SwimLane',
-            phases: [{ style: { strokeDashArray: '3,3' } }],
-            annotations: [{ text: '' }],
-            orientation: 'Vertical',
-            isPhase: true,
-          },
-          height: 60,
-          width: 140,
-        },
-        {
-          id: 'Horizontalphase',
-          addInfo: { tooltip: 'Horizontal phase' },
-          shape: {
-            type: 'SwimLane',
-            phases: [{ style: { strokeDashArray: '3,3' } }],
-            annotations: [{ text: '' }],
-            orientation: 'Horizontal',
-            isPhase: true,
-          },
-          height: 60,
-          width: 140,
-        },
-      ],
-    },
-    {
-      id: 'connectors',
-      expanded: true,
-      symbols: [
-        {
-          id: 'orthogonal',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-        },
-        {
-          id: 'orthogonaldashed',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-          style: { strokeDashArray: '4 4' },
-        },
-        {
-          id: 'straight',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-        },
-        {
-          id: 'straightdashed',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-          style: { strokeDashArray: '4 4' },
-        },
-      ],
-      title: 'Connectors',
-    },
-  ];
+  public palettes: PaletteModel[] ;
   public drawingshape?: BasicShapeModel;
-
   public palete: SymbolPaletteComponent;
   public selectedItems: SelectorModel;
   public elementData: IElementData;
@@ -336,17 +75,33 @@ export class ConstructorComponent {
     [elementId: string]: IElementData[];
   }[] = [];
 
-  elements: DraggableElement[] = [];
-  nextId: number = 1;
-  saveData: any;
-  dataSourceSetings: DataSourceModel;
+  public contextMenuSettings: ContextMenuSettingsModel;
+
+  public snapSettings: SnapSettingsModel = {
+    horizontalGridlines: {
+      snapIntervals: [10],
+    },
+    verticalGridlines: {
+      snapIntervals: [10],
+    },
+    constraints: SnapConstraints.All,
+  };
+
+  public dataSourceSetings: DataSourceModel;
   public items?: DataManager;
+  
+  private saveData: any;
+
   constructor(
     private matDialog: MatDialog,
-    private diagramService: DiagramService
+    private diagramService: DiagramService,
+    private diagramInitDataService: DiagramInitDataService
   ) {}
 
   ngOnInit(): void {
+    this.port = this.diagramInitDataService._portSettings;
+    this.palettes = this.diagramInitDataService._palettesData;
+    this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings
     this.selectedItems = {
       constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
     };
@@ -378,14 +133,11 @@ export class ConstructorComponent {
     const container = document.querySelector(
       '#symbolpalette'
     ) as HTMLElement;
-    console.log(container);
 
     if (container) {
-      // Создаем div для заголовка и кнопки
       const titleDiv = document.createElement('div');
       titleDiv.classList.add('titleDiv');
 
-      // Создаем элемент заголовка
       const titleElement = document.createElement('h2');
       titleElement.classList.add('titleDivTitle');
       titleElement.innerText = 'Add Process Attribute';
@@ -414,66 +166,14 @@ export class ConstructorComponent {
 
       container.style.transition = 'width 0.5s'; // Плавный переход ширины
       container.style.overflow = 'hidden'; // Скроет содержимое, если оно превышает ширину контейнера
-    } else {
-      console.log("Контейнер с ID 'symbolpalette_container' не найден.");
     }
   }
-
-  public snapSettings: SnapSettingsModel = {
-    horizontalGridlines: {
-      snapIntervals: [10],
-    },
-    verticalGridlines: {
-      snapIntervals: [10],
-    },
-    constraints: SnapConstraints.All,
-  };
+  
   public created(): void {
     if (this.diagram) {
       this.diagram.fitToPage();
     }
   }
-
-  public contextMenuSettings: ContextMenuSettingsModel = {
-    show: true,
-    items: [
-      {
-        text: 'Settings',
-        id: 'Settings',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-settings',
-      },
-      {
-        text: 'Clone',
-        id: 'Clone',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-copy',
-      },
-      {
-        text: 'Cut',
-        id: 'Cut',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-cut',
-      },
-      {
-        text: 'Paste',
-        id: 'Paste',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-paste',
-      },
-      {
-        text: 'InsertLaneBefore',
-        id: 'InsertLaneBefore',
-        target: '.e-diagramcontent',
-      },
-      {
-        text: 'InsertLaneAfter',
-        id: 'InsertLaneAfter',
-        target: '.e-diagramcontent',
-      },
-    ],
-    showCustomMenuOnly: true,
-  };
 
   public getConnectorDefaults(connector: ConnectorModel): ConnectorModel {
     if (
@@ -529,7 +229,7 @@ export class ConstructorComponent {
     this.saveDiagram();
   }
 
-  public dragLeave() {
+  public dragLeave(): void {
     this.saveDiagram();
   }
 
@@ -698,7 +398,6 @@ export class ConstructorComponent {
   }
 
   public selectionChange(event: any) {
-    console.log(event);
     if (event.type === 'Removal' && event.oldValue[0]) {
       const sourceNode = event.oldValue[0].sourceID;
       const targetNode = event.oldValue[0].targetID;
@@ -716,19 +415,8 @@ export class ConstructorComponent {
         if (connection.from === sourceNode) {
           const targetIndex = connection.to.indexOf(targetNode);
 
-          console.log("Connection 'to' array before removal:", connection.to);
-          console.log(
-            'Source Node:',
-            sourceNode,
-            'Target Node:',
-            targetNode,
-            'Index to remove:',
-            targetIndex
-          );
-
           if (targetIndex !== -1) {
             connection.to.splice(targetIndex, 1);
-            console.log("Connection 'to' array after removal:", connection.to);
           } else {
             console.warn("Target node not found in 'to' array.");
           }
@@ -742,7 +430,6 @@ export class ConstructorComponent {
   private saveDiagram() {
     timer(250).subscribe(() => {
       this.saveData = this.diagram.saveDiagram();
-      console.log(this.diagramsLogicData);
       localStorage.setItem('diagram', this.saveData);
     });
   }

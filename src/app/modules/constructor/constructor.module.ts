@@ -33,6 +33,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { ShareModule } from "../../shared/module/share.module";
 import { DiagramService } from './services/diagram.service';
+import { DiagramInitDataService } from './services/diagram-init-data.service';
 
 const routes: Routes = [{ path: '', component: ConstructorComponent }];
 
@@ -57,6 +58,7 @@ const routes: Routes = [{ path: '', component: ConstructorComponent }];
 ],
   providers: [
     HierarchicalTreeService,
+    DiagramInitDataService,
     MindMapService,
     RadialTreeService,
     ComplexHierarchicalTreeService,
