@@ -89,7 +89,6 @@ export class ConstructorComponent {
 
   public items?: DataManager;
 
-
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService,
@@ -99,6 +98,16 @@ export class ConstructorComponent {
   ) {}
 
   ngOnInit(): void {
+    this.initializeDiagramSettingsData();
+  }
+
+
+  ngAfterViewInit(): void {
+    this.loadDiagram();
+    this.loadSidebarTitle();
+  }
+
+  private initializeDiagramSettingsData(): void{
     this.port = this.diagramInitDataService._portSettings;
     this.palettes = this.diagramInitDataService._palettesData;
     this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
@@ -107,22 +116,24 @@ export class ConstructorComponent {
     };
   }
 
-  ngAfterViewInit(): void {
-    timer(800)
-      .pipe(take(1))
-      .subscribe(() => {
-        const data = localStorage.getItem('diagram');
-        const diagramLogic = localStorage.getItem('diagramLogicData');
-        if (data && diagramLogic) {
-          try {
-            this.diagram.loadDiagram(data);
-            this.diagramsLogicData = JSON.parse(diagramLogic);
-          } catch (error) {
-            console.error('Ошибка при загрузке диаграммы:', error);
-          }
+  private loadDiagram(){
+    timer(250)
+    .pipe(take(1))
+    .subscribe(() => {
+      const data = localStorage.getItem('diagram');
+      const diagramLogic = localStorage.getItem('diagramLogicData');
+      if (data && diagramLogic) {
+        try {
+          this.diagram.loadDiagram(data);
+          this.diagramsLogicData = JSON.parse(diagramLogic);
+        } catch (error) {
+          console.error('Ошибка при загрузке диаграммы:', error);
         }
-      });
+      }
+    });
+  }
 
+  private loadSidebarTitle(){
     const container = document.querySelector('#symbolpalette') as HTMLElement;
     if (container) {
       this.diagramSidebarLogicService.createSidebarTitle(container);

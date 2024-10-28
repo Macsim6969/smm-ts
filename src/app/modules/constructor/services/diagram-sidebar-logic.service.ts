@@ -17,7 +17,6 @@ export class DiagramSidebarLogicService {
       img.src = '/assets/images/diagram/arrowLeft.svg';
       img.alt = 'arrow';
 
-      // Добавляем img в toggleButton
       toggleButton.appendChild(img);
 
       let isExpanded = false;
@@ -27,7 +26,7 @@ export class DiagramSidebarLogicService {
         isExpanded
           ? toggleButton.classList.add('active')
           : toggleButton.classList.remove('active');
-        container.style.width = isExpanded ? '120px' : '100%';
+        container.style.width = isExpanded ? '160px' : '100%';
       });
 
       titleDiv.appendChild(titleElement);
@@ -35,7 +34,7 @@ export class DiagramSidebarLogicService {
 
       container.prepend(titleDiv);
 
-      container.style.transition = 'width 0.5s';
+      container.style.transition = 'width 0.5s easy';
       container.style.overflow = 'hidden';
     }
   }

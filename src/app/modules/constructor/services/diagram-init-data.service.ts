@@ -75,8 +75,8 @@ export class DiagramInitDataService{
         {
           id: 'Terminator',
           addInfo: { tooltip: 'Terminator' },
-          width: 50,
-          height: 60,
+          width: 90,
+          height: 80,
           shape: { type: 'Flow', shape: 'Terminator' },
           ports: this.port,
           annotations: [
@@ -89,8 +89,8 @@ export class DiagramInitDataService{
         {
           id: 'Process',
           addInfo: { tooltip: 'Process' },
-          width: 50,
-          height: 60,
+          width: 80,
+          height: 90,
           shape: { type: 'Flow', shape: 'Process' },
           ports: this.port,
           annotations: [
@@ -103,10 +103,13 @@ export class DiagramInitDataService{
         {
           id: 'Decision',
           addInfo: { tooltip: 'Decision' },
-          width: 50,
-          height: 50,
+          width: 100,
+          height: 100,
           shape: { type: 'Flow', shape: 'Decision' },
           ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
           annotations: [
             {
               content: 'Decision',
@@ -117,8 +120,8 @@ export class DiagramInitDataService{
         {
           id: 'Document',
           addInfo: { tooltip: 'Document' },
-          width: 50,
-          height: 50,
+          width: 90,
+          height: 90,
           shape: { type: 'Flow', shape: 'Document' },
           ports: this.port,
           annotations: [
@@ -131,8 +134,8 @@ export class DiagramInitDataService{
         {
           id: 'Predefinedprocess',
           addInfo: { tooltip: 'Predefined process' },
-          width: 50,
-          height: 50,
+          width: 90,
+          height: 90,
           shape: { type: 'Flow', shape: 'PreDefinedProcess' },
           ports: this.port,
           annotations: [
@@ -145,8 +148,8 @@ export class DiagramInitDataService{
         {
           id: 'Data',
           addInfo: { tooltip: 'Data' },
-          width: 50,
-          height: 50,
+          width: 90,
+          height: 90,
           shape: { type: 'Flow', shape: 'Data' },
           ports: this.port,
           annotations: [
@@ -171,18 +174,18 @@ export class DiagramInitDataService{
             lanes: [
               {
                 id: 'lane1',
-                height: 60,
-                width: 150,
-                header: { width: 50, height: 50, style: { fontSize: 11 } },
+                height: 200,
+                width: 450,
+                header: { width: 80, height: 80, style: { fontSize: 16 } },
               },
             ],
             orientation: 'Horizontal',
             isLane: true,
           },
-          height: 60,
-          width: 140,
-          offsetX: 70,
-          offsetY: 30,
+          height: 150,
+          width: 300,
+          offsetX: 120,
+          offsetY: 120,
         },
         {
           id: 'Verticalswimlane',
@@ -192,18 +195,18 @@ export class DiagramInitDataService{
             lanes: [
               {
                 id: 'lane1',
-                height: 150,
-                width: 60,
-                header: { width: 50, height: 50, style: { fontSize: 11 } },
+                height: 200,
+                width: 450,
+                header: { width: 80, height: 80, style: { fontSize: 16 } },
               },
             ],
             orientation: 'Vertical',
             isLane: true,
           },
-          height: 140,
-          width: 60,
-          offsetX: 70,
-          offsetY: 30,
+          height: 150,
+          width: 300,
+          offsetX: 120,
+          offsetY: 120,
         },
         {
           id: 'Verticalphase',
