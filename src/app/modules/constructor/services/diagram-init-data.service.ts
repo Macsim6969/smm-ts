@@ -309,6 +309,30 @@ export class DiagramInitDataService{
         id: 'InsertLaneAfter',
         target: '.e-diagramcontent',
       },
+      {
+        text: 'Fill',
+        items: [
+          { id: 'red', text: 'Red' },
+          { id: 'yellow', text: 'Yellow' },
+          { id: 'green', text: 'Green' },
+          { id: 'blue', text: 'Blue' },
+        ],
+        id: 'fill',
+        target: '.e-elementcontent',
+        iconCss: 'e-icons e-paint-bucket',
+      },
+      {
+        text: 'Annotation color',
+        id: 'annotationColor',
+        items: [
+          { id: 'pink', text: 'Pink' },
+          { id: 'orange', text: 'Orange' },
+          { id: 'violet', text: 'Violet' },
+          { id: 'brown', text: 'Brown' },
+        ],
+        target: '.e-elementcontent',
+        iconCss: 'e-icons e-font-color',
+      }
     ],
     showCustomMenuOnly: true,
   };

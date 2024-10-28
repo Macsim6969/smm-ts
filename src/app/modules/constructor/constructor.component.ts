@@ -94,20 +94,19 @@ export class ConstructorComponent {
     private diagramService: DiagramService,
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
-    private diagramMainLogicService: DiagramMainLogicService    
+    private diagramMainLogicService: DiagramMainLogicService
   ) {}
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
   }
 
-
   ngAfterViewInit(): void {
     this.loadDiagram();
     this.loadSidebarTitle();
   }
 
-  private initializeDiagramSettingsData(): void{
+  private initializeDiagramSettingsData(): void {
     this.port = this.diagramInitDataService._portSettings;
     this.palettes = this.diagramInitDataService._palettesData;
     this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
@@ -116,24 +115,22 @@ export class ConstructorComponent {
     };
   }
 
-  private loadDiagram(){
-    timer(250)
-    .pipe(take(1))
-    .subscribe(() => {
-      const data = localStorage.getItem('diagram');
-      const diagramLogic = localStorage.getItem('diagramLogicData');
-      if (data && diagramLogic) {
-        try {
-          this.diagram.loadDiagram(data);
-          this.diagramsLogicData = JSON.parse(diagramLogic);
-        } catch (error) {
-          console.error('Ошибка при загрузке диаграммы:', error);
+  private loadDiagram() {
+    timer(450)
+      .subscribe(() => {
+        const data = localStorage.getItem('diagram');
+
+        if (data) {
+          try {
+            this.diagram.loadDiagram(data);
+          } catch (error) {
+            console.error('Ошибка при загрузке диаграммы:', error);
+          }
         }
-      }
-    });
+      });
   }
 
-  private loadSidebarTitle(){
+  private loadSidebarTitle() {
     const container = document.querySelector('#symbolpalette') as HTMLElement;
     if (container) {
       this.diagramSidebarLogicService.createSidebarTitle(container);
@@ -254,6 +251,7 @@ export class ConstructorComponent {
   }
 
   public contextMenuClick(args: MenuEventArgs): void {
+    let selectedNode = (this.diagram as any).selectedItems.nodes[0];
     if (
       args.item.id === 'InsertLaneBefore' ||
       args.item.id === 'InsertLaneAfter'
@@ -310,6 +308,29 @@ export class ConstructorComponent {
     } else if (args.item.id === 'Settings') {
       this.matDialog.closeAll();
       this.onOpenDialog();
+    } else if (
+      selectedNode &&
+      args.item.id !== 'fill' &&
+      args.item.id !== 'annotationColor'
+    ) {
+      if (
+        args.item.text === 'Red' ||
+        args.item.text === 'Blue' ||
+        args.item.text === 'Yellow' ||
+        args.item.text === 'Green'
+      ) {
+        selectedNode.style.fill = args.item.text;
+        (this.diagram as any).dataBind();
+      } else if (
+        args.item.text === 'Pink' ||
+        args.item.text === 'Violet' ||
+        args.item.text === 'Orange' ||
+        args.item.text === 'Brown'
+      ) {
+        selectedNode.annotations[0].style.fill = args.item.text;
+        (this.diagram as any).dataBind();
+      }
+      this.diagramMainLogicService.saveDiagram(this.diagram);
     }
   }
 
