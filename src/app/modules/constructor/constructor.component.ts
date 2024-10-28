@@ -9,7 +9,6 @@ import {
   cloneObject,
   ConnectorModel,
   ContextMenuSettingsModel,
-  DataSourceModel,
   DiagramBeforeMenuOpenEventArgs,
   DiagramComponent,
   HeaderModel,
@@ -33,13 +32,15 @@ import {
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { take, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
 import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 import { DiagramMainLogicService } from './services/diagram-main-logic.service';
+import { NgxMatDatetimepicker } from '@angular-material-components/datetime-picker';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface DraggableElement {
   id: number;
@@ -63,6 +64,8 @@ export interface DraggableElement {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstructorComponent {
+
+ 
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
   public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
@@ -95,7 +98,9 @@ export class ConstructorComponent {
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
     private diagramMainLogicService: DiagramMainLogicService
-  ) {}
+  ) {
+   
+  }
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
@@ -116,18 +121,17 @@ export class ConstructorComponent {
   }
 
   private loadDiagram() {
-    timer(450)
-      .subscribe(() => {
-        const data = localStorage.getItem('diagram');
+    timer(450).subscribe(() => {
+      const data = localStorage.getItem('diagram');
 
-        if (data) {
-          try {
-            this.diagram.loadDiagram(data);
-          } catch (error) {
-            console.error('Ошибка при загрузке диаграммы:', error);
-          }
+      if (data) {
+        try {
+          this.diagram.loadDiagram(data);
+        } catch (error) {
+          console.error('Ошибка при загрузке диаграммы:', error);
         }
-      });
+      }
+    });
   }
 
   private loadSidebarTitle() {
@@ -249,9 +253,11 @@ export class ConstructorComponent {
       }
     }
   }
-
+  
   public contextMenuClick(args: MenuEventArgs): void {
     let selectedNode = (this.diagram as any).selectedItems.nodes[0];
+    console.log(selectedNode);
+    console.log(args.item.text);
     if (
       args.item.id === 'InsertLaneBefore' ||
       args.item.id === 'InsertLaneAfter'
@@ -308,11 +314,7 @@ export class ConstructorComponent {
     } else if (args.item.id === 'Settings') {
       this.matDialog.closeAll();
       this.onOpenDialog();
-    } else if (
-      selectedNode &&
-      args.item.id !== 'fill' &&
-      args.item.id !== 'annotationColor'
-    ) {
+    } else if (selectedNode && args.item.id !== 'fill' && args.item.id !== 'annotationText') {
       if (
         args.item.text === 'Red' ||
         args.item.text === 'Blue' ||
@@ -321,17 +323,18 @@ export class ConstructorComponent {
       ) {
         selectedNode.style.fill = args.item.text;
         (this.diagram as any).dataBind();
-      } else if (
-        args.item.text === 'Pink' ||
-        args.item.text === 'Violet' ||
-        args.item.text === 'Orange' ||
-        args.item.text === 'Brown'
+      } else if(
+        args.item.text === 'Standard' ||
+        args.item.text === 'Emergency' ||
+        args.item.text === 'Planned' ||
+        args.item.text === 'Unscheduled'
       ) {
-        selectedNode.annotations[0].style.fill = args.item.text;
+        selectedNode.annotations[0].content = args.item.text;
         (this.diagram as any).dataBind();
       }
+      (this.diagram as any).dataBind();
       this.diagramMainLogicService.saveDiagram(this.diagram);
-    }
+    } 
   }
 
   private onOpenDialog(): void {
@@ -419,5 +422,13 @@ export class ConstructorComponent {
 
   public postData(): void {
     this.diagramService.sendDiagramLogic(this.diagramsLogicData);
+  }
+
+  public changeText(args: any): void | boolean {
+    if (args.diagramAction === 'TextEdit') {
+      this.diagramMainLogicService.saveDiagram(this.diagram);
+    } else {
+      return false;
+    }
   }
 }
