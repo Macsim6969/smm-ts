@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ContextMenuSettingsModel, PaletteModel, PointPortModel, PortConstraints, PortVisibility } from "@syncfusion/ej2-angular-diagrams";
+import { ContextMenuSettingsModel, PaletteModel, PointPortModel, PortConstraints, PortVisibility, UserHandleModel } from "@syncfusion/ej2-angular-diagrams";
 
 @Injectable()
 
@@ -282,12 +282,6 @@ export class DiagramInitDataService{
         iconCss: 'e-icons e-settings',
       },
       {
-        text: 'Clone',
-        id: 'Clone',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-copy',
-      },
-      {
         text: 'Cut',
         id: 'Cut',
         target: '.e-diagramcontent',
@@ -337,7 +331,7 @@ export class DiagramInitDataService{
     showCustomMenuOnly: true,
   };
 
-
+  
 
   get _portSettings(): PointPortModel[]{
     return this.port;

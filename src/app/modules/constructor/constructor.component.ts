@@ -27,6 +27,8 @@ import {
   SwimLaneModel,
   SymbolInfo,
   SymbolPaletteComponent,
+  UserHandleEventsArgs,
+  UserHandleModel,
 } from '@syncfusion/ej2-angular-diagrams';
 
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
@@ -64,15 +66,25 @@ export interface DraggableElement {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstructorComponent {
-
- 
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
   public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
   public palettes: PaletteModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
-  public selectedItems: SelectorModel;
+  // Определение пользовательских ручек
+  public selectedItems: SelectorModel = {
+    constraints: SelectorConstraints.All, // Все ограничения включены
+    userHandles: [
+      {
+        name: 'clone',
+        pathData: 'M0,3.42 L1.36,3.42 L1.36,12.39 L9.62,12.39 L9.62,13.75 L1.36,13.75 C0.97,13.75,0.65,13.62,0.39,13.36 C0.13,13.1,0,12.78,0,12.39 Z M4.13,0 L12.39,0 C12.78,0,13.1,0.13,13.36,0.39 C13.62,0.65,13.75,0.97,13.75,1.36 L13.75,9.62 C13.75,10.01,13.62,10.33,13.36,10.6 C13.1,10.87,12.78,11.01,12.39,11.01 L4.13,11.01 C3.72,11.01,3.39,10.87,3.13,10.6 C2.87,10.33,2.74,10.01,2.74,9.62 L2.74,1.36 C2.74,0.97,2.87,0.65,3.13,0.39 C3.39,0.13,3.72,0,4.13,0 Z ',
+        offset: 0,
+        side: 'Left'  
+      }
+    ],
+  };
+
   public elementData: IElementData;
   public diagramsLogicData: {
     [elementId: string]: IElementData[];
@@ -98,9 +110,7 @@ export class ConstructorComponent {
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
     private diagramMainLogicService: DiagramMainLogicService
-  ) {
-   
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
@@ -115,9 +125,6 @@ export class ConstructorComponent {
     this.port = this.diagramInitDataService._portSettings;
     this.palettes = this.diagramInitDataService._palettesData;
     this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
-    this.selectedItems = {
-      constraints: SelectorConstraints.All & ~SelectorConstraints.Rotate,
-    };
   }
 
   private loadDiagram() {
@@ -253,7 +260,7 @@ export class ConstructorComponent {
       }
     }
   }
-  
+
   public contextMenuClick(args: MenuEventArgs): void {
     let selectedNode = (this.diagram as any).selectedItems.nodes[0];
     console.log(selectedNode);
@@ -314,7 +321,11 @@ export class ConstructorComponent {
     } else if (args.item.id === 'Settings') {
       this.matDialog.closeAll();
       this.onOpenDialog();
-    } else if (selectedNode && args.item.id !== 'fill' && args.item.id !== 'annotationText') {
+    } else if (
+      selectedNode &&
+      args.item.id !== 'fill' &&
+      args.item.id !== 'annotationText'
+    ) {
       if (
         args.item.text === 'Red' ||
         args.item.text === 'Blue' ||
@@ -323,7 +334,7 @@ export class ConstructorComponent {
       ) {
         selectedNode.style.fill = args.item.text;
         (this.diagram as any).dataBind();
-      } else if(
+      } else if (
         args.item.text === 'Standard' ||
         args.item.text === 'Emergency' ||
         args.item.text === 'Planned' ||
@@ -334,7 +345,7 @@ export class ConstructorComponent {
       }
       (this.diagram as any).dataBind();
       this.diagramMainLogicService.saveDiagram(this.diagram);
-    } 
+    }
   }
 
   private onOpenDialog(): void {
@@ -431,4 +442,13 @@ export class ConstructorComponent {
       return false;
     }
   }
+
+  public onUserHandleMouseDown(args: UserHandleEventsArgs): void
+  {
+    if (args.element) {
+        //To clone the selected node
+        ((this.diagram)as DiagramComponent).copy();
+        ((this.diagram)as DiagramComponent).paste();
+      }
+  };
 }
