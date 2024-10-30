@@ -323,12 +323,15 @@ export class DiagramInitDataService{
           { id: 'emergency', text: 'Emergency' },
           { id: 'planned', text: 'Planned' },
           { id: 'unscheduled', text: 'Unscheduled' },
+          { id: 'application_type', text: 'Application type'},
+          { id: 'range_of_sum', text: 'Range of sum'},
+          { id: 'category', text: 'Category'}
         ],
         target: '.e-elementcontent',
         iconCss: 'e-icons e-font-color',
       }
     ],
-    showCustomMenuOnly: true,
+    showCustomMenuOnly: true
   };
 
   
@@ -344,4 +347,28 @@ export class DiagramInitDataService{
   get _contextMenuSettings(): ContextMenuSettingsModel{
     return this.contextMenuSettings;
   }
+
+  onContextMenuBeforeOpen(args: any): void {
+    const selectedNode = args.diagram.selectedItems.nodes[0];
+    if (selectedNode) {
+        switch (selectedNode.id) {
+            case 'element1':
+                this.updateAnnotationTextItems(['Standard', 'Option1', 'Option2']);
+                break;
+            case 'element2':
+                this.updateAnnotationTextItems(['Emergency', 'Critical', 'Minor']);
+                break;
+            default:
+                this.updateAnnotationTextItems(['Planned', 'Unscheduled']);
+                break;
+        }
+    }
+}
+
+private updateAnnotationTextItems(options: string[]): void {
+    const annotationMenuItem = this.contextMenuSettings.items.find(item => item.id === 'annotationText');
+    if (annotationMenuItem) {
+        annotationMenuItem.items = options.map((text, index) => ({ id: `annotation_${index}`, text }));
+    }
+}
 }
