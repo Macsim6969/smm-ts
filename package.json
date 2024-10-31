@@ -26,6 +26,7 @@
     "@ngrx/store": "^18.0.2",
     "@swimlane/ngx-graph": "^9.0.0-beta.0",
     "@syncfusion/ej2": "^27.1.53",
+    "@syncfusion/ej2-angular-buttons": "^27.1.53",
     "@syncfusion/ej2-angular-diagrams": "^27.1.55",
     "@syncfusion/ej2-angular-grids": "^27.1.53",
     "@syncfusion/ej2-angular-inputs": "^27.1.50",

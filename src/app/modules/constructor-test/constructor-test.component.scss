@@ -1,23 +1,60 @@
-#paper-container {
-  position: absolute;
-  right: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  overflow-x: auto;
+.block {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+
+  ejs-symbolpalette {
+    max-width: 253px;
+    transition: all 0.8s ease;
+    width: 100%;
+  }
+
+  ejs-diagram {
+    width: 100%;
+
+    // #diagram_diagramPorts_svg,
+    // #diagram_htmlLayer,
+    // #diagram_diagramLayer_div,
+    // #diagram_diagramLayer_svg,
+    // #diagram_diagramAdornerLayer,
+    // #diagram_gridline_svg {
+    //   width: 100% !important;
+    // }
+
+    #diagramcontent{
+      &::-webkit-scrollbar{
+        display: none;
+      }
+    }
+  }
+
+  .popup_modal {
+    position: fixed;
+    background-color: white;
+    right: 0;
+    top: 0;
+    width: 300px !important;
+    height: 300px !important;
+
+    ejs-overview {}
+  }
+
 }
 
-[joint-selector="button"]:hover {
-  fill: #333;
-}
-
-#logo {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: #ffffff;
-  border: 1px solid #d3d3d3;
-  padding: 5px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+.div_data{
+  position: fixed;
+  z-index: 999;
+  background-color: aquamarine;
+  width: 500px;
+  height: 500px;
 }

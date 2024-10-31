@@ -15,6 +15,7 @@
 
   ejs-symbolpalette {
     max-width: 253px;
+    transition: all 0.8s ease;
     width: 100%;
   }
 
@@ -56,4 +57,14 @@
   background-color: aquamarine;
   width: 500px;
   height: 500px;
+}
+
+::ng-deep .e-diagram-userhandle-icon.customIcon {
+  width: 24px;
+  height: 24px;
+  fill: #717171;
+}
+
+::ng-deep .e-diagram-userhandle-icon.e-copy {
+  color: #006ce6; /* Цвет иконки копирования */
 }

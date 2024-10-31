@@ -41,8 +41,6 @@ import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 import { DiagramMainLogicService } from './services/diagram-main-logic.service';
-import { NgxMatDatetimepicker } from '@angular-material-components/datetime-picker';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface DraggableElement {
   id: number;
@@ -61,7 +59,7 @@ export interface DraggableElement {
     '../../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-navigations/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-base/styles/material.css',
-    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css',
+    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -172,8 +170,8 @@ export class ConstructorComponent {
     return connector;
   }
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {
-    return { tooltip: symbol.addInfo ? symbol.addInfo['tooltip'] : symbol.id };
-  }
+    return { fit: true,description: { text: symbol.id, } ,tooltip: symbol.addInfo ? symbol.addInfo['tooltip'] : symbol.id };
+ }
 
   public getNodeDefaults(node: NodeModel): NodeModel {
     node.style.strokeColor = '#717171';
