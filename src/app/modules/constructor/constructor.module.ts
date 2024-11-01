@@ -36,6 +36,7 @@ import { DiagramService } from './services/diagram.service';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 import { DiagramMainLogicService } from './services/diagram-main-logic.service';
+import { DiagramStoreIconsService } from './services/diagram-store-icons.service';
 
 const routes: Routes = [{ path: '', component: ConstructorComponent }];
 
@@ -63,6 +64,7 @@ const routes: Routes = [{ path: '', component: ConstructorComponent }];
     DiagramInitDataService,
     DiagramSidebarLogicService,
     DiagramMainLogicService,
+    DiagramStoreIconsService,
     MindMapService,
     RadialTreeService,
     ComplexHierarchicalTreeService,

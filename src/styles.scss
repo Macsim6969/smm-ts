@@ -65,14 +65,20 @@ body {
   .e-accordion {
     .e-acrdn-item {
       .e-acrdn-header {
+        margin: 0 20px 0 14px;
         background-color: #F3F4F6 !important;
         padding: 4px 0 4px 14px !important;
         max-height: 28px;
+        border-radius: 4px !important;
 
         .e-acrdn-header-content {
           color: #101828 !important;
           font-weight: 700 !important;
           line-height: 20px !important;
+        }
+
+        .e-toggle-icon{
+          right: 28px;
         }
       }
     }
