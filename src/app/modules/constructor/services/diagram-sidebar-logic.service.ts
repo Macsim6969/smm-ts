@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 
 @Injectable()
 export class DiagramSidebarLogicService {
-  public createSidebarTitle(container: HTMLElement): void {
+
+  public createSidebarTitle(container: HTMLElement, renderer: Renderer2): void {
+    
     if (container) {
       const titleDiv = document.createElement('div');
       titleDiv.classList.add('titleDiv');
@@ -37,5 +39,21 @@ export class DiagramSidebarLogicService {
       container.style.transition = 'width 0.5s easy';
       container.style.overflow = 'hidden';
     }
+
+    setTimeout(() => {
+      this.closeAllPopups(renderer);
+    }, 1000);
+  }
+
+  private closeAllPopups(renderer: Renderer2) {
+    const items = document.querySelectorAll('.e-acrdn-item');
+    console.log(items);
+    items.forEach((item) => {
+      renderer.removeClass(item, 'e-selected');
+      renderer.removeClass(item, 'e-active');
+      renderer.removeClass(item, 'e-select');
+      renderer.addClass(item , 'e-acrdn-item');
+    });
+    console.log(document.querySelectorAll('.e-acrdn-item'))
   }
 }

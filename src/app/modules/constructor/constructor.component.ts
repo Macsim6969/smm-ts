@@ -3,12 +3,14 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
   ViewEncapsulation,
+  Renderer2,
 } from '@angular/core';
 import {
   BasicShapeModel,
   cloneObject,
   ConnectorModel,
   ContextMenuSettingsModel,
+  Diagram,
   DiagramBeforeMenuOpenEventArgs,
   DiagramComponent,
   HeaderModel,
@@ -65,6 +67,8 @@ export interface DraggableElement {
 })
 export class ConstructorComponent {
   @ViewChild('diagram', { static: false }) public diagram: DiagramComponent;
+
+  public diagramData: Diagram;
   public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
   public palettes: PaletteModel[];
@@ -107,16 +111,36 @@ export class ConstructorComponent {
     private diagramService: DiagramService,
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
-    private diagramMainLogicService: DiagramMainLogicService
+    private diagramMainLogicService: DiagramMainLogicService,
+    private renderer: Renderer2 
   ) {}
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    this.diagramData = new Diagram({
+      width: '100%',
+      height: '100%',
+      nodes: [],
+      dragEnter: (args) => {
+        if (args.element.id === 'Horizontalswimlane') {
+          const updatedSwimlane = this.diagramInitDataService.getSwimlaneNode(screenWidth, screenHeight);
+          Object.assign(args.element, updatedSwimlane);
+        }
+      },
+    });
+
+    this.diagram.appendTo('#diagram');
   }
 
   ngAfterViewInit(): void {
     this.loadDiagram();
     this.loadSidebarTitle();
+  }
+
+  private openSidebar(container: HTMLElement) {
+    this.diagramSidebarLogicService.createSidebarTitle(container, this.renderer);
   }
 
   private initializeDiagramSettingsData(): void {
@@ -142,7 +166,7 @@ export class ConstructorComponent {
   private loadSidebarTitle() {
     const container = document.querySelector('#symbolpalette') as HTMLElement;
     if (container) {
-      this.diagramSidebarLogicService.createSidebarTitle(container);
+      this.diagramSidebarLogicService.createSidebarTitle(container, this.renderer);
     }
   }
 
@@ -170,7 +194,7 @@ export class ConstructorComponent {
     return connector;
   }
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {
-    return { fit: true,description: { text: symbol.id, } ,tooltip: symbol.addInfo ? symbol.addInfo['tooltip'] : symbol.id };
+    return { fit: true,description: { text: symbol?.addInfo?.['tooltip'], } ,tooltip: symbol?.addInfo ? symbol?.addInfo?.['tooltip'] : symbol.id };
  }
 
   public getNodeDefaults(node: NodeModel): NodeModel {

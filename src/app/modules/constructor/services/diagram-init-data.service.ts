@@ -1,11 +1,18 @@
-import { Injectable } from "@angular/core";
-import { ContextMenuSettingsModel, PaletteModel, PointPortModel, PortConstraints, PortVisibility, UserHandleModel } from "@syncfusion/ej2-angular-diagrams";
-import { DiagramStoreIconsService } from "./diagram-store-icons.service";
+import { Injectable } from '@angular/core';
+import {
+  ContextMenuSettingsModel,
+  NodeModel,
+  PaletteModel,
+  PointPortModel,
+  PortConstraints,
+  PortVisibility,
+} from '@syncfusion/ej2-angular-diagrams';
+import { DiagramStoreIconsService } from './diagram-store-icons.service';
 
 @Injectable()
-
-export class DiagramInitDataService{
-
+export class DiagramInitDataService {
+  private readonly screenWidth = window.innerWidth;
+  private readonly screenHeight = window.outerHeight;
 
   private readonly port: PointPortModel[] = [
     {
@@ -36,19 +43,19 @@ export class DiagramInitDataService{
 
   private readonly palettes: PaletteModel[] = [
     {
-      id: 'flow',
+      id: 'Applications',
       expanded: true,
-      title: 'Flow Shapes',
+      title: 'Заявки',
       symbols: [
         {
-          id: 'Start',
+          id: 'Standard',
           width: 150,
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classShape: { 
+            classShape: {
               methods: [],
-              name: 'Start',
+              name: 'Стандартн.',
             },
             classifier: 'Class',
             cornerRadius: 16,
@@ -59,21 +66,207 @@ export class DiagramInitDataService{
           },
           annotations: [
             {
-              content: 'Start',
+              content: 'Стандартн.',
               style: { color: 'black', fontSize: 18 },
             },
           ],
           // Adding the node annotations here
-          addInfo: {
-            annotations: [
-              {
-                id: 'label1',
-                content: 'Rectangle1',
-                horizontalAlignment: 'Center', // Or use 'Left'/'Right' based on your preference
-              },
-            ],
-          },
+          addInfo: { tooltip: 'Стандартная' },
         },
+        {
+          id: 'Emergency',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Аварийная',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Аварийная',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          // Adding the node annotations here
+          addInfo: { tooltip: 'Аварийная' },
+        },
+        {
+          id: 'Planned',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Плановая',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Плановая',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          // Adding the node annotations here
+          addInfo: { tooltip: 'Плановая' },
+        },
+        {
+          id: 'unscheduled',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Внепланов.',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Внепланов.',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          // Adding the node annotations here
+          addInfo: { tooltip: 'Внеплановая' },
+        },
+      ],
+    },
+    {
+      id: 'RFX_Tender',
+      expanded: true,
+      title: 'Тендер RFX',
+      symbols: [
+        {
+          id: 'Qual_RFQ',
+          width: 150,
+          height: 75,
+          addInfo: { tooltip: 'Квалифик. RFQ' },
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Квалифик. RFQ',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Квалифик. RFQ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+        },
+        {
+          id: 'Price_monitoring',
+          width: 150,
+          height: 75,
+          addInfo: { tooltip: 'Мониторинг цен' },
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Мониторинг цен',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Мониторинг цен',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+        },
+        {
+          id: 'Request for technical',
+          width: 150,
+          height: 75,
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Запрос техническ...',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Запрос техническ...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          // Adding the node annotations here
+          addInfo: { tooltip: 'Запрос техническ...' },
+        },
+        {
+          id: 'Re-auction from the list',
+          width: 150,
+          height: 75,
+          shape: {
+            type: 'UmlActivity',
+            classShape: {
+              methods: [],
+              name: 'Переторжка из списка... ',
+            },
+            classifier: 'Class',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Переторжка из списка... ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          // Adding the node annotations here
+          addInfo: { tooltip: 'Переторжка из списка... .' },
+        },
+      ],
+    },
+    {
+      id: 'flow',
+      expanded: true,
+      title: 'Flow Shapes',
+      symbols: [
         {
           id: 'Terminator',
           addInfo: { tooltip: 'Terminator' },
@@ -151,6 +344,59 @@ export class DiagramInitDataService{
       expanded: true,
       title: 'Swimlane Shapes',
       symbols: [
+        // {
+        //   id: 'SwimlaneTest',
+        //   shape: {
+        //     type: 'SwimLane',
+        //     lanes: [
+        //       {
+        //         id: 'lane1',
+        //         height: 500,
+        //         width: 1280,
+        //         style: { fill: '#f0f0f0' }, // Цвет фона дорожки
+        //         header: {
+        //           width: 100,
+        //           height: 50,
+        //           style: { fontSize: 18, color: '#333', fill: '#e0e0e0' }, // Стиль шапки дорожки
+        //           annotation: { content: 'Lane 1' }, // Текст в шапке дорожки
+        //         },
+        //       },
+        //       {
+        //         id: 'lane2',
+        //         height: 500,
+        //         width: 1280,
+        //         style: { fill: '#e8f5e9' },
+        //         header: {
+        //           width: 100,
+        //           height: 50,
+        //           style: { fontSize: 18, color: '#333', fill: '#c8e6c9' },
+        //           annotation: { content: 'Lane 2' },
+        //         },
+        //       },
+        //     ],
+        //     phases: [
+        //       {
+        //         id: 'phase1',
+        //         offset: 400,
+        //         style: { strokeColor: '#ff7043', strokeWidth: 2 }, // Цвет и ширина линий фазы
+        //         header: { annotation: { content: 'Phase 1' }, style: { fill: '#ffe0b2', fontSize: 16 } },
+        //       },
+        //       {
+        //         id: 'phase2',
+        //         offset: 800,
+        //         style: { strokeColor: '#1976d2', strokeWidth: 2 },
+        //         header: { annotation: { content: 'Phase 2' }, style: { fill: '#bbdefb', fontSize: 16 } },
+        //       },
+        //     ],
+        //     orientation: 'Horizontal',
+        //     isLane: true,
+        //   },
+        //   height: 600,
+        //   width: 1300,
+        //   offsetX: 650,
+        //   offsetY: 300,
+        //   style: { strokeColor: '#424242', fill: '#ffffff', strokeWidth: 1 }, // Общий стиль границы SwimLane
+        // },
         {
           id: 'Horizontalswimlane',
           addInfo: { tooltip: 'Horizontal swimlane' },
@@ -159,18 +405,18 @@ export class DiagramInitDataService{
             lanes: [
               {
                 id: 'lane1',
-                height: 200,
-                width: 450,
+                height: this.screenHeight,
+                width: this.screenWidth,
                 header: { width: 80, height: 80, style: { fontSize: 16 } },
               },
             ],
             orientation: 'Horizontal',
             isLane: true,
           },
-          height: 150,
-          width: 300,
-          offsetX: 120,
-          offsetY: 120,
+          height: this.screenHeight,
+          width: this.screenWidth,
+          offsetX: this.screenWidth / 2,
+          offsetY: this.screenHeight / 2,
         },
         {
           id: 'Verticalswimlane',
@@ -220,39 +466,6 @@ export class DiagramInitDataService{
           width: 140,
         },
       ],
-    },
-    {
-      id: 'connectors',
-      expanded: true,
-      symbols: [
-        {
-          id: 'orthogonal',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-        },
-        {
-          id: 'orthogonaldashed',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-          style: { strokeDashArray: '4 4' },
-        },
-        {
-          id: 'straight',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-        },
-        {
-          id: 'straightdashed',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-          style: { strokeDashArray: '4 4' },
-        },
-      ],
-      title: 'Connectors',
     },
     {
       id: 'Set_of_conditions',
@@ -447,7 +660,7 @@ export class DiagramInitDataService{
             },
           ],
         },
-      ]
+      ],
     },
     {
       id: 'Counterparty_verification',
@@ -460,9 +673,11 @@ export class DiagramInitDataService{
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('Youcontrol'),
+            content:
+              this.diagramStoreIconsService.getNativeContent('Youcontrol'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Youcontrol' },
         },
         {
           id: 'Open bot',
@@ -473,6 +688,7 @@ export class DiagramInitDataService{
             content: this.diagramStoreIconsService.getNativeContent('Open_bot'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Open bot' },
         },
         {
           id: 'Гос. реестры',
@@ -480,11 +696,13 @@ export class DiagramInitDataService{
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('State_register'),
+            content:
+              this.diagramStoreIconsService.getNativeContent('State_register'),
           },
           ports: this.port,
-        }
-      ]
+          addInfo: { tooltip: 'Гос. реестры' },
+        },
+      ],
     },
     {
       id: 'Electronic_signature',
@@ -500,6 +718,7 @@ export class DiagramInitDataService{
             content: this.diagramStoreIconsService.getNativeContent('Dia'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Дія' },
         },
         {
           id: 'In Time',
@@ -510,6 +729,7 @@ export class DiagramInitDataService{
             content: this.diagramStoreIconsService.getNativeContent('In_Time'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Вчасно' },
         },
         {
           id: 'Kay',
@@ -520,6 +740,7 @@ export class DiagramInitDataService{
             content: this.diagramStoreIconsService.getNativeContent('Kay'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Аппар. ключ' },
         },
         {
           id: 'Flash Drive',
@@ -527,14 +748,48 @@ export class DiagramInitDataService{
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('Flash_drive'),
+            content:
+              this.diagramStoreIconsService.getNativeContent('Flash_drive'),
           },
           ports: this.port,
+          addInfo: { tooltip: 'Флешка Файл' },
         },
-      ]
-    }
+      ],
+    },
+    {
+      id: 'connectors',
+      expanded: true,
+      symbols: [
+        {
+          id: 'orthogonal',
+          type: 'Orthogonal',
+          sourcePoint: { x: 0, y: 0 },
+          targetPoint: { x: 40, y: 40 },
+        },
+        {
+          id: 'orthogonaldashed',
+          type: 'Orthogonal',
+          sourcePoint: { x: 0, y: 0 },
+          targetPoint: { x: 40, y: 40 },
+          style: { strokeDashArray: '4 4' },
+        },
+        {
+          id: 'straight',
+          type: 'Straight',
+          sourcePoint: { x: 0, y: 0 },
+          targetPoint: { x: 60, y: 60 },
+        },
+        {
+          id: 'straightdashed',
+          type: 'Straight',
+          sourcePoint: { x: 0, y: 0 },
+          targetPoint: { x: 60, y: 60 },
+          style: { strokeDashArray: '4 4' },
+        },
+      ],
+      title: 'Connectors',
+    },
   ];
-
 
   private readonly contextMenuSettings: ContextMenuSettingsModel = {
     show: true,
@@ -587,29 +842,51 @@ export class DiagramInitDataService{
           { id: 'emergency', text: 'Emergency' },
           { id: 'planned', text: 'Planned' },
           { id: 'unscheduled', text: 'Unscheduled' },
-          { id: 'application_type', text: 'Application type'},
-          { id: 'range_of_sum', text: 'Range of sum'},
-          { id: 'category', text: 'Category'}
+          { id: 'application_type', text: 'Application type' },
+          { id: 'range_of_sum', text: 'Range of sum' },
+          { id: 'category', text: 'Category' },
         ],
         target: '.e-elementcontent',
         iconCss: 'e-icons e-font-color',
-      }
+      },
     ],
-    showCustomMenuOnly: true
+    showCustomMenuOnly: true,
   };
 
-  
-
-  get _portSettings(): PointPortModel[]{
+  get _portSettings(): PointPortModel[] {
     return this.port;
   }
 
-  get _palettesData(): PaletteModel[]{
+  get _palettesData(): PaletteModel[] {
     return this.palettes;
   }
 
-  get _contextMenuSettings(): ContextMenuSettingsModel{
+  get _contextMenuSettings(): ContextMenuSettingsModel {
     return this.contextMenuSettings;
   }
-  constructor(private diagramStoreIconsService: DiagramStoreIconsService){}
+  constructor(private diagramStoreIconsService: DiagramStoreIconsService) {}
+
+  getSwimlaneNode(screenWidth: number, screenHeight: number): NodeModel {
+    return {
+      id: 'Horizontalswimlane',
+      addInfo: { tooltip: 'Horizontal swimlane' },
+      shape: {
+        type: 'SwimLane',
+        lanes: [
+          {
+            id: 'lane1',
+            height: screenHeight,
+            width: screenWidth,
+            header: { width: 80, height: 80, style: { fontSize: 16 } },
+          },
+        ],
+        orientation: 'Horizontal',
+        isLane: true,
+      },
+      height: screenHeight,
+      width: screenWidth,
+      offsetX: screenWidth / 2,
+      offsetY: screenHeight / 2,
+    };
+  }
 }
