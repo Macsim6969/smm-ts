@@ -11,7 +11,7 @@
         <input matInput type="text" placeholder="Placeholder"  formControlName="nameProcess"/>
       </div>
 
-      <div class="column">
+      <div class="column" *ngIf="data.stage === 'Trigger'">
         <mat-label>Диапозон сумы</mat-label>
         <div class="row">
           <input matInput type="number" placeholder="From"  formControlName="from"/>

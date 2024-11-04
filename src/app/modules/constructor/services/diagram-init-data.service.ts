@@ -70,8 +70,7 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Стандартная' },
+          addInfo: { tooltip: 'Стандартная',  stage: 'Fdfdf' }, // Название этапа
         },
         {
           id: 'Emergency',
@@ -259,6 +258,201 @@ export class DiagramInitDataService {
           ],
           // Adding the node annotations here
           addInfo: { tooltip: 'Переторжка из списка... .' },
+        },
+      ],
+    },
+    {
+      id: 'Set_of_conditions',
+      expanded: true,
+      title: 'Набор условий',
+      symbols: [
+        {
+          id: 'Диапазон суммы',
+          addInfo: { tooltip: 'Диапазон суммы', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Диапазон сумм',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ]
+        },
+        {
+          id: 'Категория',
+          addInfo: { tooltip: 'Категория', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Категория',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'SKU',
+          addInfo: { tooltip: 'SKU', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'SKU',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Тип заявки',
+          addInfo: { tooltip: 'Тип заявки', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Тип заявки',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Тип закупки',
+          addInfo: { tooltip: 'Тип закупки', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Тип закупки',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Тип договора',
+          addInfo: { tooltip: 'Тип договора', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Тип договора',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Тип приемки',
+          addInfo: { tooltip: 'Тип приемки', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Тип приемки',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+
+        {
+          id: 'Дата',
+          addInfo: { tooltip: 'Дата', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Дата',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Время',
+          addInfo: { tooltip: 'Время', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Время',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'День недели',
+          addInfo: { tooltip: 'День недели', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'День недели',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
+        },
+        {
+          id: 'Месяц',
+          addInfo: { tooltip: 'Месяц', stage: 'Trigger' },
+          width: 100,
+          height: 100,
+          shape: { type: 'Flow', shape: 'Decision' },
+          ports: this.port,
+          style: {
+            fill: '#FF8D23',
+          },
+          annotations: [
+            {
+              content: 'Месяц',
+              style: { color: 'black', fontSize: 14 },
+            },
+          ],
         },
       ],
     },
@@ -468,201 +662,6 @@ export class DiagramInitDataService {
       ],
     },
     {
-      id: 'Set_of_conditions',
-      expanded: true,
-      title: 'Набор условий',
-      symbols: [
-        {
-          id: 'Диапазон суммы',
-          addInfo: { tooltip: 'Диапазон суммы' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Диапазон сумм',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Категория',
-          addInfo: { tooltip: 'Категория' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Категория',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'SKU',
-          addInfo: { tooltip: 'SKU' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'SKU',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Тип заявки',
-          addInfo: { tooltip: 'Тип заявки' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Тип заявки',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Тип закупки',
-          addInfo: { tooltip: 'Тип закупки' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Тип закупки',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Тип договора',
-          addInfo: { tooltip: 'Тип договора' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Тип договора',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Тип приемки',
-          addInfo: { tooltip: 'Тип приемки' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Тип приемки',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-
-        {
-          id: 'Дата',
-          addInfo: { tooltip: 'Дата' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Дата',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Время',
-          addInfo: { tooltip: 'Время' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Время',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'День недели',
-          addInfo: { tooltip: 'День недели' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'День недели',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Месяц',
-          addInfo: { tooltip: 'Месяц' },
-          width: 100,
-          height: 100,
-          shape: { type: 'Flow', shape: 'Decision' },
-          ports: this.port,
-          style: {
-            fill: '#FF8D23',
-          },
-          annotations: [
-            {
-              content: 'Месяц',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-      ],
-    },
-    {
       id: 'Counterparty_verification',
       expanded: true,
       title: 'Проверка контрагента',
@@ -805,12 +804,6 @@ export class DiagramInitDataService {
         id: 'Cut',
         target: '.e-diagramcontent',
         iconCss: 'e-icons e-cut',
-      },
-      {
-        text: 'Paste',
-        id: 'Paste',
-        target: '.e-diagramcontent',
-        iconCss: 'e-icons e-paste',
       },
       {
         text: 'InsertLaneBefore',

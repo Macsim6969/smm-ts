@@ -105,6 +105,7 @@ export class ConstructorComponent {
   };
 
   public items?: DataManager;
+  public stageElement: string;
 
   constructor(
     private matDialog: MatDialog,
@@ -131,7 +132,7 @@ export class ConstructorComponent {
       },
     });
 
-    this.diagram.appendTo('#diagram');
+    this.diagram?.appendTo('#diagram');
   }
 
   ngAfterViewInit(): void {
@@ -283,8 +284,10 @@ export class ConstructorComponent {
     }
 }
 
-  public contextMenuClick(args: MenuEventArgs): void {
-    let selectedNode = (this.diagram as any).selectedItems.nodes[0];
+public contextMenuClick(args: MenuEventArgs): void {
+  let selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
+  this.stageElement = selectedNode.addInfo.stage;
+
     if (
       args.item.id === 'InsertLaneBefore' ||
       args.item.id === 'InsertLaneAfter'
@@ -336,8 +339,6 @@ export class ConstructorComponent {
       this.diagram.cut();
     } else if (args.item.id === 'Clone') {
       this.diagram.copy();
-    } else if (args.item.id === 'Paste') {
-      this.diagram.paste();
     } else if (args.item.id === 'Settings') {
       this.matDialog.closeAll();
       this.onOpenDialog();
@@ -373,6 +374,7 @@ export class ConstructorComponent {
       width: '260px',
       data: {
         element: this.elementData,
+        stage: this.stageElement
       },
     });
 
@@ -412,7 +414,7 @@ export class ConstructorComponent {
             targetNode
           );
         }
-
+        console.log(this.diagramsLogicData);
         this.diagramMainLogicService.saveDiagram(this.diagram);
       }
     }
@@ -447,6 +449,7 @@ export class ConstructorComponent {
           }
         }
       }
+      console.log(this.diagramsLogicData);
       this.diagramMainLogicService.saveDiagram(this.diagram);
     }
   }
