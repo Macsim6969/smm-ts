@@ -61,7 +61,7 @@ export interface DraggableElement {
     '../../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-navigations/styles/material.css',
     '../../../../node_modules/@syncfusion/ej2-base/styles/material.css',
-    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css'
+    '../../../../node_modules/@syncfusion/ej2-icons/styles/material.css',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -101,11 +101,12 @@ export class ConstructorComponent {
     verticalGridlines: {
       snapIntervals: [10],
     },
-    constraints: SnapConstraints.All,
+    constraints: SnapConstraints.None,
   };
 
   public items?: DataManager;
   public stageElement: string;
+  public isGridEnabled!: boolean;
 
   constructor(
     private matDialog: MatDialog,
@@ -113,8 +114,21 @@ export class ConstructorComponent {
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
     private diagramMainLogicService: DiagramMainLogicService,
-    private renderer: Renderer2 
+    private renderer: Renderer2
   ) {}
+
+  public enableGrid(): void {
+    this.snapSettings.constraints = SnapConstraints.ShowLines | SnapConstraints.SnapToLines;
+    this.diagram.snapSettings = { ...this.snapSettings };
+    this.isGridEnabled = true;
+}
+
+// Метод для отключения сетки
+public disableGrid(): void {
+    this.snapSettings.constraints = SnapConstraints.None;
+    this.diagram.snapSettings = { ...this.snapSettings };
+    this.isGridEnabled = false;
+}
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
@@ -126,7 +140,10 @@ export class ConstructorComponent {
       nodes: [],
       dragEnter: (args) => {
         if (args.element.id === 'Horizontalswimlane') {
-          const updatedSwimlane = this.diagramInitDataService.getSwimlaneNode(screenWidth, screenHeight);
+          const updatedSwimlane = this.diagramInitDataService.getSwimlaneNode(
+            screenWidth,
+            screenHeight
+          );
           Object.assign(args.element, updatedSwimlane);
         }
       },
@@ -141,7 +158,10 @@ export class ConstructorComponent {
   }
 
   private openSidebar(container: HTMLElement) {
-    this.diagramSidebarLogicService.createSidebarTitle(container, this.renderer);
+    this.diagramSidebarLogicService.createSidebarTitle(
+      container,
+      this.renderer
+    );
   }
 
   private initializeDiagramSettingsData(): void {
@@ -167,7 +187,10 @@ export class ConstructorComponent {
   private loadSidebarTitle() {
     const container = document.querySelector('#symbolpalette') as HTMLElement;
     if (container) {
-      this.diagramSidebarLogicService.createSidebarTitle(container, this.renderer);
+      this.diagramSidebarLogicService.createSidebarTitle(
+        container,
+        this.renderer
+      );
     }
   }
 
@@ -195,8 +218,12 @@ export class ConstructorComponent {
     return connector;
   }
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {
-    return { fit: true,description: { text: symbol?.addInfo?.['tooltip'], } ,tooltip: symbol?.addInfo ? symbol?.addInfo?.['tooltip'] : symbol.id };
- }
+    return {
+      fit: true,
+      description: { text: symbol?.addInfo?.['tooltip'] },
+      tooltip: symbol?.addInfo ? symbol?.addInfo?.['tooltip'] : symbol.id,
+    };
+  }
 
   public getNodeDefaults(node: NodeModel): NodeModel {
     node.style.strokeColor = '#717171';
@@ -282,11 +309,11 @@ export class ConstructorComponent {
         args.hiddenItems.push(item.text);
       }
     }
-}
+  }
 
-public contextMenuClick(args: MenuEventArgs): void {
-  let selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
-  this.stageElement = selectedNode.addInfo.stage;
+  public contextMenuClick(args: MenuEventArgs): void {
+    let selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
+    this.stageElement = selectedNode.addInfo.stage;
 
     if (
       args.item.id === 'InsertLaneBefore' ||
@@ -374,7 +401,7 @@ public contextMenuClick(args: MenuEventArgs): void {
       width: '260px',
       data: {
         element: this.elementData,
-        stage: this.stageElement
+        stage: this.stageElement,
       },
     });
 

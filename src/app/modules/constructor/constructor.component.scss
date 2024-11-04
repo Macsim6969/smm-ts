@@ -21,9 +21,34 @@
   ejs-diagram {
     width: 100%;
 
-    #diagramcontent{
-      &::-webkit-scrollbar{
+    #diagramcontent {
+      &::-webkit-scrollbar {
         display: none;
+      }
+    }
+  }
+
+  .action--btn {
+    position: absolute;
+    top: 10px;
+    right: 400px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      outline: none;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 16px;
+      font-size: 16px;
+
+      &.active {
+        background-color: #007bff;
+        color: white;
+        border: none;
       }
     }
   }
@@ -41,7 +66,7 @@
 
 }
 
-.div_data{
+.div_data {
   position: fixed;
   z-index: 999;
   background-color: aquamarine;
@@ -56,5 +81,6 @@
 }
 
 ::ng-deep .e-diagram-userhandle-icon.e-copy {
-  color: #006ce6; /* Цвет иконки копирования */
+  color: #006ce6;
+  /* Цвет иконки копирования */
 }
