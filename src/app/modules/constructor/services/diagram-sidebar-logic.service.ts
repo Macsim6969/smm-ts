@@ -39,21 +39,6 @@ export class DiagramSidebarLogicService {
       container.style.transition = 'width 0.5s easy';
       container.style.overflow = 'hidden';
     }
-
-    setTimeout(() => {
-      this.closeAllPopups(renderer);
-    }, 1000);
   }
 
-  private closeAllPopups(renderer: Renderer2) {
-    const items = document.querySelectorAll('.e-acrdn-item');
-    console.log(items);
-    items.forEach((item) => {
-      renderer.removeClass(item, 'e-selected');
-      renderer.removeClass(item, 'e-active');
-      renderer.removeClass(item, 'e-select');
-      renderer.addClass(item , 'e-acrdn-item');
-    });
-    console.log(document.querySelectorAll('.e-acrdn-item'))
-  }
 }
