@@ -68,8 +68,8 @@
 
   <div class="block_right">
     <div class="header">
-      <button mat-button (click)="choiceStageDyagrams(0)" [ngClass]="{'active': isActiveStage[0]}">Proccess State</button>
-      <button mat-button (click)="choiceStageDyagrams(1)" [ngClass]="{'active': isActiveStage[1]}">Procurement Risk</button>
+      <button mat-button (click)="choiceStageDyagrams('diagram')" [ngClass]="{'active': isActiveStage === 'diagram'}">Proccess State</button>
+      <button mat-button (click)="choiceStageDyagrams('Procurement_Risk')" [ngClass]="{'active': isActiveStage === 'Procurement_Risk'}">Procurement Risk</button>
     </div>
     <ejs-diagram
     #diagram

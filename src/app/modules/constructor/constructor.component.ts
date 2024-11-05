@@ -76,13 +76,19 @@ export class ConstructorComponent {
 
   public handles: UserHandleModel[] = [
     {
-      name: 'Clone', pathData: 'M0,2.4879999 L0.986,2.4879999 0.986,9.0139999 6.9950027,9.0139999 6.9950027,10 0.986,10 C0.70400238,10 0.47000122,9.9060001 0.28100207,9.7180004 0.09400177,9.5300007 0,9.2959995 0,9.0139999 z M3.0050011,0 L9.0140038,0 C9.2960014,0 9.5300026,0.093999863 9.7190018,0.28199956 9.906002,0.47000027 10,0.70399952 10,0.986 L10,6.9949989 C10,7.2770004 9.906002,7.5160007 9.7190018,7.7110004 9.5300026,7.9069996 9.2960014,8.0049992 9.0140038,8.0049992 L3.0050011,8.0049992 C2.7070007,8.0049992 2.4650002,7.9069996 2.2770004,7.7110004 2.0890007,7.5160007 1.9950027,7.2770004 1.9950027,6.9949989 L1.9950027,0.986 C1.9950027,0.70399952 2.0890007,0.47000027 2.2770004,0.28199956 2.4650002,0.093999863 2.7070007,0 3.0050011,0 z', tooltip: { content: 'Clone' },
-      visible: true, offset: 1, side: 'Bottom', margin: { top: 0, bottom: 0, left: 0, right: 0 }
-    }
+      name: 'Clone',
+      pathData:
+        'M0,2.4879999 L0.986,2.4879999 0.986,9.0139999 6.9950027,9.0139999 6.9950027,10 0.986,10 C0.70400238,10 0.47000122,9.9060001 0.28100207,9.7180004 0.09400177,9.5300007 0,9.2959995 0,9.0139999 z M3.0050011,0 L9.0140038,0 C9.2960014,0 9.5300026,0.093999863 9.7190018,0.28199956 9.906002,0.47000027 10,0.70399952 10,0.986 L10,6.9949989 C10,7.2770004 9.906002,7.5160007 9.7190018,7.7110004 9.5300026,7.9069996 9.2960014,8.0049992 9.0140038,8.0049992 L3.0050011,8.0049992 C2.7070007,8.0049992 2.4650002,7.9069996 2.2770004,7.7110004 2.0890007,7.5160007 1.9950027,7.2770004 1.9950027,6.9949989 L1.9950027,0.986 C1.9950027,0.70399952 2.0890007,0.47000027 2.2770004,0.28199956 2.4650002,0.093999863 2.7070007,0 3.0050011,0 z',
+      tooltip: { content: 'Clone' },
+      visible: true,
+      offset: 1,
+      side: 'Bottom',
+      margin: { top: 0, bottom: 0, left: 0, right: 0 },
+    },
   ];
 
   public selectedItems: SelectorModel = {
-    userHandles: this.handles
+    userHandles: this.handles,
   };
 
   public elementData: IElementData;
@@ -99,13 +105,13 @@ export class ConstructorComponent {
     verticalGridlines: {
       snapIntervals: [10],
     },
-    constraints: SnapConstraints.None,
+    constraints: SnapConstraints.ShowLines,
   };
 
   public items?: DataManager;
   public stageElement: string;
-  public isGridEnabled!: boolean;
-  public isActiveStage: boolean[] = [true];
+  public isGridEnabled: boolean = true;
+  public isActiveStage = 'diagram';
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService,
@@ -122,17 +128,19 @@ export class ConstructorComponent {
     this.isGridEnabled = true;
   }
 
-  // Метод для отключения сетки
   public disableGrid(): void {
     this.snapSettings.constraints = SnapConstraints.None;
     this.diagram.snapSettings = { ...this.snapSettings };
     this.isGridEnabled = false;
   }
 
-  public choiceStageDyagrams(id: number){
-    this.isActiveStage = [];
-    this.isActiveStage[id] = true;
+  public choiceStageDyagrams(id: string) {
+    this.diagramMainLogicService.saveDiagram(this.diagram, this.isActiveStage);
+  
+    this.isActiveStage = id;
+    this.loadDiagram(id);
   }
+  
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
@@ -157,15 +165,8 @@ export class ConstructorComponent {
   }
 
   ngAfterViewInit(): void {
-    this.loadDiagram();
+    this.loadDiagram('diagram');
     this.loadSidebarTitle();
-  }
-
-  private openSidebar(container: HTMLElement) {
-    this.diagramSidebarLogicService.createSidebarTitle(
-      container,
-      this.renderer
-    );
   }
 
   private initializeDiagramSettingsData(): void {
@@ -174,19 +175,21 @@ export class ConstructorComponent {
     this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
   }
 
-  private loadDiagram() {
-    timer(450).subscribe(() => {
-      const data = localStorage.getItem('diagram');
-
-      if (data) {
-        try {
-          this.diagram.loadDiagram(data);
-        } catch (error) {
-          console.error('Ошибка при загрузке диаграммы:', error);
-        }
-      }
+  private loadDiagram(activeDiagram: string) {
+    timer(250).subscribe(() => {
+        this.diagramMainLogicService.getDiagramDataFromBack(activeDiagram).subscribe((diagramData: any) => {
+            if (diagramData) {
+                try {
+                    const data = typeof diagramData === 'string' ? JSON.parse(diagramData) : diagramData;
+                    this.diagram.loadDiagram(data);
+                } catch (error) {
+                    console.error('Ошибка при загрузке диаграммы:', error);
+                }
+            }
+        });
     });
-  }
+}
+
 
   private loadSidebarTitle() {
     const container = document.querySelector('#symbolpalette') as HTMLElement;
@@ -232,56 +235,34 @@ export class ConstructorComponent {
   public getNodeDefaults(node: NodeModel): NodeModel {
     node.style.strokeColor = '#717171';
     node.style.strokeWidth = 1;
-    return node;
+    return node
   }
 
   public dragEnter(arg: IDragEnterEventArgs): void {
-    const elementId = arg.element['changedProperties']['id'];
-
-    if (!this.diagramsLogicData[elementId]) {
-      this.diagramsLogicData[elementId] = {};
-    }
-
-    this.diagramsLogicData[elementId]['id'] = elementId;
-    this.diagramsLogicData[elementId]['label'] =
-      arg.element['oldProperties']?.['id'];
-
-    if (arg.element instanceof Node) {
-      let shape: SwimLaneModel = arg.element.shape as SwimLaneModel;
-      if (shape.isLane) {
-        if (shape.orientation === 'Horizontal') {
-          shape.lanes[0].height = 100;
-          shape.lanes[0].width = 500;
-        } else if (shape.orientation === 'Vertical') {
-          shape.lanes[0].height = 500;
-          shape.lanes[0].width = 100;
-        }
-      }
-    }
-    this.diagramMainLogicService.saveDiagram(this.diagram);
+    this.diagramMainLogicService.handleDragEnter(arg, this.diagramsLogicData, this.diagram, this.isActiveStage);
   }
 
   public dragLeave(): void {
-    this.diagramMainLogicService.saveDiagram(this.diagram);
+    this.diagramMainLogicService.saveDiagram(this.diagram, this.isActiveStage);
   }
 
   public contextMenuOpen(args: DiagramBeforeMenuOpenEventArgs): void {
     const srcElement = args.event.srcElement as HTMLElement;
     const ariaLabel = srcElement
-      ? srcElement.getAttribute('aria-label')
+      ? srcElement?.getAttribute('aria-label')
       : 'aria-label не найден';
 
     if (srcElement) {
       const computedStyle = window.getComputedStyle(srcElement);
-      const id = srcElement.getAttribute('id');
+      const id = srcElement?.getAttribute('id');
       const stroke =
-        srcElement.getAttribute('stroke') ||
+        srcElement?.getAttribute('stroke') ||
         computedStyle.getPropertyValue('stroke');
       const strokeWidth =
-        srcElement.getAttribute('stroke-width') ||
+        srcElement?.getAttribute('stroke-width') ||
         computedStyle.getPropertyValue('stroke-width');
       const fill =
-        srcElement.getAttribute('fill') ||
+        srcElement?.getAttribute('fill') ||
         computedStyle.getPropertyValue('fill');
 
       this.elementData = {
@@ -313,107 +294,12 @@ export class ConstructorComponent {
         args.hiddenItems.push(item.text);
       }
     }
+    
   }
 
   public contextMenuClick(args: MenuEventArgs): void {
-    let selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
-    this.stageElement = selectedNode.addInfo.stage;
-
-    if (
-      args.item.id === 'InsertLaneBefore' ||
-      args.item.id === 'InsertLaneAfter'
-    ) {
-      if (
-        this.diagram.selectedItems.nodes.length > 0 &&
-        (this.diagram.selectedItems.nodes[0] as Node | any).isLane
-      ) {
-        let index: number;
-        let node: Node = this.diagram.selectedItems.nodes[0] as Node;
-        let swimlane: NodeModel = this.diagram.getObject(
-          (this.diagram.selectedItems.nodes[0] as Node | any).parentId
-        );
-        let shape: SwimLaneModel = swimlane.shape as SwimLaneModel;
-        let existingLane: LaneModel = cloneObject(shape.lanes[0]);
-
-        let newLane: LaneModel = {
-          id: randomId(),
-          header: {
-            width: existingLane.header.width,
-            height: existingLane.header.height,
-            style: existingLane.header.style as ShapeStyleModel,
-          } as HeaderModel,
-          style: existingLane.style as ShapeStyleModel,
-          height: existingLane.height,
-          width: existingLane.width,
-        } as LaneModel;
-
-        if (shape.orientation === 'Horizontal') {
-          let exclude = 0;
-          exclude += shape.header ? 1 : 0;
-          exclude += shape.phases.length ? 1 : 0;
-          index = (node as any).rowIndex - exclude;
-          newLane.header.width = existingLane.header.width;
-          newLane.header.height = existingLane.height;
-        } else {
-          index = (node as any).columnIndex - shape.phases.length ? 1 : 0;
-          newLane.header.width = existingLane.width;
-          newLane.header.height = existingLane.header.height;
-        }
-        if (args.item.id === 'InsertLaneBefore') {
-          this.diagram.addLanes(swimlane, [newLane], index);
-        } else {
-          this.diagram.addLanes(swimlane, [newLane], index + 1);
-        }
-        this.diagram.clearSelection();
-      }
-    } else if (args.item.id === 'Cut') {
-      this.diagram.cut();
-    } else if (args.item.id === 'Clone') {
-      this.diagram.copy();
-    } else if (args.item.id === 'Settings') {
-      this.matDialog.closeAll();
-      this.onOpenDialog();
-    } else if (
-      selectedNode &&
-      args.item.id !== 'fill' &&
-      args.item.id !== 'annotationText'
-    ) {
-      if (
-        args.item.text === 'Red' ||
-        args.item.text === 'Blue' ||
-        args.item.text === 'Yellow' ||
-        args.item.text === 'Green'
-      ) {
-        selectedNode.style.fill = args.item.text;
-        (this.diagram as any).dataBind();
-      } else if (
-        args.item.text === 'Standard' ||
-        args.item.text === 'Emergency' ||
-        args.item.text === 'Planned' ||
-        args.item.text === 'Unscheduled'
-      ) {
-        selectedNode.annotations[0].content = args.item.text;
-        (this.diagram as any).dataBind();
-      }
-      (this.diagram as any).dataBind();
-      this.diagramMainLogicService.saveDiagram(this.diagram);
-    }
-  }
-
-  private onOpenDialog(): void {
-    const dialogRef = this.matDialog.open(SettingsDialogComponent, {
-      width: '260px',
-      data: {
-        element: this.elementData,
-        stage: this.stageElement,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.elementData = result;
-      }
-    });
+    const selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
+    this.diagramMainLogicService.handleContextMenuClick(args, this.diagram, selectedNode, this.isActiveStage, this.elementData);
   }
 
   public connectionChange(args: IBlazorConnectionChangeEventArgs): void {
@@ -445,13 +331,16 @@ export class ConstructorComponent {
             targetNode
           );
         }
-        this.diagramMainLogicService.saveDiagram(this.diagram);
+        this.diagramMainLogicService.saveDiagram(
+          this.diagram,
+          this.isActiveStage
+        );
       }
     }
   }
 
   public checkToChange(): void {
-    this.diagramMainLogicService.saveDiagram(this.diagram);
+    this.diagramMainLogicService.saveDiagram(this.diagram, this.isActiveStage);
   }
 
   public selectionChange(event: any): void {
@@ -479,7 +368,10 @@ export class ConstructorComponent {
           }
         }
       }
-      this.diagramMainLogicService.saveDiagram(this.diagram);
+      this.diagramMainLogicService.saveDiagram(
+        this.diagram,
+        this.isActiveStage
+      );
     }
   }
 
@@ -489,7 +381,10 @@ export class ConstructorComponent {
 
   public changeText(args: any): void | boolean {
     if (args.diagramAction === 'TextEdit') {
-      this.diagramMainLogicService.saveDiagram(this.diagram);
+      this.diagramMainLogicService.saveDiagram(
+        this.diagram,
+        this.isActiveStage
+      );
     } else {
       return false;
     }
