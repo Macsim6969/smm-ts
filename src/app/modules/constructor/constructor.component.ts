@@ -7,25 +7,19 @@ import {
 } from '@angular/core';
 import {
   BasicShapeModel,
-  cloneObject,
   ConnectorModel,
   ContextMenuSettingsModel,
   Diagram,
   DiagramBeforeMenuOpenEventArgs,
   DiagramComponent,
-  HeaderModel,
   IBlazorConnectionChangeEventArgs,
   IDragEnterEventArgs,
-  LaneModel,
   NodeModel,
   PaletteModel,
   PointPortModel,
-  randomId,
   SelectorModel,
-  ShapeStyleModel,
   SnapConstraints,
   SnapSettingsModel,
-  SwimLaneModel,
   SymbolInfo,
   SymbolPaletteComponent,
   UserHandleEventsArgs,
@@ -34,7 +28,6 @@ import {
 
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
 import { MatDialog } from '@angular/material/dialog';
-import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
@@ -74,18 +67,7 @@ export class ConstructorComponent {
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
 
-  public handles: UserHandleModel[] = [
-    {
-      name: 'Clone',
-      pathData:
-        'M0,2.4879999 L0.986,2.4879999 0.986,9.0139999 6.9950027,9.0139999 6.9950027,10 0.986,10 C0.70400238,10 0.47000122,9.9060001 0.28100207,9.7180004 0.09400177,9.5300007 0,9.2959995 0,9.0139999 z M3.0050011,0 L9.0140038,0 C9.2960014,0 9.5300026,0.093999863 9.7190018,0.28199956 9.906002,0.47000027 10,0.70399952 10,0.986 L10,6.9949989 C10,7.2770004 9.906002,7.5160007 9.7190018,7.7110004 9.5300026,7.9069996 9.2960014,8.0049992 9.0140038,8.0049992 L3.0050011,8.0049992 C2.7070007,8.0049992 2.4650002,7.9069996 2.2770004,7.7110004 2.0890007,7.5160007 1.9950027,7.2770004 1.9950027,6.9949989 L1.9950027,0.986 C1.9950027,0.70399952 2.0890007,0.47000027 2.2770004,0.28199956 2.4650002,0.093999863 2.7070007,0 3.0050011,0 z',
-      tooltip: { content: 'Clone' },
-      visible: true,
-      offset: 1,
-      side: 'Bottom',
-      margin: { top: 0, bottom: 0, left: 0, right: 0 },
-    },
-  ];
+  public handles!: UserHandleModel[];
 
   public selectedItems: SelectorModel = {
     userHandles: this.handles,
@@ -112,8 +94,8 @@ export class ConstructorComponent {
   public stageElement: string;
   public isGridEnabled: boolean = true;
   public isActiveStage = 'diagram';
+
   constructor(
-    private matDialog: MatDialog,
     private diagramService: DiagramService,
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
@@ -136,11 +118,10 @@ export class ConstructorComponent {
 
   public choiceStageDyagrams(id: string) {
     this.diagramMainLogicService.saveDiagram(this.diagram, this.isActiveStage);
-  
+
     this.isActiveStage = id;
     this.loadDiagram(id);
   }
-  
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
@@ -173,23 +154,28 @@ export class ConstructorComponent {
     this.port = this.diagramInitDataService._portSettings;
     this.palettes = this.diagramInitDataService._palettesData;
     this.contextMenuSettings = this.diagramInitDataService._contextMenuSettings;
+    this.handles = this.diagramInitDataService._handlesData;
   }
 
   private loadDiagram(activeDiagram: string) {
     timer(250).subscribe(() => {
-        this.diagramMainLogicService.getDiagramDataFromBack(activeDiagram).subscribe((diagramData: any) => {
-            if (diagramData) {
-                try {
-                    const data = typeof diagramData === 'string' ? JSON.parse(diagramData) : diagramData;
-                    this.diagram.loadDiagram(data);
-                } catch (error) {
-                    console.error('Ошибка при загрузке диаграммы:', error);
-                }
+      this.diagramMainLogicService
+        .getDiagramDataFromBack(activeDiagram)
+        .subscribe((diagramData: any) => {
+          if (diagramData) {
+            try {
+              const data =
+                typeof diagramData === 'string'
+                  ? JSON.parse(diagramData)
+                  : diagramData;
+              this.diagram.loadDiagram(data);
+            } catch (error) {
+              console.error('Ошибка при загрузке диаграммы:', error);
             }
+          }
         });
     });
-}
-
+  }
 
   private loadSidebarTitle() {
     const container = document.querySelector('#symbolpalette') as HTMLElement;
@@ -216,7 +202,7 @@ export class ConstructorComponent {
     } else {
       connector.type = 'Orthogonal';
     }
-    var color = '#717171';
+    let color = '#717171';
 
     connector.targetDecorator.style.strokeColor = color;
     connector.targetDecorator.style.fill = color;
@@ -235,11 +221,16 @@ export class ConstructorComponent {
   public getNodeDefaults(node: NodeModel): NodeModel {
     node.style.strokeColor = '#717171';
     node.style.strokeWidth = 1;
-    return node
+    return node;
   }
 
   public dragEnter(arg: IDragEnterEventArgs): void {
-    this.diagramMainLogicService.handleDragEnter(arg, this.diagramsLogicData, this.diagram, this.isActiveStage);
+    this.diagramMainLogicService.handleDragEnter(
+      arg,
+      this.diagramsLogicData,
+      this.diagram,
+      this.isActiveStage
+    );
   }
 
   public dragLeave(): void {
@@ -294,12 +285,17 @@ export class ConstructorComponent {
         args.hiddenItems.push(item.text);
       }
     }
-    
   }
 
   public contextMenuClick(args: MenuEventArgs): void {
     const selectedNode = (this.diagram as any)?.selectedItems?.nodes?.[0];
-    this.diagramMainLogicService.handleContextMenuClick(args, this.diagram, selectedNode, this.isActiveStage, this.elementData);
+    this.diagramMainLogicService.handleContextMenuClick(
+      args,
+      this.diagram,
+      selectedNode,
+      this.isActiveStage,
+      this.elementData
+    );
   }
 
   public connectionChange(args: IBlazorConnectionChangeEventArgs): void {
@@ -391,10 +387,11 @@ export class ConstructorComponent {
   }
 
   public onUserHandleMouseDown(args: UserHandleEventsArgs): void {
-    if (args.element) {
-      //To clone the selected node
+    if (args.element['properties'].name === 'Clone') {
       (this.diagram as DiagramComponent).copy();
       (this.diagram as DiagramComponent).paste();
+    } else if (args.element['properties'].name === 'Delete') {
+      (this.diagram as DiagramComponent).remove();
     }
   }
 }

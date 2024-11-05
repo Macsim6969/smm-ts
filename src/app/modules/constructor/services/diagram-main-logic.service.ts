@@ -96,8 +96,6 @@ export class DiagramMainLogicService {
         }
         diagram.clearSelection();
       }
-    } else if (args.item.id === 'Cut') {
-      diagram.remove();
     } else if (args.item.id === 'Clone') {
       diagram.copy();
     } else if (args.item.id === 'Settings') {
