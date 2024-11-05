@@ -115,7 +115,6 @@ export class DiagramMainLogicService {
       (diagram as any).dataBind();
     }
     (diagram as any).dataBind();
-    // Save the diagram state, possibly by injecting another service
   }
 
   private onOpenDialog(elementData): void {

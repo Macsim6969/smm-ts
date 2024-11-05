@@ -54,10 +54,6 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Стандартн.',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -71,7 +67,7 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Стандартная',  stage: 'Fdfdf' }, // Название этапа
+          addInfo: { tooltip: 'Стандартная',  stage: 'Applications' }, // Название этапа
         },
         {
           id: 'Emergency',
@@ -79,10 +75,6 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Аварийная',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -96,8 +88,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Аварийная' },
+          
+          addInfo: { tooltip: 'Аварийная',  stage: 'Applications' },
         },
         {
           id: 'Planned',
@@ -105,10 +97,6 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Плановая',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -122,8 +110,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Плановая' },
+          
+          addInfo: { tooltip: 'Плановая',  stage: 'Applications' },
         },
         {
           id: 'unscheduled',
@@ -131,10 +119,6 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Внепланов.',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -148,8 +132,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Внеплановая' },
+          
+          addInfo: { tooltip: 'Внеплановая',  stage: 'Applications' },
         },
       ],
     },
@@ -162,13 +146,9 @@ export class DiagramInitDataService {
           id: 'Qual_RFQ',
           width: 150,
           height: 75,
-          addInfo: { tooltip: 'Квалифик. RFQ' },
+          addInfo: { tooltip: 'Квалифик. RFQ',  stage: 'Trigger' },
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Квалифик. RFQ',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -187,13 +167,9 @@ export class DiagramInitDataService {
           id: 'Price_monitoring',
           width: 150,
           height: 75,
-          addInfo: { tooltip: 'Мониторинг цен' },
+          addInfo: { tooltip: 'Мониторинг цен',  stage: 'Trigger' },
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Мониторинг цен',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -214,10 +190,6 @@ export class DiagramInitDataService {
           height: 75,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Запрос техническ...',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -231,8 +203,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Запрос техническ...' },
+          
+          addInfo: { tooltip: 'Запрос техническ...',  stage: 'Trigger' },
         },
         {
           id: 'Re-auction from the list',
@@ -240,10 +212,6 @@ export class DiagramInitDataService {
           height: 75,
           shape: {
             type: 'UmlActivity',
-            classShape: {
-              methods: [],
-              name: 'Переторжка из списка... ',
-            },
             classifier: 'Class',
             cornerRadius: 16,
           },
@@ -257,8 +225,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          // Adding the node annotations here
-          addInfo: { tooltip: 'Переторжка из списка... .' },
+          
+          addInfo: { tooltip: 'Переторжка из списка... .',  stage: 'Trigger' },
         },
       ],
     },
@@ -268,7 +236,7 @@ export class DiagramInitDataService {
       title: 'Набор условий',
       symbols: [
         {
-          id: 'Диапазон суммы',
+          id: 'Sum range',
           addInfo: { tooltip: 'Диапазон суммы', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -285,7 +253,7 @@ export class DiagramInitDataService {
           ]
         },
         {
-          id: 'Категория',
+          id: 'Category',
           addInfo: { tooltip: 'Категория', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -319,7 +287,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Тип заявки',
+          id: 'Application type',
           addInfo: { tooltip: 'Тип заявки', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -336,7 +304,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Тип закупки',
+          id: 'Type of purchase',
           addInfo: { tooltip: 'Тип закупки', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -353,7 +321,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Тип договора',
+          id: 'Contract type',
           addInfo: { tooltip: 'Тип договора', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -370,7 +338,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Тип приемки',
+          id: 'Type of acceptance',
           addInfo: { tooltip: 'Тип приемки', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -388,7 +356,7 @@ export class DiagramInitDataService {
         },
 
         {
-          id: 'Дата',
+          id: 'Date',
           addInfo: { tooltip: 'Дата', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -405,7 +373,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Время',
+          id: 'Time',
           addInfo: { tooltip: 'Время', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -422,7 +390,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'День недели',
+          id: 'Day of the week',
           addInfo: { tooltip: 'День недели', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -439,7 +407,7 @@ export class DiagramInitDataService {
           ],
         },
         {
-          id: 'Месяц',
+          id: 'Month',
           addInfo: { tooltip: 'Месяц', stage: 'Trigger' },
           width: 100,
           height: 100,
@@ -539,59 +507,6 @@ export class DiagramInitDataService {
       expanded: true,
       title: 'Swimlane Shapes',
       symbols: [
-        // {
-        //   id: 'SwimlaneTest',
-        //   shape: {
-        //     type: 'SwimLane',
-        //     lanes: [
-        //       {
-        //         id: 'lane1',
-        //         height: 500,
-        //         width: 1280,
-        //         style: { fill: '#f0f0f0' }, // Цвет фона дорожки
-        //         header: {
-        //           width: 100,
-        //           height: 50,
-        //           style: { fontSize: 18, color: '#333', fill: '#e0e0e0' }, // Стиль шапки дорожки
-        //           annotation: { content: 'Lane 1' }, // Текст в шапке дорожки
-        //         },
-        //       },
-        //       {
-        //         id: 'lane2',
-        //         height: 500,
-        //         width: 1280,
-        //         style: { fill: '#e8f5e9' },
-        //         header: {
-        //           width: 100,
-        //           height: 50,
-        //           style: { fontSize: 18, color: '#333', fill: '#c8e6c9' },
-        //           annotation: { content: 'Lane 2' },
-        //         },
-        //       },
-        //     ],
-        //     phases: [
-        //       {
-        //         id: 'phase1',
-        //         offset: 400,
-        //         style: { strokeColor: '#ff7043', strokeWidth: 2 }, // Цвет и ширина линий фазы
-        //         header: { annotation: { content: 'Phase 1' }, style: { fill: '#ffe0b2', fontSize: 16 } },
-        //       },
-        //       {
-        //         id: 'phase2',
-        //         offset: 800,
-        //         style: { strokeColor: '#1976d2', strokeWidth: 2 },
-        //         header: { annotation: { content: 'Phase 2' }, style: { fill: '#bbdefb', fontSize: 16 } },
-        //       },
-        //     ],
-        //     orientation: 'Horizontal',
-        //     isLane: true,
-        //   },
-        //   height: 600,
-        //   width: 1300,
-        //   offsetX: 650,
-        //   offsetY: 300,
-        //   style: { strokeColor: '#424242', fill: '#ffffff', strokeWidth: 1 }, // Общий стиль границы SwimLane
-        // },
         {
           id: 'Horizontalswimlane',
           addInfo: { tooltip: 'Horizontal swimlane' },
@@ -677,7 +592,7 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('Youcontrol'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Youcontrol' },
+          addInfo: { tooltip: 'Youcontrol', stage: 'Counterparty_verification' },
         },
         {
           id: 'Open bot',
@@ -688,7 +603,7 @@ export class DiagramInitDataService {
             content: this.diagramStoreIconsService.getNativeContent('Open_bot'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Open bot' },
+          addInfo: { tooltip: 'Open bot', stage: 'Counterparty_verification' },
         },
         {
           id: 'Гос. реестры',
@@ -700,7 +615,7 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('State_register'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Гос. реестры' },
+          addInfo: { tooltip: 'Гос. реестры', stage: 'Counterparty_verification' },
         },
       ],
     },
@@ -718,7 +633,7 @@ export class DiagramInitDataService {
             content: this.diagramStoreIconsService.getNativeContent('Dia'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Дія' },
+          addInfo: { tooltip: 'Дія', stage: 'Dia' },
         },
         {
           id: 'In Time',
@@ -729,7 +644,7 @@ export class DiagramInitDataService {
             content: this.diagramStoreIconsService.getNativeContent('In_Time'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Вчасно' },
+          addInfo: { tooltip: 'Вчасно', stage: 'Dia' },
         },
         {
           id: 'Kay',
@@ -740,7 +655,7 @@ export class DiagramInitDataService {
             content: this.diagramStoreIconsService.getNativeContent('Kay'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Аппар. ключ' },
+          addInfo: { tooltip: 'Аппар. ключ', stage: 'Dia' },
         },
         {
           id: 'Flash Drive',
@@ -752,7 +667,7 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('Flash_drive'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Флешка Файл' },
+          addInfo: { tooltip: 'Флешка Файл', stage: 'Dia' },
         },
       ],
     },

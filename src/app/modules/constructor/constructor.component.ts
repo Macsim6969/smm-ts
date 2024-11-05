@@ -35,6 +35,7 @@ import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 import { DiagramMainLogicService } from './services/diagram-main-logic.service';
+import { DiagramStoreIconsService } from './services/diagram-store-icons.service';
 
 export interface DraggableElement {
   id: number;
@@ -62,7 +63,7 @@ export class ConstructorComponent {
 
   public diagramData: Diagram;
   public port: PointPortModel[];
-  public expandMode: ExpandMode = 'Single';
+  public expandMode: ExpandMode = 'Multiple';
   public palettes: PaletteModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
@@ -100,6 +101,7 @@ export class ConstructorComponent {
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
     private diagramMainLogicService: DiagramMainLogicService,
+    private diagramStoreIconsService: DiagramStoreIconsService,
     private renderer: Renderer2
   ) {}
 
@@ -143,6 +145,9 @@ export class ConstructorComponent {
     });
 
     this.diagram?.appendTo('#diagram');
+
+    console.log(this.diagramStoreIconsService.getNativeContent('In_Time'));
+    console.log(this.diagramStoreIconsService.getNativeContent('Kay'));
   }
 
   ngAfterViewInit(): void {
