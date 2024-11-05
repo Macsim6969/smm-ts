@@ -66,7 +66,12 @@
   >
   </ejs-symbolpalette>
 
-  <ejs-diagram
+  <div class="block_right">
+    <div class="header">
+      <button mat-button (click)="choiceStageDyagrams(0)" [ngClass]="{'active': isActiveStage[0]}">Proccess State</button>
+      <button mat-button (click)="choiceStageDyagrams(1)" [ngClass]="{'active': isActiveStage[1]}">Procurement Risk</button>
+    </div>
+    <ejs-diagram
     #diagram
     id="diagram"
     width="100%"
@@ -88,6 +93,8 @@
     (onUserHandleMouseDown) = "onUserHandleMouseDown($event)"
   >
   </ejs-diagram>
+  </div>
+  
   <div class="action--btn">
     <button (click)="enableGrid()" [ngClass]="{'active': isGridEnabled}">Grid</button>
     <button (click)="disableGrid()" [ngClass]="{'active': !isGridEnabled}">None</button>

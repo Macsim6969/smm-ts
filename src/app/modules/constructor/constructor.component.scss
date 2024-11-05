@@ -18,12 +18,45 @@
     width: 22% !important;
   }
 
-  ejs-diagram {
-    width: 100%;
+  .block_right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-    #diagramcontent {
-      &::-webkit-scrollbar {
-        display: none;
+    width: 100%;
+    height: 100%;
+
+    .header {
+      margin-top: 19px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-right: 34px;
+
+      button {
+        outline: none;
+        border: none;
+        background-color: #FFFFFF;
+        padding: 4px 12px;
+        color: #101828;
+        font-size: 13px;
+        border-radius: 6px;
+        height: auto !important;
+
+        &.active {
+          background: #000000;
+          color: #FFFFFF;
+        }
+      }
+    }
+
+    ejs-diagram {
+      width: 100%;
+
+      #diagramcontent {
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
   }
@@ -57,7 +90,7 @@
     position: fixed;
     background-color: white;
     right: 0;
-    top: 0;
+    top: 50px;
     width: 300px !important;
     height: 300px !important;
 

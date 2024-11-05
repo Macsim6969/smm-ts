@@ -105,6 +105,7 @@ export class ConstructorComponent {
   public items?: DataManager;
   public stageElement: string;
   public isGridEnabled!: boolean;
+  public isActiveStage: boolean[] = [true];
   constructor(
     private matDialog: MatDialog,
     private diagramService: DiagramService,
@@ -126,6 +127,11 @@ export class ConstructorComponent {
     this.snapSettings.constraints = SnapConstraints.None;
     this.diagram.snapSettings = { ...this.snapSettings };
     this.isGridEnabled = false;
+  }
+
+  public choiceStageDyagrams(id: number){
+    this.isActiveStage = [];
+    this.isActiveStage[id] = true;
   }
 
   ngOnInit(): void {
