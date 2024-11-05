@@ -27,7 +27,6 @@ import {
 } from '@syncfusion/ej2-angular-diagrams';
 
 import { ExpandMode, MenuEventArgs } from '@syncfusion/ej2-navigations';
-import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { IElementData } from './models/form.interface';
 import { DiagramService } from './services/diagram.service';
