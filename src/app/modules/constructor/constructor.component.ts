@@ -63,7 +63,7 @@ export class ConstructorComponent {
   public diagramData: Diagram;
   public port: PointPortModel[];
   public expandMode: ExpandMode = 'Multiple';
-  public palettes: PaletteModel[];
+  public palettes: PaletteModel[] | NodeModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
 
@@ -126,27 +126,13 @@ export class ConstructorComponent {
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    
     this.diagramData = new Diagram({
       width: '100%',
       height: '100%',
-      nodes: [],
-      dragEnter: (args) => {
-        if (args.element.id === 'Horizontalswimlane') {
-          const updatedSwimlane = this.diagramInitDataService.getSwimlaneNode(
-            screenWidth,
-            screenHeight
-          );
-          Object.assign(args.element, updatedSwimlane);
-        }
-      },
-    });
+      });
 
     this.diagram?.appendTo('#diagram');
-
-    console.log(this.diagramStoreIconsService.getNativeContent('In_Time'));
-    console.log(this.diagramStoreIconsService.getNativeContent('Kay'));
   }
 
   ngAfterViewInit(): void {
