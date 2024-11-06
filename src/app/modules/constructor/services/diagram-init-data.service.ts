@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   ContextMenuSettingsModel,
-  NodeModel,
   PaletteModel,
   PointPortModel,
   PortConstraints,
@@ -12,8 +11,6 @@ import { DiagramStoreIconsService } from './diagram-store-icons.service';
 
 @Injectable()
 export class DiagramInitDataService {
-  private readonly screenWidth = window.innerWidth;
-  private readonly screenHeight = window.outerHeight;
 
   private readonly port: PointPortModel[] = [
     {
@@ -51,7 +48,7 @@ export class DiagramInitDataService {
         {
           id: 'Standard',
           width: 150,
-          height: 50,
+          height: 60,
           shape: {
             type: 'UmlActivity',
             classifier: 'Class',
@@ -67,7 +64,7 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Стандартная',  stage: 'Applications' }, // Название этапа
+          addInfo: { tooltip: 'Стандартная', stage: 'Applications' }, // Название этапа
         },
         {
           id: 'Emergency',
@@ -88,8 +85,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          
-          addInfo: { tooltip: 'Аварийная',  stage: 'Applications' },
+
+          addInfo: { tooltip: 'Аварийная', stage: 'Applications' },
         },
         {
           id: 'Planned',
@@ -110,8 +107,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          
-          addInfo: { tooltip: 'Плановая',  stage: 'Applications' },
+
+          addInfo: { tooltip: 'Плановая', stage: 'Applications' },
         },
         {
           id: 'unscheduled',
@@ -132,8 +129,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          
-          addInfo: { tooltip: 'Внеплановая',  stage: 'Applications' },
+
+          addInfo: { tooltip: 'Внеплановая', stage: 'Applications' },
         },
       ],
     },
@@ -146,7 +143,7 @@ export class DiagramInitDataService {
           id: 'Qual_RFQ',
           width: 150,
           height: 75,
-          addInfo: { tooltip: 'Квалифик. RFQ',  stage: 'Trigger' },
+          addInfo: { tooltip: 'Квалифик. RFQ', stage: 'RFX_Tender' },
           shape: {
             type: 'UmlActivity',
             classifier: 'Class',
@@ -167,7 +164,7 @@ export class DiagramInitDataService {
           id: 'Price_monitoring',
           width: 150,
           height: 75,
-          addInfo: { tooltip: 'Мониторинг цен',  stage: 'Trigger' },
+          addInfo: { tooltip: 'Мониторинг цен', stage: 'RFX_Tender' },
           shape: {
             type: 'UmlActivity',
             classifier: 'Class',
@@ -203,8 +200,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          
-          addInfo: { tooltip: 'Запрос техническ...',  stage: 'Trigger' },
+
+          addInfo: { tooltip: 'Запрос техническ...', stage: 'RFX_Tender' },
         },
         {
           id: 'Re-auction from the list',
@@ -225,8 +222,8 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          
-          addInfo: { tooltip: 'Переторжка из списка... .',  stage: 'Trigger' },
+
+          addInfo: { tooltip: 'Переторжка из списка... .', stage: 'RFX_Tender' },
         },
       ],
     },
@@ -250,7 +247,7 @@ export class DiagramInitDataService {
               content: 'Диапазон сумм',
               style: { color: 'black', fontSize: 14 },
             },
-          ]
+          ],
         },
         {
           id: 'Category',
@@ -509,24 +506,26 @@ export class DiagramInitDataService {
       symbols: [
         {
           id: 'Horizontalswimlane',
-          addInfo: { tooltip: 'Horizontal swimlane' },
+          addInfo: { tooltip: 'Horizontal swimlane', stage: 'Test' },
           shape: {
+            header: { width: 0, height: 0 },
             type: 'SwimLane',
             lanes: [
               {
                 id: 'lane1',
-                height: this.screenHeight,
-                width: this.screenWidth,
-                header: { width: 80, height: 80, style: { fontSize: 16 } },
+                height: 600,
+                width: 500,
+                header: { width: 80, height: 80, style: { fontSize: 16 } }
               },
             ],
+            phaseSize: 0,
             orientation: 'Horizontal',
             isLane: true,
           },
-          height: this.screenHeight,
-          width: this.screenWidth,
-          offsetX: this.screenWidth / 2,
-          offsetY: this.screenHeight / 2,
+          height: 600,
+          width: 500,
+          offsetX: 0,
+          offsetY: 0,
         },
         {
           id: 'Verticalswimlane',
@@ -584,7 +583,7 @@ export class DiagramInitDataService {
       symbols: [
         {
           id: 'Youcontrol',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
@@ -592,22 +591,24 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('Youcontrol'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Youcontrol', stage: 'Counterparty_verification' },
+          addInfo: {
+            stage: 'Counterparty_verification',
+          },
         },
         {
           id: 'Open bot',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
             content: this.diagramStoreIconsService.getNativeContent('Open_bot'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Open bot', stage: 'Counterparty_verification' },
+          addInfo: { stage: 'Counterparty_verification' },
         },
         {
           id: 'Гос. реестры',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
@@ -615,7 +616,9 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('State_register'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Гос. реестры', stage: 'Counterparty_verification' },
+          addInfo: {
+            stage: 'Counterparty_verification',
+          },
         },
       ],
     },
@@ -626,40 +629,40 @@ export class DiagramInitDataService {
       symbols: [
         {
           id: 'Dia',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
             content: this.diagramStoreIconsService.getNativeContent('Dia'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Дія', stage: 'Dia' },
+          addInfo: { stage: 'Electronic_signature' },
         },
         {
           id: 'In Time',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
             content: this.diagramStoreIconsService.getNativeContent('In_Time'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Вчасно', stage: 'Dia' },
+          addInfo: { stage: 'Electronic_signature' },
         },
         {
           id: 'Kay',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
             content: this.diagramStoreIconsService.getNativeContent('Kay'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Аппар. ключ', stage: 'Dia' },
+          addInfo: { stage: 'Electronic_signature' },
         },
         {
           id: 'Flash Drive',
-          width: 110,
+          width: 100,
           height: 80,
           shape: {
             type: 'Native',
@@ -667,7 +670,7 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('Flash_drive'),
           },
           ports: this.port,
-          addInfo: { tooltip: 'Флешка Файл', stage: 'Dia' },
+          addInfo: {  stage: 'Electronic_signature' },
         },
       ],
     },
@@ -777,7 +780,7 @@ export class DiagramInitDataService {
       side: 'Bottom',
       margin: { top: 0, bottom: 0, left: 0, right: 0 },
     },
-  ]
+  ];
 
   get _portSettings(): PointPortModel[] {
     return this.port;
@@ -791,33 +794,9 @@ export class DiagramInitDataService {
     return this.contextMenuSettings;
   }
 
-  get _handlesData(): UserHandleModel[]{
+  get _handlesData(): UserHandleModel[] {
     return this.handlesData;
   }
 
   constructor(private diagramStoreIconsService: DiagramStoreIconsService) {}
-
-  getSwimlaneNode(screenWidth: number, screenHeight: number): NodeModel {
-    return {
-      id: 'Horizontalswimlane',
-      addInfo: { tooltip: 'Horizontal swimlane' },
-      shape: {
-        type: 'SwimLane',
-        lanes: [
-          {
-            id: 'lane1',
-            height: screenHeight,
-            width: screenWidth,
-            header: { width: 80, height: 80, style: { fontSize: 16 } },
-          },
-        ],
-        orientation: 'Horizontal',
-        isLane: true,
-      },
-      height: screenHeight,
-      width: screenWidth,
-      offsetX: screenWidth / 2,
-      offsetY: screenHeight / 2,
-    };
-  }
 }

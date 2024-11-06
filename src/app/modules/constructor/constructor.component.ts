@@ -34,7 +34,6 @@ import { DataManager } from '@syncfusion/ej2-data';
 import { DiagramInitDataService } from './services/diagram-init-data.service';
 import { DiagramSidebarLogicService } from './services/diagram-sidebar-logic.service';
 import { DiagramMainLogicService } from './services/diagram-main-logic.service';
-import { DiagramStoreIconsService } from './services/diagram-store-icons.service';
 
 export interface DraggableElement {
   id: number;
@@ -100,7 +99,6 @@ export class ConstructorComponent {
     private diagramInitDataService: DiagramInitDataService,
     private diagramSidebarLogicService: DiagramSidebarLogicService,
     private diagramMainLogicService: DiagramMainLogicService,
-    private diagramStoreIconsService: DiagramStoreIconsService,
     private renderer: Renderer2
   ) {}
 
@@ -126,11 +124,52 @@ export class ConstructorComponent {
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
-    
+
     this.diagramData = new Diagram({
       width: '100%',
       height: '100%',
-      });
+      nodes: [{
+        shape: {
+          type: 'SwimLane',
+          orientation: 'Horizontal',
+          //Intialize header to swimlane
+          header: {
+            annotation: {
+              content: 'ONLINE PURCHASE STATUS',
+              style: { fill: '#111111' },
+            },
+            height: 50,
+            style: { fontSize: 11 },
+          },
+          lanes: [
+            {
+              id: 'stackCanvas1',
+              height: 100,
+              header: {
+                annotation: { content: 'CUSTOMER' },
+                width: 50,
+                style: { fontSize: 11 },
+              },
+            },
+          ],
+          phases: [
+            {
+              id: 'phase1',
+              offset: 150,
+            },
+            {
+              id: 'phase2',
+              offset: 200,
+            },
+          ],
+          phaseSize: 20,
+        },
+        offsetX: 300,
+        offsetY: 200,
+        height: 200,
+        width: 350,
+      }],
+    });
 
     this.diagram?.appendTo('#diagram');
   }
@@ -215,6 +254,7 @@ export class ConstructorComponent {
   }
 
   public dragEnter(arg: IDragEnterEventArgs): void {
+    console.log(arg);
     this.diagramMainLogicService.handleDragEnter(
       arg,
       this.diagramsLogicData,
