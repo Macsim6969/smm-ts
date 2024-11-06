@@ -162,66 +162,65 @@ export class ConstructorComponent {
               console.error('Ошибка при загрузке диаграммы:', error);
             }
           } else {
-            timer(3000).subscribe(() => {
-              // Define the three swimlanes
+            const windowHeight = window.innerHeight - 100;
+            timer(0).subscribe(() => {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
-                width: 500,
-                height: 200, // Высота для "развернутого" состояния
+                width: 350,
+                height: windowHeight, 
                 shape: {
                   type: 'SwimLane',
-                  orientation: 'Horizontal',
+                  orientation: 'Vertical',
                   lanes: [
                     {
                       id: 'Lane1',
-                      height: 100, // Высота первого слоя
+                      height: 100, 
                       style: { fill: '#f8f8f8' },
                     },
                   ],
                 },
-                offsetX: 300,
+                offsetX: 100,
                 offsetY: 100,
               };
 
               const swimlane2: NodeModel = {
                 id: 'Swimlane2',
-                width: 500,
-                height: 200, // Высота для "развернутого" состояния
+                width: 350,
+                height: windowHeight, 
                 shape: {
                   type: 'SwimLane',
-                  orientation: 'Horizontal',
+                  orientation: 'Vertical',
                   lanes: [
                     {
                       id: 'Lane2',
-                      height: 100, // Высота второго слоя
+                      height: 100,
                       style: { fill: '#e8f4fc' },
                     },
                   ],
                 },
-                offsetX: 300,
-                offsetY: 350,
+                offsetX: 400,
+                offsetY: 100,
               };
 
               const swimlane3: NodeModel = {
                 id: 'Swimlane3',
-                width: 500,
-                height: 200, // Высота для "развернутого" состояния
+                width: 350,
+                height: windowHeight,
                 shape: {
                   type: 'SwimLane',
-                  orientation: 'Horizontal',
+                  orientation: 'Vertical',
                   lanes: [
                     {
                       id: 'Lane3',
-                      height: 100, // Высота третьего слоя
+                      height: 100,
                       style: { fill: '#e4fcef' },
                     },
                   ],
                 },
-                offsetX: 300,
-                offsetY: 600,
+                offsetX: 750,
+                offsetY: 100,
               };
 
-              // Add swimlanes to the diagram after the delay
               this.diagram.add(swimlane1);
               this.diagram.add(swimlane2);
               this.diagram.add(swimlane3);
