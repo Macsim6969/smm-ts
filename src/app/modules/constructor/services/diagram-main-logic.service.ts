@@ -108,11 +108,10 @@ export class DiagramMainLogicService {
     args: MenuEventArgs,
     diagram: Diagram,
     selectedNode: NodeModel,
-    isActiveStage: string,
     elementData: any
   ): void {
     this.stageElement = selectedNode.addInfo?.['stage'] ?? '';
-
+    console.log(args.item.id );
     if (
       args.item.id === 'InsertLaneBefore' ||
       args.item.id === 'InsertLaneAfter'
@@ -165,6 +164,28 @@ export class DiagramMainLogicService {
       args.item.id !== 'annotationText'
     ) {
       this.handleNodeStyleChange(args, selectedNode, diagram);
+    } else if (args.item.id === 'Collapse'){
+      const nodeId = selectedNode.id;
+      const laneId = selectedNode.shape?.['lanes'][0]?.id;
+      const isCollapsed = selectedNode.shape?.['lanes'][0]?.height === 30;
+  
+      this.toggleSwimlaneHeight(diagram, nodeId, laneId, isCollapsed);
+    }
+  }
+
+  public toggleSwimlaneHeight(diagram, nodeId: string, laneId: string, isCollapsed: boolean): void {
+    console.log(diagram, nodeId, laneId,isCollapsed)
+    const node = diagram.getObject(nodeId) as NodeModel;
+    if (node) {
+      const lane = node.shape?.['lanes'].find(l => l.id === laneId);
+      if (lane) {
+        if (isCollapsed) {
+          lane.height = 30; // Уменьшаем высоту для "свернутого" состояния
+        } else {
+          lane.height = 100; // Восстанавливаем высоту для "развернутого" состояния
+        }
+        diagram.dataBind(); // Обновляем диаграмму
+      }
     }
   }
 

@@ -125,50 +125,10 @@ export class ConstructorComponent {
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
 
+    // Initialize the diagram first
     this.diagramData = new Diagram({
       width: '100%',
       height: '100%',
-      nodes: [{
-        shape: {
-          type: 'SwimLane',
-          orientation: 'Horizontal',
-          //Intialize header to swimlane
-          header: {
-            annotation: {
-              content: 'ONLINE PURCHASE STATUS',
-              style: { fill: '#111111' },
-            },
-            height: 50,
-            style: { fontSize: 11 },
-          },
-          lanes: [
-            {
-              id: 'stackCanvas1',
-              height: 100,
-              header: {
-                annotation: { content: 'CUSTOMER' },
-                width: 50,
-                style: { fontSize: 11 },
-              },
-            },
-          ],
-          phases: [
-            {
-              id: 'phase1',
-              offset: 150,
-            },
-            {
-              id: 'phase2',
-              offset: 200,
-            },
-          ],
-          phaseSize: 20,
-        },
-        offsetX: 300,
-        offsetY: 200,
-        height: 200,
-        width: 350,
-      }],
     });
 
     this.diagram?.appendTo('#diagram');
@@ -201,6 +161,71 @@ export class ConstructorComponent {
             } catch (error) {
               console.error('Ошибка при загрузке диаграммы:', error);
             }
+          } else {
+            timer(3000).subscribe(() => {
+              // Define the three swimlanes
+              const swimlane1: NodeModel = {
+                id: 'Swimlane1',
+                width: 500,
+                height: 200, // Высота для "развернутого" состояния
+                shape: {
+                  type: 'SwimLane',
+                  orientation: 'Horizontal',
+                  lanes: [
+                    {
+                      id: 'Lane1',
+                      height: 100, // Высота первого слоя
+                      style: { fill: '#f8f8f8' },
+                    },
+                  ],
+                },
+                offsetX: 300,
+                offsetY: 100,
+              };
+
+              const swimlane2: NodeModel = {
+                id: 'Swimlane2',
+                width: 500,
+                height: 200, // Высота для "развернутого" состояния
+                shape: {
+                  type: 'SwimLane',
+                  orientation: 'Horizontal',
+                  lanes: [
+                    {
+                      id: 'Lane2',
+                      height: 100, // Высота второго слоя
+                      style: { fill: '#e8f4fc' },
+                    },
+                  ],
+                },
+                offsetX: 300,
+                offsetY: 350,
+              };
+
+              const swimlane3: NodeModel = {
+                id: 'Swimlane3',
+                width: 500,
+                height: 200, // Высота для "развернутого" состояния
+                shape: {
+                  type: 'SwimLane',
+                  orientation: 'Horizontal',
+                  lanes: [
+                    {
+                      id: 'Lane3',
+                      height: 100, // Высота третьего слоя
+                      style: { fill: '#e4fcef' },
+                    },
+                  ],
+                },
+                offsetX: 300,
+                offsetY: 600,
+              };
+
+              // Add swimlanes to the diagram after the delay
+              this.diagram.add(swimlane1);
+              this.diagram.add(swimlane2);
+              this.diagram.add(swimlane3);
+            });
           }
         });
     });
@@ -323,7 +348,6 @@ export class ConstructorComponent {
       args,
       this.diagram,
       selectedNode,
-      this.isActiveStage,
       this.elementData
     );
   }

@@ -729,6 +729,11 @@ export class DiagramInitDataService {
         target: '.e-diagramcontent',
       },
       {
+        text: 'Collapse',
+        id: 'Collapse',
+        target: '.e-diagramcollapse'
+      },
+      {
         text: 'Fill',
         items: [
           { id: 'red', text: 'Red' },
