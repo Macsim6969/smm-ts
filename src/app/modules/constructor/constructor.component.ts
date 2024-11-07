@@ -166,7 +166,7 @@ export class ConstructorComponent {
             timer(0).subscribe(() => {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
-                width: 350,
+                width: 500,
                 height: windowHeight, 
                 shape: {
                   type: 'SwimLane',
@@ -185,7 +185,7 @@ export class ConstructorComponent {
 
               const swimlane2: NodeModel = {
                 id: 'Swimlane2',
-                width: 350,
+                width: 500,
                 height: windowHeight, 
                 shape: {
                   type: 'SwimLane',
@@ -198,13 +198,13 @@ export class ConstructorComponent {
                     },
                   ],
                 },
-                offsetX: 400,
+                offsetX: 600,
                 offsetY: 100,
               };
 
               const swimlane3: NodeModel = {
                 id: 'Swimlane3',
-                width: 350,
+                width: 500,
                 height: windowHeight,
                 shape: {
                   type: 'SwimLane',
@@ -217,7 +217,7 @@ export class ConstructorComponent {
                     },
                   ],
                 },
-                offsetX: 750,
+                offsetX: 1100,
                 offsetY: 100,
               };
 
