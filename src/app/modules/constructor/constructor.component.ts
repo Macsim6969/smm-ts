@@ -86,12 +86,12 @@ export class ConstructorComponent {
     verticalGridlines: {
       snapIntervals: [10],
     },
-    constraints: SnapConstraints.ShowLines,
+    constraints: SnapConstraints.None,
   };
 
   public items?: DataManager;
   public stageElement: string;
-  public isGridEnabled: boolean = true;
+  public isGridEnabled: boolean = false;
   public isActiveStage = 'diagram';
 
   constructor(
@@ -282,10 +282,10 @@ export class ConstructorComponent {
     }
     let color = '#717171';
 
-    connector.targetDecorator.style.strokeColor = color;
+    connector.targetDecorator.style.strokeColor = 'transparent';
     connector.targetDecorator.style.fill = color;
-    connector.style.strokeColor = color;
-    connector.style.strokeWidth = 1;
+    connector.style.strokeColor = 'transparent';
+    connector.style.strokeWidth = 0;
     return connector;
   }
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {
@@ -297,13 +297,12 @@ export class ConstructorComponent {
   }
 
   public getNodeDefaults(node: NodeModel): NodeModel {
-    node.style.strokeColor = '#717171';
-    node.style.strokeWidth = 1;
+    node.style.strokeColor = 'transparent';
+    node.style.strokeWidth = 0;
     return node;
   }
 
   public dragEnter(arg: IDragEnterEventArgs): void {
-    console.log(arg);
     this.diagramMainLogicService.handleDragEnter(
       arg,
       this.diagramsLogicData,

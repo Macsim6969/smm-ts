@@ -43,7 +43,7 @@ export class DiagramInitDataService {
     {
       id: 'Applications',
       expanded: true,
-      title: 'Заявки',
+      title: 'Заявки', 
       symbols: [
         {
           id: 'Standard',
@@ -56,7 +56,7 @@ export class DiagramInitDataService {
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD',
+            fill: '#DFD8FD'
           },
           annotations: [
             {
@@ -77,7 +77,7 @@ export class DiagramInitDataService {
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD',
+            fill: '#DFD8FD'
           },
           annotations: [
             {
@@ -99,7 +99,7 @@ export class DiagramInitDataService {
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD',
+            fill: '#DFD8FD'
           },
           annotations: [
             {
@@ -121,7 +121,7 @@ export class DiagramInitDataService {
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD',
+            fill: '#DFD8FD'
           },
           annotations: [
             {
@@ -422,83 +422,7 @@ export class DiagramInitDataService {
         },
       ],
     },
-    {
-      id: 'flow',
-      expanded: true,
-      title: 'Flow Shapes',
-      symbols: [
-        {
-          id: 'Terminator',
-          addInfo: { tooltip: 'Terminator' },
-          width: 90,
-          height: 80,
-          shape: { type: 'Flow', shape: 'Terminator' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Terminator',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Process',
-          addInfo: { tooltip: 'Process' },
-          width: 80,
-          height: 90,
-          shape: { type: 'Flow', shape: 'Process' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Process',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Document',
-          addInfo: { tooltip: 'Document' },
-          width: 90,
-          height: 90,
-          shape: { type: 'Flow', shape: 'Document' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Document',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Predefinedprocess',
-          addInfo: { tooltip: 'Predefined process' },
-          width: 90,
-          height: 90,
-          shape: { type: 'Flow', shape: 'PreDefinedProcess' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'PreDefined Process',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-        {
-          id: 'Data',
-          addInfo: { tooltip: 'Data' },
-          width: 90,
-          height: 90,
-          shape: { type: 'Flow', shape: 'Data' },
-          ports: this.port,
-          annotations: [
-            {
-              content: 'Data',
-              style: { color: 'black', fontSize: 14 },
-            },
-          ],
-        },
-      ],
-    },
+
     {
       id: 'swimlaneShapes',
       expanded: true,
@@ -673,40 +597,7 @@ export class DiagramInitDataService {
           addInfo: {  stage: 'Electronic_signature' },
         },
       ],
-    },
-    {
-      id: 'connectors',
-      expanded: true,
-      symbols: [
-        {
-          id: 'orthogonal',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-        },
-        {
-          id: 'orthogonaldashed',
-          type: 'Orthogonal',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 40, y: 40 },
-          style: { strokeDashArray: '4 4' },
-        },
-        {
-          id: 'straight',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-        },
-        {
-          id: 'straightdashed',
-          type: 'Straight',
-          sourcePoint: { x: 0, y: 0 },
-          targetPoint: { x: 60, y: 60 },
-          style: { strokeDashArray: '4 4' },
-        },
-      ],
-      title: 'Connectors',
-    },
+    }
   ];
 
   private readonly contextMenuSettings: ContextMenuSettingsModel = {

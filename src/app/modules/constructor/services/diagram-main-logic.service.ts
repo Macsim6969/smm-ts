@@ -52,7 +52,8 @@ export class DiagramMainLogicService {
     isActiveStage: string
   ): void {
     const elementId = arg.element['changedProperties']['id'];
-
+    arg.element['properties'].style.properties.strokeWidth = 0
+    console.log(arg.element['properties'].style.properties)
     if (!diagramsLogicData[elementId]) {
       diagramsLogicData[elementId] = {};
     }

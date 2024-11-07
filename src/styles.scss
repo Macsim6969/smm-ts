@@ -10,6 +10,17 @@
 * {
   margin: 0;
   padding: 0;
+
+  canvas {
+    margin-top: 0 !important;
+  }
+
+  ::ng-deep {
+
+    path {
+      stroke: transparent !important;
+    }
+  }
 }
 
 html {
@@ -30,38 +41,55 @@ body {
   margin: 0;
   font-family: "Helvetica Neue", sans-serif;
 
-  #symbolpalette{
-    .titleDiv{
+  #symbolpalette {
+    .titleDiv {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
       padding: 10px;
-      .titleDivTitle{
-        font-size: 20px ;
+
+      .titleDivTitle {
+        font-size: 20px;
         margin: 0;
       }
-  
-      button{
+
+      button {
         outline: none;
         background-color: transparent;
         border: 1px solid gainsboro;
       }
-      .active{
+
+      .active {
         transform: rotate(180deg);
         transition: all 0.5s ease;
-        
+
       }
-     
-     }
+
+    }
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      width: 4px;
+      background-color: rgb(212, 212, 212);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 4px;
+      background-color: black;
+    }
   }
-  #symbolpalette_container{
+
+  #symbolpalette_container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
     border: none;
 
   }
+
   .e-accordion {
     .e-acrdn-item {
       .e-acrdn-header {
@@ -75,15 +103,20 @@ body {
           color: #101828 !important;
           font-weight: 700 !important;
           line-height: 20px !important;
+          font-size: 18px !important;
         }
 
-        .e-toggle-icon{
+        .e-toggle-icon {
           right: 28px;
         }
       }
+
+      &.e-select {
+        border-width: 0 !important;
+      }
     }
 
-    .e-acrdn-item:first-child{
+    .e-acrdn-item:first-child {
       margin-top: 28px;
     }
   }
