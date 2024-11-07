@@ -21,6 +21,17 @@
       stroke: transparent !important;
     }
   }
+
+  .e-icons {
+    &.logo {
+      display: block;
+      width: 24px;
+      height: 24px;
+      background-image: url('./assets/images/diagram/logo.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
 }
 
 html {
@@ -118,6 +129,8 @@ body {
           overflow: hidden;
           text-overflow: ellipsis;
           width: 200px;
+
+
 
         }
 

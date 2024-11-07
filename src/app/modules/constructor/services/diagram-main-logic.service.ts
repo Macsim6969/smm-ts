@@ -77,7 +77,9 @@ export class DiagramMainLogicService {
       arg.element['minHeight'] = 80;
     } else if (
       arg.element['properties'].addInfo.stage === 'Counterparty_verification' ||
-      arg.element['properties'].addInfo.stage === 'Electronic_signature'
+      arg.element['properties'].addInfo.stage === 'Electronic_signature' ||
+      arg.element['properties'].addInfo.stage === 'Communication' ||
+      arg.element['properties'].addInfo.stage === 'Integration'
     ) {
       arg.element['width'] = 100;
       arg.element['height'] = 80;

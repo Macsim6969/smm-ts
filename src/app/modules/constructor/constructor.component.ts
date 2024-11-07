@@ -282,10 +282,10 @@ export class ConstructorComponent {
     }
     let color = '#717171';
 
-    connector.targetDecorator.style.strokeColor = 'transparent';
+    connector.targetDecorator.style.strokeColor = 'gray';
     connector.targetDecorator.style.fill = color;
-    connector.style.strokeColor = 'transparent';
-    connector.style.strokeWidth = 0;
+    connector.style.strokeColor = 'gray';
+    connector.style.strokeWidth = 1;
     return connector;
   }
   public getSymbolInfo(symbol: NodeModel): SymbolInfo {

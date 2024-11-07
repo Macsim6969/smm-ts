@@ -6,7 +6,7 @@
   background-color: white;
 
   display: grid;
-  grid-template-columns: 0.35fr 1fr;
+  grid-template-columns: 0.25fr 1fr;
 
   // display: flex;
   // flex-direction: row;
@@ -61,32 +61,6 @@
       }
     }
   }
-
-  .action--btn {
-    position: absolute;
-    bottom: 50px;
-    right: 100px;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-
-    button {
-      outline: none;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 16px;
-      font-size: 16px;
-
-      &.active {
-        background-color: #007bff;
-        color: white;
-        border: none;
-      }
-    }
-  }
-
   .popup_modal {
     position: fixed;
     background-color: white;
@@ -98,6 +72,32 @@
   }
 
 }
+
+.action--btn {
+  position: absolute;
+  bottom: 50px;
+  right: 100px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  button {
+    outline: none;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 16px;
+    font-size: 16px;
+
+    &.active {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+  }
+}
+
 
 .div_data {
   position: fixed;

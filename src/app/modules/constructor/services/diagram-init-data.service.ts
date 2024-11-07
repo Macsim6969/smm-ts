@@ -11,7 +11,6 @@ import { DiagramStoreIconsService } from './diagram-store-icons.service';
 
 @Injectable()
 export class DiagramInitDataService {
-
   private readonly port: PointPortModel[] = [
     {
       id: 'Port1',
@@ -41,9 +40,145 @@ export class DiagramInitDataService {
 
   private readonly palettes: PaletteModel[] = [
     {
+      id: 'Ready-made-processes',
+      expanded: true,
+      title: 'Готовые процессы',
+      symbols: [
+        {
+          id: 'Retail',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Ритейл',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Ритейл', stage: 'Ready-made-processes' }, // Название этапа
+        },
+        {
+          id: 'Agorosek',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Агоросек...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Агоросек...', stage: 'Ready-made-processes' }, // Название этапа
+        },
+        {
+          id: 'Big',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Большой',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Большой', stage: 'Ready-made-processes' },
+        },
+        {
+          id: 'Banks',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Банки',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Банки', stage: 'Ready-made-processes' },
+        },
+        {
+          id: 'Machine_building',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Маш. строение',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Маш. строение', stage: 'Ready-made-processes' },
+        },
+        {
+          id: 'Food_industry',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Пищевая промышл...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Пищевая промышл...', stage: 'Ready-made-processes' },
+        }
+      ],
+    },
+    {
       id: 'Applications',
       expanded: true,
-      title: 'Заявки', 
+      title: 'Заявки',
       symbols: [
         {
           id: 'Standard',
@@ -51,12 +186,12 @@ export class DiagramInitDataService {
           height: 60,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD'
+            fill: '#DFD8FD',
           },
           annotations: [
             {
@@ -72,12 +207,12 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD'
+            fill: '#DFD8FD',
           },
           annotations: [
             {
@@ -94,12 +229,12 @@ export class DiagramInitDataService {
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD'
+            fill: '#DFD8FD',
           },
           annotations: [
             {
@@ -111,27 +246,253 @@ export class DiagramInitDataService {
           addInfo: { tooltip: 'Плановая', stage: 'Applications' },
         },
         {
-          id: 'unscheduled',
+          id: 'Unscheduled',
           width: 150,
           height: 50,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
           style: {
-            fill: '#DFD8FD'
+            fill: '#DFD8FD',
           },
           annotations: [
             {
-              content: 'Внепланов.',
+              content: 'Внеплановая',
               style: { color: 'black', fontSize: 18 },
             },
           ],
 
           addInfo: { tooltip: 'Внеплановая', stage: 'Applications' },
+        }
+      ],
+    },
+    {
+      id: 'Non-tender_procedures',
+      expanded: true,
+      title: 'Заявки',
+      symbols: [
+        {
+          id: 'Purchasing_from_one_source...',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Закупка у одного ист...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Закупка у одного ист...', stage: 'Non-tender_procedures' }, // Название этапа
         },
+        {
+          id: 'By_the_score',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'По счету',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'По счету', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Emergency_purchase',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Аварийная закупка',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Аварийная закупка', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Credits_supplier',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Акредитов. поставщик ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Акредитов. поставщик ', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Purchase_registration',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Регистрац.  закупки',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Регистрац.  закупки', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Competitor_negotiations',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Конкурент. переговоры',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Конкурент. переговоры', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'From_the_list_of_selected',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Из списка отобранн... ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Из списка отобранн... ', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Regulations_exceptions',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Регламент... исключения',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Регламент... исключения', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Solution_TOP_me',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Решение ТОП мен...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Решение ТОП мен...', stage: 'Non-tender_procedures' },
+        },
+        {
+          id: 'Decision_watched',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Решение наблюдат... ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Решение наблюдат... ', stage: 'Non-tender_procedures' },
+        }
       ],
     },
     {
@@ -146,7 +507,7 @@ export class DiagramInitDataService {
           addInfo: { tooltip: 'Квалифик. RFQ', stage: 'RFX_Tender' },
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
@@ -167,7 +528,7 @@ export class DiagramInitDataService {
           addInfo: { tooltip: 'Мониторинг цен', stage: 'RFX_Tender' },
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
@@ -187,7 +548,7 @@ export class DiagramInitDataService {
           height: 75,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
@@ -209,7 +570,7 @@ export class DiagramInitDataService {
           height: 75,
           shape: {
             type: 'UmlActivity',
-            classifier: 'Class',
+
             cornerRadius: 16,
           },
           ports: this.port,
@@ -223,10 +584,361 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Переторжка из списка... .', stage: 'RFX_Tender' },
+          addInfo: {
+            tooltip: 'Переторжка из списка... .',
+            stage: 'RFX_Tender',
+          },
         },
       ],
     },
+    {
+      id: 'Online_bidding',
+      expanded: true,
+      title: 'Онлайн торги',
+      symbols: [
+        {
+          id: 'Bidding_on_price_only',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Торги только по цене ',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Торги только по цене ', stage: 'Online_bidding' }, // Название этапа
+        },
+        {
+          id: 'Bidding_complex',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Торги по комплексн...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Торги по комплексн...', stage: 'Online_bidding' },
+        },
+        {
+          id: 'Trading_given',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Торги по приведен...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Торги по приведен...', stage: 'Online_bidding' },
+        },
+        {
+          id: 'Bidding_complex',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Торги по комплекс...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Торги по комплекс...', stage: 'Online_bidding' },
+        },
+        {
+          id: 'Trading_on',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Одноврем. торги по ...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Одноврем. торги по ...', stage: 'Online_bidding' },
+        }
+      ],
+    },
+    {
+      id: 'Agreements',
+      expanded: true,
+      title: 'Договора',
+      symbols: [
+        {
+          id: 'Standard_Agreement',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Стандарт...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Стандарт...', stage: 'Agreements' }, // Название этапа
+        },
+        {
+          id: 'Supplier',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Поставщ...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Поставщ...', stage: 'Agreements' },
+        },
+        {
+          id: 'Template_by_category',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Шаблон по категориям',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Шаблон по категориям', stage: 'Agreements' },
+        },
+        {
+          id: 'Template_by_SUK',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Шаблон по SUK',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Шаблон по SUK', stage: 'Agreements' },
+        },
+        {
+          id: 'AI_Contract_Creation',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Создание договора',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Создание договора', stage: 'Agreements' },
+        },
+        {
+          id: 'AI_Contract_Check',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Проверка договора',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Проверка договора', stage: 'Agreements' },
+        }
+      ]
+    },
+    {
+      id: 'AI_Neolink',
+      expanded: true,
+      title: 'AI Neolink',
+      iconCss: 'logo',
+      symbols: [
+        {
+          id: 'AI_Price_Monitor',
+          width: 150,
+          height: 80,
+          shape: {
+            type: 'UmlActivity',  
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Монитор. цен',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Монитор. цен', stage: 'AI_Neolink' },
+        },
+        {
+          id: 'AI_Checking_technical_specifications',
+          width: 150,
+          height: 80,
+          shape: {
+            type: 'UmlActivity',  
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Проверка тех. задания',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Проверка тех. задания', stage: 'AI_Neolink' },
+        },
+        {
+          id: 'AI_Communic',
+          width: 150,
+          height: 80,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Коммуник.',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Коммуник.', stage: 'AI_Neolink' },
+        },
+        {
+          id: 'AI_Search_Supplier',
+          width: 150,
+          height: 80,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Поиск поставщик.',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Поиск поставщик.', stage: 'AI_Neolink' },
+        }
+      ]
+    },   
     {
       id: 'Set_of_conditions',
       expanded: true,
@@ -422,81 +1134,580 @@ export class DiagramInitDataService {
         },
       ],
     },
-
     {
-      id: 'swimlaneShapes',
+      id: 'Set_control',
       expanded: true,
-      title: 'Swimlane Shapes',
+      title: 'Набор контролей',
       symbols: [
         {
-          id: 'Horizontalswimlane',
-          addInfo: { tooltip: 'Horizontal swimlane', stage: 'Test' },
-          shape: {
-            header: { width: 0, height: 0 },
-            type: 'SwimLane',
-            lanes: [
-              {
-                id: 'lane1',
-                height: 600,
-                width: 500,
-                header: { width: 80, height: 80, style: { fontSize: 16 } }
-              },
-            ],
-            phaseSize: 0,
-            orientation: 'Horizontal',
-            isLane: true,
-          },
-          height: 600,
-          width: 500,
-          offsetX: 0,
-          offsetY: 0,
-        },
-        {
-          id: 'Verticalswimlane',
-          addInfo: { tooltip: 'Vertical swimlane' },
-          shape: {
-            type: 'SwimLane',
-            lanes: [
-              {
-                id: 'lane1',
-                height: 200,
-                width: 450,
-                header: { width: 80, height: 80, style: { fontSize: 16 } },
-              },
-            ],
-            orientation: 'Vertical',
-            isLane: true,
-          },
-          height: 150,
-          width: 300,
-          offsetX: 120,
-          offsetY: 120,
-        },
-        {
-          id: 'Verticalphase',
-          addInfo: { tooltip: 'Vertical phase' },
-          shape: {
-            type: 'SwimLane',
-            phases: [{ style: { strokeDashArray: '3,3' } }],
-            annotations: [{ text: '' }],
-            orientation: 'Vertical',
-            isPhase: true,
-          },
+          id: 'External_expert',
+          width: 150,
           height: 60,
-          width: 140,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Внешний эксперт',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Внешний эксперт', stage: 'Set_control' }, // Название этапа
         },
         {
-          id: 'Horizontalphase',
-          addInfo: { tooltip: 'Horizontal phase' },
+          id: 'Internal_expert',
+          width: 150,
+          height: 50,
           shape: {
-            type: 'SwimLane',
-            phases: [{ style: { strokeDashArray: '3,3' } }],
-            annotations: [{ text: '' }],
-            orientation: 'Horizontal',
-            isPhase: true,
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
           },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Внутренний эксперт',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Внутренний эксперт', stage: 'Set_control' },
+        },
+        {
+          id: 'Technical_expertise',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Техническая экспертиза',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Техническая экспертиза', stage: 'Set_control' },
+        },
+        {
+          id: 'Food_expert',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Эксперт по пищевым...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Эксперт по пищевым...', stage: 'Set_control' },
+        },
+        {
+          id: 'AI_Price_Monitor',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Монитор. цен',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Монитор. цен', stage: 'Set_control' },
+        },
+        {
+          id: 'AI_Checking_technical_specifications',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#FFD382',
+          },
+          annotations: [
+            {
+              content: 'AI Проверка тех. задания',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'AI Проверка тех. задания', stage: 'Set_control' },
+        },
+        {
+          id: 'Audit',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Аудит',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Аудит', stage: 'Set_control' },
+        },
+        {
+          id: 'Nab_Council',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Наб совет',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Наб совет', stage: 'Set_control' },
+        },
+        {
+          id: 'Security_service',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Служба безопасн.',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Служба безопасн.', stage: 'Set_control' },
+        },
+        {
+          id: 'General_Director',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Ген. директор',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Ген. директор', stage: 'Set_control' },
+        }
+      ]
+    },
+    // {
+    //   id: 'swimlaneShapes',
+    //   expanded: true,
+    //   title: 'Swimlane Shapes',
+    //   symbols: [
+    //     {
+    //       id: 'Horizontalswimlane',
+    //       addInfo: { tooltip: 'Horizontal swimlane', stage: 'Test' },
+    //       shape: {
+    //         header: { width: 0, height: 0 },
+    //         type: 'SwimLane',
+    //         lanes: [
+    //           {
+    //             id: 'lane1',
+    //             height: 600,
+    //             width: 500,
+    //             header: { width: 80, height: 80, style: { fontSize: 16 } },
+    //           },
+    //         ],
+    //         phaseSize: 0,
+    //         orientation: 'Horizontal',
+    //         isLane: true,
+    //       },
+    //       height: 600,
+    //       width: 500,
+    //       offsetX: 0,
+    //       offsetY: 0,
+    //     },
+    //     {
+    //       id: 'Verticalswimlane',
+    //       addInfo: { tooltip: 'Vertical swimlane' },
+    //       shape: {
+    //         type: 'SwimLane',
+    //         lanes: [
+    //           {
+    //             id: 'lane1',
+    //             height: 200,
+    //             width: 450,
+    //             header: { width: 80, height: 80, style: { fontSize: 16 } },
+    //           },
+    //         ],
+    //         orientation: 'Vertical',
+    //         isLane: true,
+    //       },
+    //       height: 150,
+    //       width: 300,
+    //       offsetX: 120,
+    //       offsetY: 120,
+    //     },
+    //     {
+    //       id: 'Verticalphase',
+    //       addInfo: { tooltip: 'Vertical phase' },
+    //       shape: {
+    //         type: 'SwimLane',
+    //         phases: [{ style: { strokeDashArray: '3,3' } }],
+    //         annotations: [{ text: '' }],
+    //         orientation: 'Vertical',
+    //         isPhase: true,
+    //       },
+    //       height: 60,
+    //       width: 140,
+    //     },
+    //     {
+    //       id: 'Horizontalphase',
+    //       addInfo: { tooltip: 'Horizontal phase' },
+    //       shape: {
+    //         type: 'SwimLane',
+    //         phases: [{ style: { strokeDashArray: '3,3' } }],
+    //         annotations: [{ text: '' }],
+    //         orientation: 'Horizontal',
+    //         isPhase: true,
+    //       },
+    //       height: 60,
+    //       width: 140,
+    //     },
+    //   ],
+    // },
+    {
+      id: 'Communication',
+      expanded: true,
+      title: 'Коммуникация',
+      symbols: [
+        {
+          id: 'Email',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('Email'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Communication',
+          },
+        },
+        {
+          id: 'Phone',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('Phone'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Communication' },
+        },
+        {
+          id: 'Messanger',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('Messanger'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Communication',
+          },
+        },
+        {
+          id: 'Notification',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('Notification'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Communication',
+          },
+        },  
+        {
+          id: 'AI_comm',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('AI_comm'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Communication',
+          },
+        }
+      ]
+    },
+    {
+      id: 'Coordination',
+      expanded: true,
+      title: 'Согласование',
+      symbols: [
+        {
+          id: 'Agreed_one_of_all',
+          width: 150,
           height: 60,
-          width: 140,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Согласов. один из всех',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Согласов. один из всех', stage: 'Coordination' }, // Название этапа
+        },
+        {
+          id: 'Agreed_by_everyone',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Согласов. каждый',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Согласов. каждый', stage: 'Coordination' }, // Название этапа
+        },
+        {
+          id: 'Vote',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Голосование',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Голосование', stage: 'Coordination' },
+        } 
+      ]
+    },
+    {
+      id: 'Special_processes',
+      expanded: true,
+      title: 'Спец процессы',
+      symbols: [
+        {
+          id: 'Testing_laboratory',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Тестиров. лаборатория',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Тестиров. лаборатория', stage: 'Special_processes' }, // Название этапа
+        },
+        {
+          id: 'Testing_technology',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Тестиров. технология',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Тестиров. технология', stage: 'Special_processes' }, // Название этапа
+        },
+        {
+          id: 'Experimental_form',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Бланк эксперим...',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Бланк эксперим...', stage: 'Special_processes' },
+        } 
+      ]
+    },
+    {
+      id: 'Integration',
+      expanded: true,
+      title: 'Интеграция',
+      symbols: [
+        {
+          id: '1C',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('1C'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Integration',
+          },
+        },
+        {
+          id: 'SAP',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('SAP'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Integration' },
+        },
+        {
+          id: 'MS_Dinamics',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('MS_Dinamics'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Integration',
+          },
+        },
+        {
+          id: 'Oracle',
+          width: 100,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('Oracle'),
+          },
+          ports: this.port,
+          addInfo: {
+            stage: 'Integration',
+          },
         },
       ],
     },
@@ -553,8 +1764,8 @@ export class DiagramInitDataService {
       symbols: [
         {
           id: 'Dia',
-          width: 100,
-          height: 80,
+          width: 110,
+          height: 100,
           shape: {
             type: 'Native',
             content: this.diagramStoreIconsService.getNativeContent('Dia'),
@@ -594,10 +1805,10 @@ export class DiagramInitDataService {
               this.diagramStoreIconsService.getNativeContent('Flash_drive'),
           },
           ports: this.port,
-          addInfo: {  stage: 'Electronic_signature' },
+          addInfo: { stage: 'Electronic_signature' },
         },
       ],
-    }
+    },
   ];
 
   private readonly contextMenuSettings: ContextMenuSettingsModel = {
@@ -622,7 +1833,7 @@ export class DiagramInitDataService {
       {
         text: 'Collapse',
         id: 'Collapse',
-        target: '.e-diagramcollapse'
+        target: '.e-diagramcollapse',
       },
       {
         text: 'Fill',
