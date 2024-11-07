@@ -172,48 +172,65 @@ export class DiagramMainLogicService {
 
   public toggleSwimlaneWidth(diagram: Diagram, nodeId: string): void {
     const swimlane = diagram.getObject(nodeId) as NodeModel;
-
+  
     if (swimlane) {
-      // Initialize addInfo if it doesn't exist
+      // Инициализация addInfo, если еще не существует
       if (!swimlane.addInfo) {
         swimlane.addInfo = {};
       }
-
-      // Determine the current collapsed state from addInfo
+  
+      // Проверяем текущий статус сворачивания
       const isCollapsed = swimlane.addInfo['isCollapsed'] || false;
-
-      // Store the original width if it's not already stored
+  
+      // Храним оригинальную ширину, если еще не сохранена
       if (!swimlane.addInfo['originalWidth']) {
         swimlane.addInfo['originalWidth'] = swimlane.width;
       }
-
-      // Toggle width and visibility of child elements
-      if (isCollapsed) {
-        // If it's currently collapsed, expand it
-        swimlane.width = swimlane.addInfo['originalWidth']; // Restore original width
-        swimlane.children?.forEach((childId) => {
-          const childNode = diagram.getObject(childId) as NodeModel;
-          if (childNode) {
-            childNode.visible = true; // Show child elements
-          }
-        });
-        swimlane.addInfo['isCollapsed'] = false; // Update state to expanded
+  
+      // 1. Сначала меняем ширину swimlane
+      if (!isCollapsed) {
+        swimlane.width = swimlane.addInfo['originalWidth']; // Восстановить оригинальную ширину
+        swimlane['actualSize'].width = swimlane.addInfo['originalWidth'];
+        swimlane['properties']['width'] = swimlane.addInfo['originalWidth'];
       } else {
-        // If it's currently expanded, collapse it
-        swimlane.width = 50; // Set to collapsed width
-        swimlane.children?.forEach((childId) => {
-          const childNode = diagram.getObject(childId) as NodeModel;
-          if (childNode) {
-            childNode.visible = false; // Hide child elements
-          }
-        });
-        swimlane.addInfo['isCollapsed'] = true; // Update state to collapsed
+        swimlane.width = 50; // Сжать swimlane
+        swimlane['actualSize'].width = 50;
+        swimlane['properties']['width'] = 50;
       }
 
-      // Apply changes to the diagram
+      console.log(swimlane);
+  
+      // 2. Меняем видимость дочерних элементов сразу
+      swimlane.children?.forEach((childId) => {
+        const childNode = diagram.getObject(childId) as NodeModel;
+        if (childNode) {
+          childNode.visible = !isCollapsed; // Скрыть/показать в зависимости от состояния
+        }
+      });
+  
+      // 3. Меняем видимость соединений, если они привязаны к дочерним элементам
+      diagram.connectors.forEach((connector) => {
+        const sourceNode = diagram.getObject(connector.sourceID) as NodeModel;
+        const targetNode = diagram.getObject(connector.targetID) as NodeModel;
+  
+        // Если источник или цель соединения - дочерний элемент swimlane, скрываем соединение
+        if (
+          swimlane.children?.includes(sourceNode?.id) ||
+          swimlane.children?.includes(targetNode?.id)
+        ) {
+          connector.visible = !isCollapsed; // Скрыть соединение
+        }
+      });
+  
+      // 4. Обновляем информацию о статусе сворачивания
+      swimlane.addInfo['isCollapsed'] = !isCollapsed;
+  
+      // 5. Применяем изменения к диаграмме
       diagram.dataBind();
     }
   }
+  
+  
 
   private handleNodeStyleChange(
     args: MenuEventArgs,

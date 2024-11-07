@@ -207,7 +207,7 @@ export class ConstructorComponent {
                       header: {
                         annotation: { content: 'Stage 2' },
                         style: {
-                          fill: '#e0e0e0',
+                          fill: 'transparent',
                           color: 'black',
                           fontSize: 16,
                         },
