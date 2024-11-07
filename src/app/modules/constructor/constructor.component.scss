@@ -67,8 +67,12 @@
     right: 0;
     top: 50px;
     width: 300px !important;
-    height: 300px !important;
-
+    height: 200px !important;
+    ::ng-deep{
+      #overview_canvasoverviewrect{
+        height: 200px;
+      }
+    }
   }
 
 }
