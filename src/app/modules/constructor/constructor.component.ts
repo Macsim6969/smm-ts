@@ -166,7 +166,7 @@ export class ConstructorComponent {
             timer(0).subscribe(() => {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
-                width: 500,
+                width: 900,
                 height: windowHeight,
                 shape: {
                   type: 'SwimLane',
@@ -175,13 +175,14 @@ export class ConstructorComponent {
                     {
                       id: 'Lane1',
                       height: 100,
-                      style: { fill: '#f8f8f8' },
+                      style: { fill: '#FF8D2333' },
                       canMove: false,
                       header: {
                         annotation: { content: 'Stage 1' },
                         style: {
-                          fill: '#e0e0e0',
+                          fill: '#FF8D23',
                           color: 'black',
+                          strokeColor: 'transperent',
                           fontSize: 16,
                         },
                       },
@@ -192,36 +193,36 @@ export class ConstructorComponent {
                 offsetY: 100,
               };
 
-              const swimlane2: NodeModel = {
-                id: 'Swimlane2',
-                width: 500,
-                height: windowHeight,
-                shape: {
-                  type: 'SwimLane',
-                  orientation: 'Vertical',
-                  lanes: [
-                    {
-                      id: 'Lane2',
-                      height: 100,
-                      style: { fill: '#e8f4fc' },
-                      header: {
-                        annotation: { content: 'Stage 2' },
-                        style: {
-                          fill: 'transparent',
-                          color: 'black',
-                          fontSize: 16,
-                        },
-                      },
-                    },
-                  ],
-                },
-                offsetX: 600,
-                offsetY: 100,
-              };
+              // const swimlane2: NodeModel = {
+              //   id: 'Swimlane2',
+              //   width: 500,
+              //   height: windowHeight,
+              //   shape: {
+              //     type: 'SwimLane',
+              //     orientation: 'Vertical',
+              //     lanes: [
+              //       {
+              //         id: 'Lane2',
+              //         height: 100,
+              //         style: { fill: '#e8f4fc' },
+              //         header: {
+              //           annotation: { content: 'Stage 2' },
+              //           style: {
+              //             fill: 'transparent',
+              //             color: 'black',
+              //             fontSize: 16,
+              //           },
+              //         },
+              //       },
+              //     ],
+              //   },
+              //   offsetX: 600,
+              //   offsetY: 100,
+              // };
 
               const swimlane3: NodeModel = {
                 id: 'Swimlane3',
-                width: 500,
+                width: 650,
                 height: windowHeight,
                 shape: {
                   type: 'SwimLane',
@@ -230,11 +231,11 @@ export class ConstructorComponent {
                     {
                       id: 'Lane3',
                       height: 100,
-                      style: { fill: '#e4fcef' },
+                      style: { fill: '#57BD6833' },
                       header: {
                         annotation: { content: 'Stage 3' },
                         style: {
-                          fill: '#e0e0e0',
+                          fill: '#57BD68',
                           color: 'black',
                           fontSize: 16,
                         },
@@ -242,12 +243,12 @@ export class ConstructorComponent {
                     },
                   ],
                 },
-                offsetX: 1100,
+                offsetX: 875,
                 offsetY: 100,
               };
 
               this.diagram.add(swimlane1);
-              this.diagram.add(swimlane2);
+              // this.diagram.add(swimlane2);
               this.diagram.add(swimlane3);
             });
           }
