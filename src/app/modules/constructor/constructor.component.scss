@@ -6,16 +6,16 @@
   background-color: white;
 
   display: grid;
-  grid-template-columns: 0.2fr 1fr;
+  grid-template-columns: 0.35fr 1fr;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // width: 100%;
 
   ejs-symbolpalette {
     transition: all 0.8s ease;
-    width: 22% !important;
+    // width: 22% !important;
   }
 
   .block_right {
@@ -25,6 +25,7 @@
 
     width: 100%;
     height: 100%;
+    position: relative;
 
     .header {
       margin-top: 19px;

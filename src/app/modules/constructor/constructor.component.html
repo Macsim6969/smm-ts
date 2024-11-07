@@ -93,15 +93,16 @@
     (onUserHandleMouseDown)="onUserHandleMouseDown($event)"
   >
   </ejs-diagram>
-  </div>
-  
   <div class="action--btn">
     <button (click)="enableGrid()" [ngClass]="{'active': isGridEnabled}">Grid</button>
     <button (click)="disableGrid()" [ngClass]="{'active': !isGridEnabled}">None</button>
-
+  
   </div>
   <div class="popup_modal">
     <ejs-overview id="overview" width="300px" height="300px" sourceID="diagram">
     </ejs-overview>
   </div>
 </div>
+
+</div>
+

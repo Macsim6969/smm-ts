@@ -61,7 +61,7 @@ export class ConstructorComponent {
 
   public diagramData: Diagram;
   public port: PointPortModel[];
-  public expandMode: ExpandMode = 'Multiple';
+  public expandMode: ExpandMode = 'Single';
   public palettes: PaletteModel[] | NodeModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;

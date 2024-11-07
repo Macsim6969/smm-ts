@@ -46,18 +46,26 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 10px;
+      padding: 25px 16px 25px 15px;
 
       .titleDivTitle {
         font-size: 20px;
         margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
       }
 
       button {
         outline: none;
         background-color: transparent;
         border: 1px solid gainsboro;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+
+        box-shadow: 0px 1px 2px 0px #1018280F;
       }
 
       .active {
@@ -67,6 +75,7 @@ body {
       }
 
     }
+
     &::-webkit-scrollbar {
       width: 4px;
     }
@@ -104,6 +113,12 @@ body {
           font-weight: 700 !important;
           line-height: 20px !important;
           font-size: 18px !important;
+
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 200px;
+
         }
 
         .e-toggle-icon {
@@ -114,10 +129,6 @@ body {
       &.e-select {
         border-width: 0 !important;
       }
-    }
-
-    .e-acrdn-item:first-child {
-      margin-top: 28px;
     }
   }
 }
