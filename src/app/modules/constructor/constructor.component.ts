@@ -167,15 +167,24 @@ export class ConstructorComponent {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
                 width: 500,
-                height: windowHeight, 
+                height: windowHeight,
                 shape: {
                   type: 'SwimLane',
                   orientation: 'Vertical',
                   lanes: [
                     {
                       id: 'Lane1',
-                      height: 100, 
+                      height: 100,
                       style: { fill: '#f8f8f8' },
+                      canMove: false,
+                      header: {
+                        annotation: { content: 'Stage 1' },
+                        style: {
+                          fill: '#e0e0e0',
+                          color: 'black',
+                          fontSize: 16,
+                        },
+                      },
                     },
                   ],
                 },
@@ -186,7 +195,7 @@ export class ConstructorComponent {
               const swimlane2: NodeModel = {
                 id: 'Swimlane2',
                 width: 500,
-                height: windowHeight, 
+                height: windowHeight,
                 shape: {
                   type: 'SwimLane',
                   orientation: 'Vertical',
@@ -195,6 +204,14 @@ export class ConstructorComponent {
                       id: 'Lane2',
                       height: 100,
                       style: { fill: '#e8f4fc' },
+                      header: {
+                        annotation: { content: 'Stage 2' },
+                        style: {
+                          fill: '#e0e0e0',
+                          color: 'black',
+                          fontSize: 16,
+                        },
+                      },
                     },
                   ],
                 },
@@ -214,6 +231,14 @@ export class ConstructorComponent {
                       id: 'Lane3',
                       height: 100,
                       style: { fill: '#e4fcef' },
+                      header: {
+                        annotation: { content: 'Stage 3' },
+                        style: {
+                          fill: '#e0e0e0',
+                          color: 'black',
+                          fontSize: 16,
+                        },
+                      },
                     },
                   ],
                 },

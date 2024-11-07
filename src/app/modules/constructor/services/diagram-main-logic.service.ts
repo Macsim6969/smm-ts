@@ -7,6 +7,7 @@ import {
   DiagramComponent,
   IDragEnterEventArgs,
   LaneModel,
+  NodeConstraints,
   NodeModel,
   randomId,
   SwimLaneModel,
@@ -111,7 +112,6 @@ export class DiagramMainLogicService {
     elementData: any
   ): void {
     this.stageElement = selectedNode.addInfo?.['stage'] ?? '';
-    console.log(args.item.id );
     if (
       args.item.id === 'InsertLaneBefore' ||
       args.item.id === 'InsertLaneAfter'
@@ -153,6 +153,9 @@ export class DiagramMainLogicService {
         }
         diagram.clearSelection();
       }
+    } else if (args.item.id == 'Collapse') {
+      const node = selectedNode.id;
+      this.toggleSwimlaneWidth(diagram, node);
     } else if (args.item.id === 'Clone') {
       diagram.copy();
     } else if (args.item.id === 'Settings') {
@@ -164,28 +167,51 @@ export class DiagramMainLogicService {
       args.item.id !== 'annotationText'
     ) {
       this.handleNodeStyleChange(args, selectedNode, diagram);
-    } else if (args.item.id === 'Collapse'){
-      const nodeId = selectedNode.id;
-      const laneId = selectedNode.shape?.['lanes'][0]?.id;
-      const isCollapsed = selectedNode.shape?.['lanes'][0]?.height === 30;
-  
-      this.toggleSwimlaneHeight(diagram, nodeId, laneId, isCollapsed);
     }
   }
 
-  public toggleSwimlaneHeight(diagram, nodeId: string, laneId: string, isCollapsed: boolean): void {
-    console.log(diagram, nodeId, laneId,isCollapsed)
-    const node = diagram.getObject(nodeId) as NodeModel;
-    if (node) {
-      const lane = node.shape?.['lanes'].find(l => l.id === laneId);
-      if (lane) {
-        if (isCollapsed) {
-          lane.height = 30; // Уменьшаем высоту для "свернутого" состояния
-        } else {
-          lane.height = 100; // Восстанавливаем высоту для "развернутого" состояния
-        }
-        diagram.dataBind(); // Обновляем диаграмму
+  public toggleSwimlaneWidth(diagram: Diagram, nodeId: string): void {
+    const swimlane = diagram.getObject(nodeId) as NodeModel;
+
+    if (swimlane) {
+      // Initialize addInfo if it doesn't exist
+      if (!swimlane.addInfo) {
+        swimlane.addInfo = {};
       }
+
+      // Determine the current collapsed state from addInfo
+      const isCollapsed = swimlane.addInfo['isCollapsed'] || false;
+
+      // Store the original width if it's not already stored
+      if (!swimlane.addInfo['originalWidth']) {
+        swimlane.addInfo['originalWidth'] = swimlane.width;
+      }
+
+      // Toggle width and visibility of child elements
+      if (isCollapsed) {
+        // If it's currently collapsed, expand it
+        swimlane.width = swimlane.addInfo['originalWidth']; // Restore original width
+        swimlane.children?.forEach((childId) => {
+          const childNode = diagram.getObject(childId) as NodeModel;
+          if (childNode) {
+            childNode.visible = true; // Show child elements
+          }
+        });
+        swimlane.addInfo['isCollapsed'] = false; // Update state to expanded
+      } else {
+        // If it's currently expanded, collapse it
+        swimlane.width = 50; // Set to collapsed width
+        swimlane.children?.forEach((childId) => {
+          const childNode = diagram.getObject(childId) as NodeModel;
+          if (childNode) {
+            childNode.visible = false; // Hide child elements
+          }
+        });
+        swimlane.addInfo['isCollapsed'] = true; // Update state to collapsed
+      }
+
+      // Apply changes to the diagram
+      diagram.dataBind();
     }
   }
 
