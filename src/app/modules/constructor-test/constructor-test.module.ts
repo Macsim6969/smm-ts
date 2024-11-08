@@ -36,6 +36,9 @@ const routes: Routes = [
     HttpClientModule ,
     OverviewModule,
     CheckBoxModule
-  ]
+  ],
+  providers: [
+    { provide: 'sourceFiles', useValue: { files: [] } }
+  ],
 })
 export class ConstructorTestModule { }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
+  BpmnGatewayModel,
   ContextMenuSettingsModel,
+  NodeConstraints,
   PaletteModel,
   PointPortModel,
   PortConstraints,
@@ -171,8 +173,11 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Пищевая промышл...', stage: 'Ready-made-processes' },
-        }
+          addInfo: {
+            tooltip: 'Пищевая промышл...',
+            stage: 'Ready-made-processes',
+          },
+        },
       ],
     },
     {
@@ -337,7 +342,8 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('Reduction'),
+            content:
+              this.diagramStoreIconsService.getNativeContent('Reduction'),
           },
           ports: this.port,
           addInfo: { stage: 'Purchase' },
@@ -348,7 +354,9 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('Tender_Request_Quotations'),
+            content: this.diagramStoreIconsService.getNativeContent(
+              'Tender_Request_Quotations'
+            ),
           },
           ports: this.port,
           addInfo: { stage: 'Purchase' },
@@ -359,7 +367,9 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('Reduction_present_price'),
+            content: this.diagramStoreIconsService.getNativeContent(
+              'Reduction_present_price'
+            ),
           },
           ports: this.port,
           addInfo: { stage: 'Purchase' },
@@ -370,7 +380,8 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content: this.diagramStoreIconsService.getNativeContent('From_accredited'),
+            content:
+              this.diagramStoreIconsService.getNativeContent('From_accredited'),
           },
           ports: this.port,
           addInfo: { stage: 'Purchase' },
@@ -489,7 +500,7 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'Внеплановая', stage: 'Applications' },
-        },       
+        },
         {
           id: 'Emergency Drive',
           width: 120,
@@ -501,7 +512,7 @@ export class DiagramInitDataService {
           },
           ports: this.port,
           addInfo: { stage: 'Applications' },
-        }
+        },
       ],
     },
     {
@@ -528,7 +539,10 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Закупка у одного ист...', stage: 'Non-tender_procedures' }, // Название этапа
+          addInfo: {
+            tooltip: 'Закупка у одного ист...',
+            stage: 'Non-tender_procedures',
+          }, // Название этапа
         },
         {
           id: 'By_the_score',
@@ -572,7 +586,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Аварийная закупка', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Аварийная закупка',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Credits_supplier',
@@ -594,7 +611,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Акредитов. поставщик ', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Акредитов. поставщик ',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Purchase_registration',
@@ -616,7 +636,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Регистрац.  закупки', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Регистрац.  закупки',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Competitor_negotiations',
@@ -638,7 +661,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Конкурент. переговоры', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Конкурент. переговоры',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'From_the_list_of_selected',
@@ -660,7 +686,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Из списка отобранн... ', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Из списка отобранн... ',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Regulations_exceptions',
@@ -682,7 +711,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Регламент... исключения', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Регламент... исключения',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Solution_TOP_me',
@@ -704,7 +736,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Решение ТОП мен...', stage: 'Non-tender_procedures' },
+          addInfo: {
+            tooltip: 'Решение ТОП мен...',
+            stage: 'Non-tender_procedures',
+          },
         },
         {
           id: 'Decision_watched',
@@ -726,8 +761,11 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Решение наблюдат... ', stage: 'Non-tender_procedures' },
-        }
+          addInfo: {
+            tooltip: 'Решение наблюдат... ',
+            stage: 'Non-tender_procedures',
+          },
+        },
       ],
     },
     {
@@ -850,7 +888,10 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Торги только по цене ', stage: 'Online_bidding' }, // Название этапа
+          addInfo: {
+            tooltip: 'Торги только по цене ',
+            stage: 'Online_bidding',
+          }, // Название этапа
         },
         {
           id: 'Bidding_complex',
@@ -872,7 +913,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Торги по комплексн...', stage: 'Online_bidding' },
+          addInfo: {
+            tooltip: 'Торги по комплексн...',
+            stage: 'Online_bidding',
+          },
         },
         {
           id: 'Trading_given',
@@ -938,8 +982,11 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'Одноврем. торги по ...', stage: 'Online_bidding' },
-        }
+          addInfo: {
+            tooltip: 'Одноврем. торги по ...',
+            stage: 'Online_bidding',
+          },
+        },
       ],
     },
     {
@@ -1077,8 +1124,8 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'AI Проверка договора', stage: 'Agreements' },
-        }
-      ]
+        },
+      ],
     },
     {
       id: 'AI_Neolink',
@@ -1091,7 +1138,7 @@ export class DiagramInitDataService {
           width: 150,
           height: 80,
           shape: {
-            type: 'UmlActivity',  
+            type: 'UmlActivity',
             cornerRadius: 16,
           },
           ports: this.port,
@@ -1112,7 +1159,7 @@ export class DiagramInitDataService {
           width: 150,
           height: 80,
           shape: {
-            type: 'UmlActivity',  
+            type: 'UmlActivity',
             cornerRadius: 16,
           },
           ports: this.port,
@@ -1171,9 +1218,9 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'AI Поиск поставщик.', stage: 'AI_Neolink' },
-        }
-      ]
-    },   
+        },
+      ],
+    },
     {
       id: 'Set_of_conditions',
       expanded: true,
@@ -1503,7 +1550,10 @@ export class DiagramInitDataService {
             },
           ],
 
-          addInfo: { tooltip: 'AI Проверка тех. задания', stage: 'Set_control' },
+          addInfo: {
+            tooltip: 'AI Проверка тех. задания',
+            stage: 'Set_control',
+          },
         },
         {
           id: 'Audit',
@@ -1592,8 +1642,8 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'Ген. директор', stage: 'Set_control' },
-        }
-      ]
+        },
+      ],
     },
     // {
     //   id: 'swimlaneShapes',
@@ -1683,8 +1733,7 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content:
-              this.diagramStoreIconsService.getNativeContent('Email'),
+            content: this.diagramStoreIconsService.getNativeContent('Email'),
           },
           ports: this.port,
           addInfo: {
@@ -1729,22 +1778,21 @@ export class DiagramInitDataService {
           addInfo: {
             stage: 'Communication',
           },
-        },  
+        },
         {
           id: 'AI_comm',
           width: 100,
           height: 80,
           shape: {
             type: 'Native',
-            content:
-              this.diagramStoreIconsService.getNativeContent('AI_comm'),
+            content: this.diagramStoreIconsService.getNativeContent('AI_comm'),
           },
           ports: this.port,
           addInfo: {
             stage: 'Communication',
           },
-        }
-      ]
+        },
+      ],
     },
     {
       id: 'Coordination',
@@ -1813,8 +1861,8 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'Голосование', stage: 'Coordination' },
-        } 
-      ]
+        },
+      ],
     },
     {
       id: 'Special_processes',
@@ -1840,7 +1888,10 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Тестиров. лаборатория', stage: 'Special_processes' }, // Название этапа
+          addInfo: {
+            tooltip: 'Тестиров. лаборатория',
+            stage: 'Special_processes',
+          }, // Название этапа
         },
         {
           id: 'Testing_technology',
@@ -1861,7 +1912,10 @@ export class DiagramInitDataService {
               style: { color: 'black', fontSize: 18 },
             },
           ],
-          addInfo: { tooltip: 'Тестиров. технология', stage: 'Special_processes' }, // Название этапа
+          addInfo: {
+            tooltip: 'Тестиров. технология',
+            stage: 'Special_processes',
+          }, // Название этапа
         },
         {
           id: 'Experimental_form',
@@ -1883,8 +1937,8 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'Бланк эксперим...', stage: 'Special_processes' },
-        } 
-      ]
+        },
+      ],
     },
     {
       id: 'Integration',
@@ -1897,8 +1951,7 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content:
-              this.diagramStoreIconsService.getNativeContent('1C'),
+            content: this.diagramStoreIconsService.getNativeContent('1C'),
           },
           ports: this.port,
           addInfo: {
@@ -1936,8 +1989,7 @@ export class DiagramInitDataService {
           height: 80,
           shape: {
             type: 'Native',
-            content:
-              this.diagramStoreIconsService.getNativeContent('Oracle'),
+            content: this.diagramStoreIconsService.getNativeContent('Oracle'),
           },
           ports: this.port,
           addInfo: {
@@ -2044,6 +2096,146 @@ export class DiagramInitDataService {
         },
       ],
     },
+    {
+      id: 'BMPN',
+      expanded: true,
+      title: 'BMPN',
+      symbols: [
+        {
+          id: 'Start',
+          width: 35,
+          height: 35,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Event',
+            event: { event: 'Start' },
+          },
+        },
+        {
+          id: 'NonInterruptingIntermediate',
+          width: 35,
+          height: 35,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Event',
+            event: { event: 'NonInterruptingIntermediate' },
+          },
+        },
+        {
+          id: 'End',
+          width: 35,
+          height: 35,
+          offsetX: 665,
+          offsetY: 230,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Event',
+            event: { event: 'End' },
+          },
+        },
+        {
+          id: 'Task',
+          width: 35,
+          height: 35,
+          offsetX: 700,
+          offsetY: 700,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Activity',
+            activity: {
+              activity: 'Task',
+            },
+          },
+        },
+        {
+          id: 'Transaction',
+          width: 35,
+          height: 35,
+          offsetX: 300,
+          offsetY: 100,
+          constraints: NodeConstraints.Default | NodeConstraints.AllowDrop,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Activity',
+            activity: {
+              activity: 'SubProcess',
+              subProcess: {
+                type: 'Transaction',
+                transaction: {
+                  cancel: { visible: false },
+                  failure: { visible: false },
+                  success: { visible: false },
+                },
+              },
+            },
+          },
+        },
+        {
+          id: 'Task_Service',
+          width: 35,
+          height: 35,
+          offsetX: 700,
+          offsetY: 700,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Activity',
+            activity: {
+              activity: 'Task',
+              task: { type: 'Service' },
+            },
+          },
+        },
+        {
+          id: 'Gateway',
+          width: 35,
+          height: 35,
+          offsetX: 100,
+          offsetY: 100,
+          shape: {
+            type: 'Bpmn',
+            shape: 'Gateway',
+            gateway: { type: 'Exclusive' } as BpmnGatewayModel,
+          },
+        },
+        {
+          id: 'DataObject',
+          width: 35,
+          height: 35,
+          offsetX: 500,
+          offsetY: 100,
+          shape: {
+            type: 'Bpmn',
+            shape: 'DataObject',
+            dataObject: { collection: false, type: 'None' },
+          },
+        },
+        {
+          id: 'subProcess',
+          width: 520,
+          height: 250,
+          offsetX: 355,
+          offsetY: 230,
+          constraints: NodeConstraints.Default | NodeConstraints.AllowDrop,
+          shape: {
+            shape: 'Activity',
+            type: 'Bpmn',
+            activity: {
+              activity: 'SubProcess',
+              subProcess: {
+                type: 'Transaction',
+                collapsed: false,
+                processes: [],
+                transaction: {
+                  cancel: { visible: false },
+                  failure: { visible: false },
+                  success: { visible: false },
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   ];
 
   private readonly contextMenuSettings: ContextMenuSettingsModel = {
@@ -2096,6 +2288,355 @@ export class DiagramInitDataService {
         ],
         target: '.e-elementcontent',
         iconCss: 'e-icons e-font-color',
+      },
+      {
+        text: 'Ad-Hoc',
+        id: 'Adhoc',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-adhocs e-bpmn-event e-bpmn-icons e-None',
+            id: 'AdhocNone',
+          },
+          {
+            iconCss: 'e-adhocs e-bpmn-icons e-adhoc',
+            text: 'Ad-Hoc',
+            id: 'AdhocAdhoc',
+          },
+        ],
+      },
+      {
+        text: 'Loop',
+        id: 'Loop',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-loop e-bpmn-icons e-None',
+            id: 'LoopNone',
+          },
+          {
+            text: 'Standard',
+            iconCss: 'e-loop e-bpmn-icons e-Loop',
+            id: 'Standard',
+          },
+          {
+            text: 'Parallel Multi-Instance',
+            iconCss: 'e-loop e-bpmn-icons e-ParallelMI',
+            id: 'ParallelMultiInstance',
+          },
+          {
+            text: 'Sequence Multi-Instance',
+            iconCss: 'e-loop e-bpmn-icons e-SequentialMI',
+            id: 'SequenceMultiInstance',
+          },
+        ],
+      },
+      {
+        text: 'Compensation',
+        id: 'taskCompensation',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-compensation e-bpmn-icons e-None',
+            id: 'CompensationNone',
+          },
+          {
+            iconCss: 'e-compensation e-bpmn-icons e-Compensation',
+            text: 'Compensation',
+            id: 'CompensationCompensation',
+          },
+        ],
+      },
+      {
+        text: 'Activity-Type',
+        id: 'Activity-Type',
+        items: [
+          {
+            text: 'Collapsed sub-process',
+            iconCss: 'e-bpmn-icons e-SubProcess',
+            id: 'CollapsedSubProcess',
+          },
+          {
+            iconCss: 'e-bpmn-icons e-Task',
+            text: 'Expanded sub-process',
+            id: 'ExpandedSubProcess',
+          },
+        ],
+      },
+      {
+        text: 'Boundry',
+        id: 'Boundry',
+        items: [
+          {
+            text: 'Default',
+            iconCss: 'e-boundry e-bpmn-icons e-Default',
+            id: 'Default',
+          },
+          {
+            text: 'Call',
+            iconCss: 'e-boundry e-bpmn-icons e-Call',
+            id: 'BoundryCall',
+          },
+          {
+            text: 'Event',
+            iconCss: 'e-boundry e-bpmn-icons e-Event',
+            id: 'BoundryEvent',
+          },
+        ],
+      },
+      {
+        text: 'Data Object',
+        id: 'DataObject',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-data e-bpmn-icons e-None',
+            id: 'DataObjectNone',
+          },
+          {
+            text: 'Input',
+            iconCss: 'e-data e-bpmn-icons e-DataInput',
+            id: 'Input',
+          },
+          {
+            text: 'Output',
+            iconCss: 'e-data e-bpmn-icons e-DataOutput',
+            id: 'Output',
+          },
+        ],
+      },
+      {
+        text: 'Collection',
+        id: 'collection',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-collection e-bpmn-icons e-None',
+            id: 'collectionNone',
+          },
+          {
+            text: 'Collection',
+            iconCss: 'e-collection e-bpmn-icons e-ParallelMI',
+            id: 'Collectioncollection',
+          },
+        ],
+      },
+      {
+        text: 'Call',
+        id: 'DeftCall',
+        items: [
+          {
+            text: 'None',
+            iconCss: 'e-call e-bpmn-icons e-None',
+            id: 'CallNone',
+          },
+          {
+            text: 'Call',
+            iconCss: 'e-call e-bpmn-icons e-CallActivity',
+            id: 'CallCall',
+          },
+        ],
+      },
+      {
+        text: 'Trigger Result',
+        id: 'TriggerResult',
+        items: [
+          {
+            text: 'None',
+            id: 'TriggerNone',
+            iconCss: 'e-trigger e-bpmn-icons e-None',
+          },
+          {
+            text: 'Message',
+            id: 'Message',
+            iconCss: 'e-trigger e-bpmn-icons e-InMessage',
+          },
+          {
+            text: 'Multiple',
+            id: 'Multiple',
+            iconCss: 'e-trigger e-bpmn-icons e-InMultiple',
+          },
+          {
+            text: 'Parallel',
+            id: 'Parallel',
+            iconCss: 'e-trigger e-bpmn-icons e-InParallelMultiple',
+          },
+          {
+            text: 'Signal',
+            id: 'Signal',
+            iconCss: 'e-trigger e-bpmn-icons e-InSignal',
+          },
+          {
+            text: 'Timer',
+            id: 'Timer',
+            iconCss: 'e-trigger e-bpmn-icons e-InTimer',
+          },
+          {
+            text: 'Cancel',
+            id: 'Cancel',
+            iconCss: 'e-trigger e-bpmn-icons e-CancelEnd',
+          },
+          {
+            text: 'Escalation',
+            id: 'Escalation',
+            iconCss: 'e-trigger e-bpmn-icons e-InEscalation',
+          },
+          {
+            text: 'Error',
+            id: 'Error',
+            iconCss: 'e-trigger e-bpmn-icons e-InError',
+          },
+          {
+            text: 'Compensation',
+            id: 'triggerCompensation',
+            iconCss: 'e-trigger e-bpmn-icons e-InCompensation',
+          },
+          {
+            text: 'Terminate',
+            id: 'Terminate',
+            iconCss: 'e-trigger e-bpmn-icons e-TerminateEnd',
+          },
+          {
+            text: 'Conditional',
+            id: 'Conditional',
+            iconCss: 'e-trigger e-bpmn-icons e-InConditional',
+          },
+          {
+            text: 'Link',
+            id: 'Link',
+            iconCss: 'e-trigger e-bpmn-icons e-ThrowLinkin',
+          },
+        ],
+      },
+      {
+        text: 'Event Type',
+        id: 'EventType',
+        items: [
+          {
+            text: 'Start',
+            id: 'Start',
+            iconCss: 'e-event e-bpmn-icons e-NoneStart',
+          },
+          {
+            text: 'Intermediate',
+            id: 'Intermediate',
+            iconCss: 'e-event e-bpmn-icons e-InterruptingNone',
+          },
+          {
+            text: 'NonInterruptingStart',
+            id: 'NonInterruptingStart',
+            iconCss: 'e-event e-bpmn-icons e-Noninterruptingstart',
+          },
+          {
+            text: 'ThrowingIntermediate',
+            id: 'ThrowingIntermediate',
+            iconCss: 'e-event e-bpmn-icons e-InterruptingNone',
+          },
+          {
+            text: 'NonInterruptingIntermediate',
+            id: 'NonInterruptingIntermediate',
+            iconCss: 'e-event e-bpmn-icons e-NoninterruptingIntermediate',
+          },
+          { text: 'End', id: 'End', iconCss: 'e-event e-bpmn-icons e-NoneEnd' },
+        ],
+      },
+      {
+        text: 'Task Type',
+        id: 'TaskType',
+        items: [
+          {
+            text: 'None',
+            id: 'TaskNone',
+            iconCss: 'e-task e-bpmn-icons e-None',
+          },
+          {
+            text: 'Service',
+            id: 'Service',
+            iconCss: 'e-task e-bpmn-icons e-ServiceTask',
+          },
+          {
+            text: 'BusinessRule',
+            id: 'BusinessRule',
+            iconCss: 'e-task e-bpmn-icons e-BusinessRule',
+          },
+          {
+            text: 'InstantiatingReceive',
+            id: 'InstantiatingReceive',
+            iconCss: 'e-task e-bpmn-icons e-InstantiatingReceive',
+          },
+          {
+            text: 'Manual',
+            id: 'Manual',
+            iconCss: 'e-task e-bpmn-icons e-ManualCall',
+          },
+          {
+            text: 'Receive',
+            id: 'Receive',
+            iconCss: 'e-task e-bpmn-icons e-InMessage',
+          },
+          {
+            text: 'Script',
+            id: 'Script',
+            iconCss: 'e-task e-bpmn-icons e-ScriptCall',
+          },
+          {
+            text: 'Send',
+            id: 'Send',
+            iconCss: 'e-task e-bpmn-icons e-InMessage',
+          },
+          {
+            text: 'User',
+            id: 'User',
+            iconCss: 'e-task e-bpmn-icons e-UserCall',
+          },
+        ],
+      },
+      {
+        text: 'GateWay',
+        id: 'GateWay',
+        iconCss: 'e-bpmn-icons e-Gateway',
+        items: [
+          {
+            text: 'None',
+            id: 'GatewayNone',
+            iconCss: 'e-gate e-bpmn-icons e-None',
+          },
+          {
+            text: 'Exclusive',
+            iconCss: 'e-gate e-bpmn-icons e-ExclusiveGatewayWithMarker',
+            id: 'Exclusive',
+          },
+          {
+            text: 'Inclusive',
+            iconCss: 'e-gate e-bpmn-icons e-InclusiveGateway',
+            id: 'Inclusive',
+          },
+          {
+            text: 'Parallel',
+            iconCss: 'e-gate e-bpmn-icons e-ParallelGateway',
+            id: 'GatewayParallel',
+          },
+          {
+            text: 'Complex',
+            iconCss: 'e-gate e-bpmn-icons e-ComplexGateway',
+            id: 'Complex',
+          },
+          {
+            text: 'EventBased',
+            iconCss: 'e-gate e-bpmn-icons e-EventBasedGateway',
+            id: 'EventBased',
+          },
+          {
+            text: 'ExclusiveEventBased',
+            iconCss: 'e-gate e-bpmn-icons e-ExclusiveEventBased',
+            id: 'ExclusiveEventBased',
+          },
+          {
+            text: 'ParallelEventBased',
+            iconCss: 'e-gate e-bpmn-icons e-ParallelEventBasedGatewaytostart',
+            id: 'ParallelEventBased',
+          },
+        ],
       },
     ],
     showCustomMenuOnly: true,
