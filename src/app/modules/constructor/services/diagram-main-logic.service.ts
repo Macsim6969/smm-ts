@@ -31,7 +31,7 @@ export class DiagramMainLogicService {
       this.saveData = diagram.saveDiagram();
       this.httpClient
         .put(
-          `https://smm-st-19042-default-rtdb.firebaseio.com/diagram/${diagramId}.json`,
+          `https://smm-st-19042-default-rtdb.firebaseio.com/test/${diagramId}.json`,
           JSON.stringify(this.saveData)
         )
         .subscribe();
@@ -40,7 +40,7 @@ export class DiagramMainLogicService {
 
   public getDiagramDataFromBack(diagramId: string) {
     return this.httpClient.get(
-      `https://smm-st-19042-default-rtdb.firebaseio.com/diagram/${diagramId}.json`
+      `https://smm-st-19042-default-rtdb.firebaseio.com/test/${diagramId}.json`
     );
   }
 

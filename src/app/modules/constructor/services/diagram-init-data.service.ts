@@ -181,6 +181,27 @@ export class DiagramInitDataService {
       title: 'Заявки',
       symbols: [
         {
+          id: 'Purchase_Request',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Заявка на покупку',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Заявка на покупку', stage: 'Applications' }, // Название этапа
+        },
+        {
           id: 'Standard',
           width: 150,
           height: 60,
@@ -266,16 +287,28 @@ export class DiagramInitDataService {
           ],
 
           addInfo: { tooltip: 'Внеплановая', stage: 'Applications' },
+        },       
+        {
+          id: 'Emergency Drive',
+          width: 120,
+          height: 60,
+          shape: {
+            type: 'Native',
+            content:
+              this.diagramStoreIconsService.getNativeContent('Emergency'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Applications' },
         }
       ],
     },
     {
       id: 'Non-tender_procedures',
       expanded: true,
-      title: 'Заявки',
+      title: 'Безтендерные процедуры',
       symbols: [
         {
-          id: 'Purchasing_from_one_source...',
+          id: 'Purchasing_from_one_source',
           width: 150,
           height: 60,
           shape: {

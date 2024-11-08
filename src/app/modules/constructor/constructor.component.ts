@@ -162,7 +162,7 @@ export class ConstructorComponent {
               console.error('Ошибка при загрузке диаграммы:', error);
             }
           } else {
-            const windowHeight = window.innerHeight - 100;
+            const windowHeight = window.innerHeight - 50;
             timer(0).subscribe(() => {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
