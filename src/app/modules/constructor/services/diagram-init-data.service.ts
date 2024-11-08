@@ -176,6 +176,208 @@ export class DiagramInitDataService {
       ],
     },
     {
+      id: 'Purchase',
+      expanded: true,
+      title: 'Закупка',
+      symbols: [
+        {
+          id: 'Raw_materials_indirect',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Сырьевые (непрямые)',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Сырьевые (непрямые)', stage: 'Purchase' }, // Название этапа
+        },
+        {
+          id: 'Operational_indirect',
+          width: 150,
+          height: 60,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Операционные (непрямые)',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+          addInfo: { tooltip: 'Операционные (непрямые)', stage: 'Purchase' }, // Название этапа
+        },
+        {
+          id: 'Complex_procurement',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Сложная закупка',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Сложная закупка', stage: 'Purchase' },
+        },
+        {
+          id: 'Simple_purchase',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Простая закупка',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Простая закупка', stage: 'Purchase' },
+        },
+        {
+          id: 'Simplified_tender',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Упрощенный  тендер',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Упрощенный  тендер', stage: 'Purchase' },
+        },
+        {
+          id: 'Non-tender_procurement',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Безтендерная закупка',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Безтендерная закупка', stage: 'Purchase' },
+        },
+        {
+          id: 'Non-tender_procurement',
+          width: 150,
+          height: 50,
+          shape: {
+            type: 'UmlActivity',
+
+            cornerRadius: 16,
+          },
+          ports: this.port,
+          style: {
+            fill: '#DFD8FD',
+          },
+          annotations: [
+            {
+              content: 'Безтендерная закупка',
+              style: { color: 'black', fontSize: 18 },
+            },
+          ],
+
+          addInfo: { tooltip: 'Безтендерная закупка', stage: 'Purchase' },
+        },
+        {
+          id: 'Reduction',
+          width: 140,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('Reduction'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Purchase' },
+        },
+        {
+          id: 'Tender_Request_Quotations',
+          width: 140,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('Tender_Request_Quotations'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Purchase' },
+        },
+        {
+          id: 'Reduction_present_price',
+          width: 140,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('Reduction_present_price'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Purchase' },
+        },
+        {
+          id: 'From_accredited',
+          width: 140,
+          height: 80,
+          shape: {
+            type: 'Native',
+            content: this.diagramStoreIconsService.getNativeContent('From_accredited'),
+          },
+          ports: this.port,
+          addInfo: { stage: 'Purchase' },
+        },
+      ],
+    },
+    {
       id: 'Applications',
       expanded: true,
       title: 'Заявки',
