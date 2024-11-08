@@ -5,17 +5,16 @@
   height: 100vh;
   background-color: white;
 
-  display: grid;
-  grid-template-columns: 0.25fr 1fr;
+  // display: grid;
+  // grid-template-columns: 0.25fr 1fr;
 
-  // display: flex;
-  // flex-direction: row;
-  // align-items: center;
-  // width: 100%;
+  display: flex;
+  flex-direction: row;
 
   ejs-symbolpalette {
     transition: all 0.8s ease;
-    // width: 22% !important;
+    width: 25%;
+    min-width: 160px;
   }
 
   .block_right {

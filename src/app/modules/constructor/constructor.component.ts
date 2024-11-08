@@ -65,9 +65,7 @@ export class ConstructorComponent {
   public palettes: PaletteModel[] | NodeModel[];
   public drawingshape?: BasicShapeModel;
   public palete: SymbolPaletteComponent;
-
   public handles!: UserHandleModel[];
-
   public selectedItems: SelectorModel = {
     userHandles: this.handles,
   };
@@ -75,10 +73,8 @@ export class ConstructorComponent {
   public elementData: IElementData;
   public diagramsLogicData: {
     [elementId: string]: IElementData[];
-  }[] = [];
-
+  }[] = []
   public contextMenuSettings: ContextMenuSettingsModel;
-
   public snapSettings: SnapSettingsModel = {
     horizontalGridlines: {
       snapIntervals: [10],
@@ -117,15 +113,14 @@ export class ConstructorComponent {
 
   public choiceStageDyagrams(id: string) {
     this.diagramMainLogicService.saveDiagram(this.diagram, this.isActiveStage);
-
     this.isActiveStage = id;
     this.loadDiagram(id);
+    this.diagram.fitToPage({ mode: 'Page', region: 'Content' });
   }
 
   ngOnInit(): void {
     this.initializeDiagramSettingsData();
 
-    // Initialize the diagram first
     this.diagramData = new Diagram({
       width: '100%',
       height: '100%',
@@ -158,6 +153,8 @@ export class ConstructorComponent {
                   ? JSON.parse(diagramData)
                   : diagramData;
               this.diagram.loadDiagram(data);
+
+              this.diagram.fitToPage({ mode: 'Page', region: 'Content' });
             } catch (error) {
               console.error('Ошибка при загрузке диаграммы:', error);
             }
@@ -166,7 +163,7 @@ export class ConstructorComponent {
             timer(0).subscribe(() => {
               const swimlane1: NodeModel = {
                 id: 'Swimlane1',
-                width: 900,
+                width: 1000,
                 height: windowHeight,
                 shape: {
                   type: 'SwimLane',
@@ -178,12 +175,11 @@ export class ConstructorComponent {
                       style: { fill: '#FF8D2333' },
                       canMove: false,
                       header: {
-                        annotation: { content: 'Stage 1' },
+                        annotation: { content: 'Stage 1', style: {fontSize: 22} },
                         style: {
                           fill: '#FF8D23',
                           color: 'black',
                           strokeColor: 'transperent',
-                          fontSize: 16,
                         },
                       },
                     },
@@ -193,36 +189,9 @@ export class ConstructorComponent {
                 offsetY: 100,
               };
 
-              // const swimlane2: NodeModel = {
-              //   id: 'Swimlane2',
-              //   width: 500,
-              //   height: windowHeight,
-              //   shape: {
-              //     type: 'SwimLane',
-              //     orientation: 'Vertical',
-              //     lanes: [
-              //       {
-              //         id: 'Lane2',
-              //         height: 100,
-              //         style: { fill: '#e8f4fc' },
-              //         header: {
-              //           annotation: { content: 'Stage 2' },
-              //           style: {
-              //             fill: 'transparent',
-              //             color: 'black',
-              //             fontSize: 16,
-              //           },
-              //         },
-              //       },
-              //     ],
-              //   },
-              //   offsetX: 600,
-              //   offsetY: 100,
-              // };
-
               const swimlane3: NodeModel = {
                 id: 'Swimlane3',
-                width: 650,
+                width: 750,
                 height: windowHeight,
                 shape: {
                   type: 'SwimLane',
@@ -233,7 +202,7 @@ export class ConstructorComponent {
                       height: 100,
                       style: { fill: '#57BD6833' },
                       header: {
-                        annotation: { content: 'Stage 3' },
+                        annotation: { content: 'Stage 2', style: {fontSize: 22} },
                         style: {
                           fill: '#57BD68',
                           color: 'black',
@@ -243,13 +212,13 @@ export class ConstructorComponent {
                     },
                   ],
                 },
-                offsetX: 875,
+                offsetX: 975,
                 offsetY: 100,
               };
 
               this.diagram.add(swimlane1);
-              // this.diagram.add(swimlane2);
               this.diagram.add(swimlane3);
+              this.diagram.fitToPage({ mode: 'Page', region: 'Content' });
             });
           }
         });

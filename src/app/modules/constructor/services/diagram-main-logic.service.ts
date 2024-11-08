@@ -31,7 +31,7 @@ export class DiagramMainLogicService {
       this.saveData = diagram.saveDiagram();
       this.httpClient
         .put(
-          `https://smm-st-19042-default-rtdb.firebaseio.com/test/${diagramId}.json`,
+          `https://smm-st-19042-default-rtdb.firebaseio.com/diagram/${diagramId}.json`,
           JSON.stringify(this.saveData)
         )
         .subscribe();
@@ -40,7 +40,7 @@ export class DiagramMainLogicService {
 
   public getDiagramDataFromBack(diagramId: string) {
     return this.httpClient.get(
-      `https://smm-st-19042-default-rtdb.firebaseio.com/test/${diagramId}.json`
+      `https://smm-st-19042-default-rtdb.firebaseio.com/diagram/${diagramId}.json`
     );
   }
 
@@ -52,8 +52,8 @@ export class DiagramMainLogicService {
     isActiveStage: string
   ): void {
     const elementId = arg.element['changedProperties']['id'];
-    arg.element['properties'].style.properties.strokeWidth = 0
-    console.log(arg.element['properties'].style.properties)
+    arg.element['properties'].style.properties.strokeWidth = 0;
+    console.log(arg.element['properties'].style.properties);
     if (!diagramsLogicData[elementId]) {
       diagramsLogicData[elementId] = {};
     }
@@ -175,65 +175,64 @@ export class DiagramMainLogicService {
 
   public toggleSwimlaneWidth(diagram: Diagram, nodeId: string): void {
     const swimlane = diagram.getObject(nodeId) as NodeModel;
-  
+
     if (swimlane) {
-      // Инициализация addInfo, если еще не существует
+      // Initialize addInfo if it doesn't exist
       if (!swimlane.addInfo) {
         swimlane.addInfo = {};
       }
-  
-      // Проверяем текущий статус сворачивания
-      const isCollapsed = swimlane.addInfo['isCollapsed'] || false;
-  
-      // Храним оригинальную ширину, если еще не сохранена
+
+      // Check the current collapse status
+      let isCollapsed = swimlane.addInfo['isCollapsed'] || false;
+      console.log(isCollapsed);
+
+      // Store the original width if it hasn't been saved
       if (!swimlane.addInfo['originalWidth']) {
         swimlane.addInfo['originalWidth'] = swimlane.width;
       }
-  
-      // 1. Сначала меняем ширину swimlane
+
+      // 1. Adjust the width of the Swimlane
       if (!isCollapsed) {
-        swimlane.width = swimlane.addInfo['originalWidth']; // Восстановить оригинальную ширину
+        // Expand Swimlane to original width
+        swimlane.width = swimlane.addInfo['originalWidth'];
         swimlane['actualSize'].width = swimlane.addInfo['originalWidth'];
         swimlane['properties']['width'] = swimlane.addInfo['originalWidth'];
       } else {
-        swimlane.width = 50; // Сжать swimlane
+        // Collapse Swimlane to minimal width
+        swimlane.width = 50; // Adjust this value as needed for a fully collapsed width
         swimlane['actualSize'].width = 50;
         swimlane['properties']['width'] = 50;
       }
 
-      console.log(swimlane);
-  
-      // 2. Меняем видимость дочерних элементов сразу
+      // 2. Toggle visibility of child elements based on collapse status
       swimlane.children?.forEach((childId) => {
         const childNode = diagram.getObject(childId) as NodeModel;
         if (childNode) {
-          childNode.visible = !isCollapsed; // Скрыть/показать в зависимости от состояния
+          childNode.visible = !isCollapsed; // Hide/show child nodes depending on collapse state
         }
       });
-  
-      // 3. Меняем видимость соединений, если они привязаны к дочерним элементам
+
+      // 3. Toggle visibility of connectors if connected to child elements
       diagram.connectors.forEach((connector) => {
         const sourceNode = diagram.getObject(connector.sourceID) as NodeModel;
         const targetNode = diagram.getObject(connector.targetID) as NodeModel;
-  
-        // Если источник или цель соединения - дочерний элемент swimlane, скрываем соединение
+
+        // Hide connectors if connected to Swimlane children when collapsed
         if (
           swimlane.children?.includes(sourceNode?.id) ||
           swimlane.children?.includes(targetNode?.id)
         ) {
-          connector.visible = !isCollapsed; // Скрыть соединение
+          connector.visible = !isCollapsed; // Hide/show connectors based on collapse state
         }
       });
-  
-      // 4. Обновляем информацию о статусе сворачивания
+
+      // 4. Update the collapse status in addInfo
       swimlane.addInfo['isCollapsed'] = !isCollapsed;
-  
-      // 5. Применяем изменения к диаграмме
+
+      // 5. Apply changes to the diagram
       diagram.dataBind();
     }
   }
-  
-  
 
   private handleNodeStyleChange(
     args: MenuEventArgs,
